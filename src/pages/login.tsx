@@ -1,34 +1,39 @@
 import Head from 'next/head'
-import Link from 'next/link'
 import styles from '../styles/Form.module.css';
 import { HiAtSymbol, HiFingerPrint } from "react-icons/hi";
-import { useState } from 'react';
-import { signIn, signOut } from "next-auth/react"
-import { useFormik } from 'formik';
-import {Image} from "@nextui-org/image";
+import { FormEventHandler, useEffect, useState } from 'react';
+import { signIn, signOut, useSession } from "next-auth/react"
 import React from "react";
 import { Layout } from './../../layout/layout';
+import { useRouter } from 'next/router';
+import { Input } from '@nextui-org/input';
+import { Button } from '@nextui-org/button';
 
 
 export default function Login(){
 
-    const [show, setShow] = useState(false)
-    const formik = useFormik({
-        initialValues: {
-            email: '',
-            password: ''
-        },
-        onSubmit
-    })
-
-    async function onSubmit(values: any ){
-        console.log(values)
-    }
-
-    // Github Login 
-    async function handleGithubSignin(){
-        signIn('github', { callbackUrl : "http://localhost:3000"})
-    }
+    const [userInfo, setUserInfo] = useState({
+        email: '',
+        password: ''
+      })
+      const { replace } = useRouter()
+      const { status } = useSession()
+    
+      useEffect(() => {
+        status === 'authenticated' && replace('')
+      }, [status])
+    
+      const handleSubmit: FormEventHandler<HTMLFormElement> = async e => {
+        e.preventDefault()
+    
+        await signIn('credentials', {
+          email: userInfo.email,
+          password: userInfo.password,
+          redirect: false
+        })
+    
+        status === 'authenticated' && replace('')
+      }
 
     return (
         <Layout>
@@ -45,35 +50,29 @@ export default function Login(){
             </div>
 
             {/* form */}
-            <form className='flex flex-col gap-5' onSubmit={formik.handleSubmit}>
+            <form className='flex flex-col gap-5' onSubmit={handleSubmit}>
                 <div className={styles.input_group}>
-                    <input 
+                    <Input 
                     type="email"
                     placeholder='Email'
                     className={styles.input_text}
-                    {...formik.getFieldProps('email')}
                     />
-                    <span className='icon flex items-center px-4'>
-                        <HiAtSymbol size={25} />
-                    </span>
+                   
                 </div>
                 <div className={styles.input_group}>
-                    <input 
-                    type={`${show ? "text" : "password"}`}
+                    <Input 
+                    type={"password"}
                     placeholder='password'
                     className={styles.input_text}
-                    {...formik.getFieldProps('password')}
                     />
-                     <span className='icon flex items-center px-4' onClick={() => setShow(!show)}>
-                        <HiFingerPrint size={25} />
-                    </span>
+                
                 </div>
 
                 {/* login buttons */}
                 <div className="input-button">
-                    <button type='submit' className={styles.button}>
+                    <Button type='submit' className={styles.button}>
                         Login
-                    </button>
+                    </Button>
                 </div>
                 
               

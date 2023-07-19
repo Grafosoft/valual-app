@@ -3,7 +3,7 @@ import GithubProvider from "next-auth/providers/github"
 import Credentials from 'next-auth/providers/credentials'
 
 declare module 'next-auth' {
-    interface Session {
+    interface Sessions {
       accessToken?: string;
     }
   
