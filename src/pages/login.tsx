@@ -45,8 +45,8 @@ export default function Login(){
         
         <section className='w-3/4 mx-auto flex flex-col gap-10'>
             <div className="title">
-                <h1 className='text-gray-800 text-4xl font-bold py-4'>Explore</h1>
-                <p className='w-3/4 mx-auto text-gray-400'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores, officia?</p>
+                <h1 className='text-gray-800 text-4xl font-bold py-4'>Valual</h1>
+                <p className='w-3/4 mx-auto text-gray-400'>Programa Adminstrativo</p>
             </div>
 
             {/* form */}
@@ -56,6 +56,8 @@ export default function Login(){
                     type="email"
                     placeholder='Email'
                     className={styles.input_text}
+                    size ="lg"
+                    
                     />
                    
                 </div>
@@ -64,13 +66,14 @@ export default function Login(){
                     type={"password"}
                     placeholder='password'
                     className={styles.input_text}
+                    size ="lg"
                     />
                 
                 </div>
 
                 {/* login buttons */}
                 <div className="input-button">
-                    <Button type='submit' className={styles.button}>
+                    <Button type='submit' className={styles.button} size ="lg">
                         Login
                     </Button>
                 </div>
