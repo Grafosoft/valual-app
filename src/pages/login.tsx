@@ -1,6 +1,5 @@
 import Head from 'next/head'
 import styles from '../styles/Form.module.css';
-import { HiAtSymbol, HiFingerPrint } from "react-icons/hi";
 import { FormEventHandler, useEffect, useState } from 'react';
 import { signIn, signOut, useSession } from "next-auth/react"
 import React from "react";
@@ -8,9 +7,14 @@ import { Layout } from './../../layout/layout';
 import { useRouter } from 'next/router';
 import { Input } from '@nextui-org/input';
 import { Button } from '@nextui-org/button';
+import { TbEye,TbEyeClosed } from 'react-icons/tb'
 
 
 export default function Login(){
+
+    const [isVisible, setIsVisible] = React.useState(false);
+
+    const toggleVisibility = () => setIsVisible(!isVisible);
 
     const [userInfo, setUserInfo] = useState({
         email: '',
@@ -54,7 +58,7 @@ export default function Login(){
                 <div className={styles.input_group}>
                     <Input 
                     type="email"
-                    placeholder='Email'
+                    placeholder='Correo electronico'
                     className={styles.input_text}
                     size ="lg"
                     
@@ -63,10 +67,21 @@ export default function Login(){
                 </div>
                 <div className={styles.input_group}>
                     <Input 
-                    type={"password"}
-                    placeholder='password'
+                    
+                    placeholder='Contraseña'
                     className={styles.input_text}
                     size ="lg"
+                    endContent={
+                        <button className="focus:outline-none" type="button" onClick={toggleVisibility}>
+                          {isVisible ? (
+                            <TbEye className="text-2xl text-default-400 pointer-events-none" />
+                          ) : (
+                            <TbEyeClosed className="text-2xl text-default-400 pointer-events-none" />
+                          )}
+                        </button>
+                        }
+                        type={isVisible ? "text" : "password"}
+
                     />
                 
                 </div>
@@ -74,7 +89,7 @@ export default function Login(){
                 {/* login buttons */}
                 <div className="input-button">
                     <Button type='submit' className={styles.button} size ="lg">
-                        Login
+                        Iniciar sesion
                     </Button>
                 </div>
                 
