@@ -1,5 +1,5 @@
 import React, { FC, PropsWithChildren } from 'react'
-import styles from '.././src/styles/Layout.module.css';
+import styles from '../src/styles/Layout.module.css'
 
 export const Layout: FC<PropsWithChildren> = ({ children })=>{
     return (
@@ -9,11 +9,12 @@ export const Layout: FC<PropsWithChildren> = ({ children })=>{
                     <div className={styles.cartoonImg}></div>
                     <div className={styles.cloud_one}></div>
                     <div className={styles.cloud_two}></div>
-                </div>
+                    </div>
+               
                 <div className="right flex flex-col justify-evenly">
                     <div className="text-center py-10">
                         {children}
-                    </div>
+                     </div>
                 </div>
             </div>
   

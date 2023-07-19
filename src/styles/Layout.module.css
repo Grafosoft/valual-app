@@ -6,7 +6,7 @@
 }
 
 .cartoonImg{
-    background: url('/public/assets/img2.png') no-repeat;
+    background: url('../.././public/assets/img2.png') no-repeat;
     position: absolute;
     bottom: 0;left: 0;right: 0;top:0;
     width: 100%;
@@ -17,7 +17,7 @@
 }
 
 .cloud_one{
-    background: url('/public/assets/cloud_1.png') no-repeat;
+    background: url('../.././public/assets/cloud_1.png') no-repeat;
     position: absolute;
     top: 65%; left: 10%;
     width: 180px;
@@ -29,7 +29,7 @@
 }
 
 .cloud_two{
-    background: url('/public/assets/cloud_2.png') no-repeat;
+    background: url('../.././public/assets/cloud_2.png') no-repeat;
     position: absolute;
     top: 49%;left: 50%;
     width: 200px;

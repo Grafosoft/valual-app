@@ -37,6 +37,7 @@ export default function Login(){
             <title>Login</title>
         </Head>
         
+        
         <section className='w-3/4 mx-auto flex flex-col gap-10'>
             <div className="title">
                 <h1 className='text-gray-800 text-4xl font-bold py-4'>Explore</h1>
@@ -75,17 +76,11 @@ export default function Login(){
                     </button>
                 </div>
                 
-                <div className="input-button">
-                    <button type='button' onClick={handleGithubSignin} className={styles.button_custom}>
-                        Sign In with Github <Image src={'/assets/github.svg'} width={25} height={25}/>
-                    </button>
-                </div>
+              
             </form>
 
-            {/* bottom */}
-            <p className='text-center text-gray-400 '>
-                don't have an account yet? <Link href={'/register'} className='text-blue-700'>Sign Up</Link>
-            </p>
+           
+           
         </section>
 
         </Layout>
