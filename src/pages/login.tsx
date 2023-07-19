@@ -1,8 +1,7 @@
 import Head from 'next/head'
 import styles from '../styles/Form.module.css';
-import { FormEventHandler, useEffect, useState } from 'react';
+import React ,{ FormEventHandler, useEffect, useState  }  from 'react';
 import { signIn, signOut, useSession } from "next-auth/react"
-import React from "react";
 import { Layout } from './../../layout/layout';
 import { useRouter } from 'next/router';
 import { Input } from '@nextui-org/input';
