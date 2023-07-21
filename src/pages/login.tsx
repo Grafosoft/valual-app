@@ -8,6 +8,7 @@ import { Button } from '@nextui-org/button';
 import { TbEye,TbEyeOff } from 'react-icons/tb'
 import { Spacer } from '@nextui-org/spacer';
 import { Layout } from '../../layout/layout';
+import { SocialFooter } from './../../layout/socialfooter';
 
 
 export default function Login(){
@@ -94,7 +95,9 @@ export default function Login(){
                   style={{ width: '100%' }} size ="lg"  color="primary">
                         Iniciar sesion
                     </Button>
+                    
                 </div>
+                
                 
               
             </form>
@@ -102,7 +105,8 @@ export default function Login(){
            
            
         </section>
+       
 
-        </Layout>
+        </Layout> 
     )
 }
