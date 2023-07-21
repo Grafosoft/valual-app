@@ -6,7 +6,7 @@ import { Layout } from './../../layout/layout';
 import { useRouter } from 'next/router';
 import { Input } from '@nextui-org/input';
 import { Button } from '@nextui-org/button';
-import { TbEye,TbEyeClosed } from 'react-icons/tb'
+import { TbEye,TbEyeOff } from 'react-icons/tb'
 
 
 export default function Login(){
@@ -75,7 +75,7 @@ export default function Login(){
                           {isVisible ? (
                             <TbEye className="text-2xl text-default-400 pointer-events-none" />
                           ) : (
-                            <TbEyeClosed className="text-2xl text-default-400 pointer-events-none" />
+                            <TbEyeOff className="text-2xl text-default-400 pointer-events-none" />
                           )}
                         </button>
                         }
