@@ -1,81 +1,135 @@
+import React ,{ ChangeEvent, FormEventHandler, useEffect, useState  }  from 'react';
 import Head from 'next/head'
-import styles from '../styles/Home.module.css'
-import Link from 'next/link'
-import { useState } from 'react'
-import React from 'react'
-import { Session } from 'next-auth'
-import { GetServerSideProps } from 'next'
-import { getSession, signOut, useSession } from 'next-auth/react'
-
-export default function Home() {
-
-  const { data: session, status } = useSession()
-
-  function handleSignOut(){
-    signOut()
-  }
+import { Card, CardBody, Image,Spacer , Button , Input} from '@nextui-org/react';
+import { Layout } from '../../layout/layout';
+import { signIn, useSession } from "next-auth/react"
+import styles from '../styles/Form.module.css';
+import { useRouter } from 'next/router';
+import { TbEye,TbEyeOff } from 'react-icons/tb'
+import second from '../../public/assets/Valualfon.png'
 
 
-  return (
-    <div className={styles.container}>
-      <Head>
-        <title>Home Page</title>
-      </Head>
+export default function index(){
 
-      {session ? User(session, handleSignOut ) : Guest()}
-    </div>
-  )
-}
+    const [isVisible, setIsVisible] = React.useState(false);
 
-// Guest
-function Guest(){
-  return (
-    <main className="container mx-auto text-center py-20">
-          <h3 className='text-4xl font-bold'>Guest Homepage</h3>
+    const toggleVisibility = () => setIsVisible(!isVisible);
 
-          <div className='flex justify-center'>
-            <Link href={'/login'} className='mt-5 px-10 py-1 rounded-sm bg-indigo-500 text-gray-50'>Sign In</Link>
-          </div>
-      </main>
-  )
-}
-
-// Authorize User
-function User(session: Session, handleSignOut: () => void ){
-  return(
-    <main className="container mx-auto text-center py-20">
-          <h3 className='text-4xl font-bold'>Authorize User Homepage</h3>
-
-          <div className='details'>
-            <h5>{session.user.name}</h5>
-            <h5>{session.user.email}</h5>
-          </div>
-
-          <div className="flex justify-center">
-            <button onClick={handleSignOut} className='mt-5 px-10 py-1 rounded-sm bg-indigo-500 bg-gray-50'>Sign Out</button>
-          </div>
-
-          <div className='flex justify-center'>
-            <Link href={'/profile'} className='mt-5 px-10 py-1 rounded-sm bg-indigo-500 text-gray-50'>Profile Page</Link>
-          </div>
-      </main>
-  )
-}
-
-
-export const getServerSideProps: GetServerSideProps= async ({ req })  => {
-  const session = await getSession({ req })
-
-  if(!session){
-    return {
-      redirect : {
-        destination: '/login',
-        permanent: false
+    const [userInfo, setUserInfo] = useState({
+        email: '',
+        password: ''
+      })
+      const { replace } = useRouter()
+      const { status } = useSession()
+    
+      useEffect(() => {
+        status === 'authenticated' && replace('/ind')
+      }, [status])
+    
+      const handleSubmit: FormEventHandler<HTMLFormElement> = async e => {
+        e.preventDefault()
+    
+        await signIn('credentials', {
+          email: userInfo.email,
+          password: userInfo.password,
+          redirect: false
+        })
+    
+        status === 'authenticated' && replace('/ind')
       }
-    }
-  }
 
-  return {
-    props: { session }
-  }
+    return (
+        
+          <>
+      
+        <Head>
+            <title>Valual App</title>
+          
+        </Head>
+        
+        
+        <Layout>
+        
+        <section className=' mx-auto flex flex-col gap-10'>
+        
+          
+              <Card isHoverable className="text-center py-10  "> 
+              <Image src={second.src}
+               width={400}
+               className="text-center py-5  "
+            />
+         
+                <p className='mx-auto text-gray-400'>Programa Adminstrativo</p>
+                
+              
+              
+            
+              
+         
+       
+           
+            <CardBody>
+            
+            <form className='flex flex-col gap-5' onSubmit={handleSubmit}>
+                <div className={styles.input_group}>
+                    <Input 
+                    type="email"
+                    value={userInfo.email}
+                    placeholder='Correo electronico'
+                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                    setUserInfo({ ...userInfo, email: e.target.value })
+                    }  
+                    size ="lg"
+                    />
+                     <Spacer y={1} />
+                </div>
+                <div className={styles.input_group}>
+                    <Input  
+                    value={userInfo.password}
+                     onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                    setUserInfo({ ...userInfo, password: e.target.value })
+                      
+                   } 
+                  
+                    placeholder='Contraseña'           
+                    size ="lg"
+                    endContent={
+                        <button className="focus:outline-none" type="button" onClick={toggleVisibility}>
+                          {isVisible ? (
+                            <TbEye className="text-2xl text-default-400 pointer-events-none" />
+                          ) : (
+                            <TbEyeOff className="text-2xl text-default-400 pointer-events-none" />
+                          )}
+                        </button>
+                        }
+                        type={isVisible ? "text" : "password"}
+                    />  
+                </div>
+                <Spacer y={1} />
+
+                {/* login buttons */}
+                <div className="input-button">
+                    <Button type='submit' 
+                  style={{ width: '100%' }} size ="lg"  color="primary">
+                        Iniciar sesion
+                    </Button>
+                    
+                </div>
+                
+                
+              
+            </form>
+            </CardBody>
+            </Card>
+          
+
+           
+           
+        </section>
+       
+
+        </Layout> 
+        </>
+        
+    )
 }
