@@ -8,7 +8,8 @@ import { Button } from '@nextui-org/button';
 import { TbEye,TbEyeOff } from 'react-icons/tb'
 import { Spacer } from '@nextui-org/spacer';
 import { Layout } from '../../layout/layout';
-import { SocialFooter } from './../../layout/socialfooter';
+import { Card, CardBody, Image } from '@nextui-org/react';
+import second from '../../public/assets/Valualfon.png'
 
 
 export default function Login(){
@@ -41,22 +42,36 @@ export default function Login(){
       }
 
     return (
-        <Layout>
-          
+        
+          <>
       
         <Head>
-            <title>Login</title>
+            <title>Valual App</title>
+          
         </Head>
         
         
+        <Layout>
         
+        <section className=' mx-auto flex flex-col gap-10'>
         
-        <section className='w-3/4 mx-auto flex flex-col gap-10'>
-            <div className="title">
-                <h1 className='text-gray-800 text-6xl font-bold py-4'>Valual</h1>
-                <p className='w-3/4 mx-auto text-gray-400'>Programa Adminstrativo</p>
-            </div>
-
+          
+              <Card isHoverable className="text-center py-10  "> 
+              <Image src={second.src}
+               width={400}
+               className="text-center py-5  "
+            />
+         
+                <p className='mx-auto text-gray-400'>Programa Adminstrativo</p>
+                
+              
+              
+            
+              
+         
+       
+           
+            <CardBody>
             
             <form className='flex flex-col gap-5' onSubmit={handleSubmit}>
                 <div className={styles.input_group}>
@@ -101,6 +116,9 @@ export default function Login(){
                 
               
             </form>
+            </CardBody>
+            </Card>
+          
 
            
            
@@ -108,5 +126,7 @@ export default function Login(){
        
 
         </Layout> 
+        </>
+        
     )
 }

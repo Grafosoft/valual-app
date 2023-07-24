@@ -1,6 +1,5 @@
-import { Card, CardBody,Image } from '@nextui-org/react'
+import {Spacer } from '@nextui-org/react'
 import React, { FC, PropsWithChildren } from 'react'
-import second from '../public/assets/valual.png'
 import { SocialFooter } from './socialfooter';
 
 
@@ -9,53 +8,41 @@ import { SocialFooter } from './socialfooter';
 
 export const Layout: FC<PropsWithChildren> = ({ children })=>{
     return (
+     
         <div 
-        className="flex h-screen ">
+         
+      style={{
+        display:"flex",
+        alignContent:"center",
+        flexDirection:"column",
+        justifyContent:"center",
+        minHeight: 'calc(100vh - 80px)',
+        minWidth: '100vw',}}>
             
             <div
-             className="m-auto bg-slate-50 rounded-md w-3/5 h-3/4 grid lg:grid-cols-2">
+        
+        style={{
+        minWidth: '600px',
+        display:"flex",
+        flexDirection:"column",
+        justifyContent:"center",
+      
+    
+        }}>
+           
                 
-                
-                
-               <Card 
-               
-                className="border-none bg-background/60 dark:bg-default-100/50 max-w-[610px]"
-                shadow="sm"
-                style={{
-                    display: 'flex',
-                position: 'relative',
-                overflow: 'hidden',
-                background: 'linear-gradient(70deg, blue, pink)'
-               
-                }}
-               >
-                
+                {children}
+                </div>
+      <Spacer y={2} />
+      <SocialFooter />  
+      <Spacer y={1} />
+        
                    
-                        <Image
-                        src={second.src}
-                        width={300}
-                 
-                        
-                        />
-                        
-                    
-                    
-                   
-                   </Card>
-                   
-               
-                <div className="right flex flex-col justify-evenly">
-                    <div className="text-center py-10">
-                        {children}
-                    
-                     </div>
+                     
                 </div>
                 
                 
                
-            </div> 
-           
-                
-        </div> 
+            
     )
 }
