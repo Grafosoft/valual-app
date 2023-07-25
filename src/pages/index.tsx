@@ -51,27 +51,18 @@ export default function index(){
         <Layout>
         
         <section className=' mx-auto flex flex-col gap-10'>
-        
-          
               <Card isHoverable className="text-center py-10  "> 
               <Image src={second.src}
                width={400}
                className="text-center py-5  "
+              
             />
-         
-                <p className='mx-auto text-gray-400'>Programa Adminstrativo</p>
-                
-              
-              
-            
-              
-         
-       
+              <Spacer y={2} />
+              <p className='mx-auto text-gray-400'>Programa Adminstrativo</p>
            
-            <CardBody>
             
             <form className='flex flex-col gap-5' onSubmit={handleSubmit}>
-                <div className={styles.input_group}>
+                <CardBody>
                     <Input 
                     type="email"
                     value={userInfo.email}
@@ -80,17 +71,19 @@ export default function index(){
                     setUserInfo({ ...userInfo, email: e.target.value })
                     }  
                     size ="lg"
+                    clearable
+                   shadow={false}
                     />
-                     <Spacer y={1} />
-                </div>
-                <div className={styles.input_group}>
+                     <Spacer y={3} />
+               
+                
                     <Input  
                     value={userInfo.password}
                      onChange={(e: ChangeEvent<HTMLInputElement>) =>
                     setUserInfo({ ...userInfo, password: e.target.value })
                       
-                   } 
-                  
+                   } clearable
+                   shadow={false}
                     placeholder='Contraseña'           
                     size ="lg"
                     endContent={
@@ -104,8 +97,8 @@ export default function index(){
                         }
                         type={isVisible ? "text" : "password"}
                     />  
-                </div>
-                <Spacer y={1} />
+               
+                <Spacer y={3} />
 
                 {/* login buttons */}
                 <div className="input-button">
@@ -117,9 +110,9 @@ export default function index(){
                 </div>
                 
                 
-              
+              </CardBody>
             </form>
-            </CardBody>
+            
             </Card>
           
 
