@@ -12,7 +12,7 @@ declare module "next-auth" {
         name?:string
         email?:string
         apikey?:string
-
+        companyId?: number
     } & DefaultSession["user"]
   }
 }

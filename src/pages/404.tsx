@@ -4,6 +4,8 @@ import { TbArrowBigLeftFilled } from 'react-icons/tb'
 import { useRouter } from 'next/router'
 
 export default function FourOhFour() {
+
+  
   const { back } = useRouter()
 
   const handleClickHome = () => {

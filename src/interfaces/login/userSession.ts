@@ -4,6 +4,10 @@ export interface UserSession {
     name: string
     image: string
     apikey: string
-    
+    company: {
+      id: number
+    }
   }
+    
+  
   

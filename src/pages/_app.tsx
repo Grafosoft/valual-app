@@ -13,11 +13,13 @@ export default function App({ Component,
   return (
     
     <NextUIProvider>
-    <NextThemesProvider attribute="class" defaultTheme="system"  
-        ><SessionProvider session={session}>
+    <NextThemesProvider attribute="class" defaultTheme="system"  >
+      <SessionProvider session={session}>
       <NavbarLogin />
       
-      <Component {...pageProps} /></SessionProvider>
+      <Component {...pageProps} />
+      
+      </SessionProvider>
       </NextThemesProvider>
     </NextUIProvider>
   );

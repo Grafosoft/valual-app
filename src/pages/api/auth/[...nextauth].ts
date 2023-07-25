@@ -40,6 +40,9 @@ export const authOptions: NextAuthOptions = {
           email: res.data.email,
           apikey: res.data.apikey,
           image: res.data.image,
+          company: {
+            id: res.data.company.id
+          }
           
         }
 
@@ -76,6 +79,8 @@ export const authOptions: NextAuthOptions = {
     session.user.id = user?.id
     session.user.apikey = sessionInfo?.apikey
     session.accessToken =token.accessToken;
+    session.user.companyId = sessionInfo?.company.id
+
     return session;
   }
 

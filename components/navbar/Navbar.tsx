@@ -1,5 +1,5 @@
 import React from 'react'
-import { Dropdown, Image, Spacer, User, DropdownTrigger, DropdownMenu, DropdownItem } from '@nextui-org/react'
+import { Dropdown, Image, Spacer, User, DropdownTrigger, DropdownMenu, DropdownItem, Card } from '@nextui-org/react'
 import { useSession, signOut } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import { SwitchTheme } from '../switch/SwitchTheme'
@@ -18,8 +18,10 @@ export const NavbarLogin = () => {
 
 
   return (
-    
-    <Navbar  > 
+ 
+    <Navbar style={{zIndex: '999' ,
+    padding:'10px'}}  > 
+  
       <NavbarBrand>
         {status === 'authenticated' && (
           <>
@@ -170,7 +172,7 @@ export const NavbarLogin = () => {
           ))}
         </Navbar.Collapse>
       )} */}
-      <NavbarContent className='xs:justify-end' style={{   width: '12%', justifyContent: 'flex-end'  }}>
+      <NavbarContent className='xs:justify-end' style={{   width: '12px', justifyContent: 'flex-end'  }}>
         <SwitchTheme />
         {status === 'authenticated' && (
           <Dropdown placement="bottom-right">
@@ -210,6 +212,6 @@ export const NavbarLogin = () => {
           </Dropdown>
         )}
       </NavbarContent>
-    </Navbar>
+    </Navbar> 
   )
 }

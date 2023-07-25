@@ -9,7 +9,7 @@ import { getSession, signOut, useSession } from 'next-auth/react'
 
 export default function Home() {
 
-  const { data: session, status } = useSession()
+  const { data: session ,status } = useSession()
 
   function handleSignOut() {
     signOut()
@@ -56,7 +56,7 @@ function User(session: Session, handleSignOut: () => void ){
           </div>
 
           <div className='flex justify-center'>
-            <Link href={'/profile'} className='mt-5 px-10 py-1 rounded-sm bg-indigo-500 text-gray-50'>Profile Page</Link>
+            <Link href={`/catalogo?apikey=${session.user.apikey}&companyId=${session.user.companyId} `} className='mt-5 px-10 py-1 rounded-sm bg-indigo-500 text-gray-50'>Profile Page</Link>
           </div>
       </main>
   )

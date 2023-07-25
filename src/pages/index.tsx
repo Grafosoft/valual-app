@@ -12,6 +12,7 @@ import second from '../../public/assets/Valualfon.png'
 export default function index(){
 
     const [isVisible, setIsVisible] = React.useState(false);
+    const [isLoading, setIsLoading] = React.useState(false);
 
     const toggleVisibility = () => setIsVisible(!isVisible);
 
@@ -23,11 +24,14 @@ export default function index(){
       const { status } = useSession()
     
       useEffect(() => {
-        status === 'authenticated' && replace('/ind')
+        status === 'authenticated' && replace('/')
       }, [status])
     
       const handleSubmit: FormEventHandler<HTMLFormElement> = async e => {
         e.preventDefault()
+
+        setIsLoading (true)
+
     
         await signIn('credentials', {
           email: userInfo.email,
@@ -35,7 +39,13 @@ export default function index(){
           redirect: false
         })
     
-        status === 'authenticated' && replace('/ind')
+        status === 'authenticated' 
+
+        if(status === 'authenticated'){
+
+          setIsLoading(false) 
+           replace('/ind')
+        }
       }
 
     return (
@@ -52,11 +62,13 @@ export default function index(){
         
         <section className=' mx-auto flex flex-col gap-10'>
               <Card isHoverable className="text-center py-10  "> 
-              <Image src={second.src}
+              {/* <Image src={second.src}
                width={400}
                className="text-center py-5  "
               
-            />
+            /> */}
+                <h1  className='text-gray-800 text-6xl font-bold py-4' >Valual</h1>
+
               <Spacer y={2} />
               <p className='mx-auto text-gray-400'>Programa Adminstrativo</p>
            
@@ -102,7 +114,7 @@ export default function index(){
 
                 {/* login buttons */}
                 <div className="input-button">
-                    <Button type='submit' 
+                    <Button type='submit' isLoading={isLoading}
                   style={{ width: '100%' }} size ="lg"  color="primary">
                         Iniciar sesion
                     </Button>
