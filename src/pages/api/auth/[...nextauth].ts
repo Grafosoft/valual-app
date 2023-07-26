@@ -1,65 +1,72 @@
 import NextAuth ,{NextAuthOptions} from "next-auth"
-import GithubProvider from "next-auth/providers/github"
-import Credentials from 'next-auth/providers/credentials'
-
-declare module 'next-auth' {
-    interface Sessions {
-      accessToken?: string;
-    }
-  
-
-};
+import CredentialsProvider from 'next-auth/providers/credentials'
+import valualApi from '@/apis/valualApi'
+import { UserSession } from '@/interfaces/login/userSession'
 
 
+let sessionInfo: UserSession
 
 export const authOptions: NextAuthOptions = {
-    
-  // Configure one or more authentication providers
+
+  session: {
+    strategy: 'jwt',
+    maxAge: 86400
+  },
+  secret: process.env.NEXTAUTH_SECRET,
   providers: [
    
     
-    Credentials ({
-        name:'Custom login',
-        credentials:{
-            email:{label:'Correo' , type:'email' , placeholder:'correo@google.com'},
-            password:{label:'Contraseña' , type:'password' , placeholder:'contraseña'},
+    CredentialsProvider ({
+        type: 'credentials',
+      credentials: {},
+      async authorize(credentials) {
+        const { email, password } = credentials as {
+          email: string
+          password: string
+        }
 
-        },
-        async authorize (credentials){
-            console.log({credentials})
-            //return null;
+        const base64String = Buffer.from(
+          `${email}:${password}`,
+          'binary'
+        ).toString('base64')
 
-           const user= { id:'1' , name:'jhoan' ,email:'jhoan@google.com' , role:'admin'}
-            
+        const res = await valualApi.get<UserSession>(
+          `users/oauth?accesstoken=${base64String}`
+        )
 
-
-           if (user) {
-            return user
-          } else {
-   
-            return null;
+        sessionInfo = {
+          id: res.data.id,
+          name: res.data.name,
+          email: res.data.email,
+          apikey: res.data.apikey,
+          image: res.data.image,
+          company: {
+            id: res.data.company.id
           }
-        },
+          
+        }
+
+        if (res) {
+          return sessionInfo
+        } else {
+          throw Error('invalid')
+        }
+      }
     })
   ],
   pages: {
     signIn: '/',
-    error: '/404',
-  
+    error: '/404'
   },
-
 
   callbacks:{
     async jwt ({ token,account,user}){
         if(account){
             token.accessToken= account.access_token;
 
-            switch(account.type){
-            case 'oauth':
-                break;
-                case 'credentials':
-                    token.user=user;
-                    break;
+           
+        if (account.type === 'credentials') {
+          token.user = user
         }
     }
     return token;
@@ -68,8 +75,12 @@ export const authOptions: NextAuthOptions = {
   },
 
   async session({session,token,user}){
-    session.accessToken =token.accessToken as any;
-    session.user= token.user as any;
+
+    session.user.id = user?.id
+    session.user.apikey = sessionInfo?.apikey
+    session.accessToken =token.accessToken;
+    session.user.companyId = sessionInfo?.company.id
+
     return session;
   }
 

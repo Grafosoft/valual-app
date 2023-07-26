@@ -1,81 +1,130 @@
+import React ,{ ChangeEvent, FormEventHandler, useEffect, useState  }  from 'react';
 import Head from 'next/head'
-import styles from '../styles/Home.module.css'
-import Link from 'next/link'
-import { useState } from 'react'
-import React from 'react'
-import { Session } from 'next-auth'
-import { GetServerSideProps } from 'next'
-import { getSession, signOut, useSession } from 'next-auth/react'
-
-export default function Home() {
-
-  const { data: session, status } = useSession()
-
-  function handleSignOut(){
-    signOut()
-  }
+import { Card, CardBody,Spacer , Button , Input, CardHeader, CardFooter} from '@nextui-org/react';
+import { Layout } from '../../layout/layout';
+import { signIn, useSession } from "next-auth/react"
+import { useRouter } from 'next/router';
+import { TbEye,TbEyeOff } from 'react-icons/tb'
 
 
-  return (
-    <div className={styles.container}>
-      <Head>
-        <title>Home Page</title>
-      </Head>
+export default function index(){
 
-      {session ? User(session, handleSignOut ) : Guest()}
-    </div>
-  )
-}
-
-// Guest
-function Guest(){
-  return (
-    <main className="container mx-auto text-center py-20">
-          <h3 className='text-4xl font-bold'>Guest Homepage</h3>
-
-          <div className='flex justify-center'>
-            <Link href={'/login'} className='mt-5 px-10 py-1 rounded-sm bg-indigo-500 text-gray-50'>Sign In</Link>
-          </div>
-      </main>
-  )
-}
-
-// Authorize User
-function User(session: Session, handleSignOut: () => void ){
-  return(
-    <main className="container mx-auto text-center py-20">
-          <h3 className='text-4xl font-bold'>Authorize User Homepage</h3>
-
-          <div className='details'>
-            <h5>{session.user.name}</h5>
-            <h5>{session.user.email}</h5>
-          </div>
-
-          <div className="flex justify-center">
-            <button onClick={handleSignOut} className='mt-5 px-10 py-1 rounded-sm bg-indigo-500 bg-gray-50'>Sign Out</button>
-          </div>
-
-          <div className='flex justify-center'>
-            <Link href={'/profile'} className='mt-5 px-10 py-1 rounded-sm bg-indigo-500 text-gray-50'>Profile Page</Link>
-          </div>
-      </main>
-  )
-}
+    const [isVisible, setIsVisible] = React.useState(false);
+    const [isLoading, setIsLoading] = React.useState(false);
+    
 
 
-export const getServerSideProps: GetServerSideProps= async ({ req })  => {
-  const session = await getSession({ req })
+    const toggleVisibility = () => setIsVisible(!isVisible);
 
-  if(!session){
-    return {
-      redirect : {
-        destination: '/login',
-        permanent: false
+    const [userInfo, setUserInfo] = useState({
+        email: '',
+        password: ''
+      })
+      const { replace } = useRouter()
+      const { data: session, status } = useSession()
+    
+      useEffect(() => {
+        status === 'authenticated' && replace(`/catalogo?apikey=${session.user.apikey}&companyId=${session.user.companyId} `)
+      }, [status])
+    
+      const handleSubmit: FormEventHandler<HTMLFormElement> = async e => {
+        e.preventDefault()
+
+        setIsLoading (true)
+
+    
+        await signIn('credentials', {
+          email: userInfo.email,
+          password: userInfo.password,
+          redirect: false
+        })
+    
+
+        if(status === 'authenticated'){
+
+          setIsLoading(false) 
+           replace('/ind')
+        }
       }
-    }
-  }
 
-  return {
-    props: { session }
-  }
+    return (
+        
+          <>
+      
+        <Head>
+            <title>Valual App</title>
+          
+        </Head>
+        
+        
+        <Layout>
+        
+        
+        <Card style={{ padding: '50px 20px' }}>
+          <CardHeader className="flex flex-col justify-center">
+              
+                <h1 className="text-7xl font-bold" >Valual</h1>
+
+              <Spacer y={5} />
+              <h3 className="text-2xl text-gray-500 font-bold">Programa Adminstrativo</h3>
+              <Spacer y={3} />
+           </CardHeader>
+            
+            <form onSubmit={handleSubmit}>
+                <CardBody>
+                    <Input 
+                    value={userInfo.email}
+                    placeholder='Correo electronico'
+                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                    setUserInfo({ ...userInfo, email: e.target.value })
+                    }  
+                    size ="lg"
+
+                    />
+                     <Spacer y={5} />
+               
+                
+                    <Input  
+                     onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                    setUserInfo({ ...userInfo, password: e.target.value })
+                      
+                   } 
+                   
+                   
+                    placeholder='Contraseña'           
+                    size ="lg"
+                    endContent={
+                        <button className="focus:outline-none" type="button" onClick={toggleVisibility}>
+                          {isVisible ? (
+                            <TbEye className="text-2xl text-default-400 pointer-events-none" />
+                          ) : (
+                            <TbEyeOff className="text-2xl text-default-400 pointer-events-none" />
+                          )}
+                        </button>
+                        }
+                        type={isVisible ? "text" : "password"}
+                    /> 
+
+               </CardBody>
+                <Spacer y={3} />
+                <CardFooter>
+
+
+                <Button
+                size={'lg'}
+                className="text-white"
+                type="submit"
+                style={{ width: '100%' }}
+                color="primary"
+                isLoading={isLoading}
+              >
+                Iniciar sesión
+                    </Button>
+                </CardFooter>
+              </form>
+            </Card>
+        </Layout> 
+        </>
+        
+    )
 }
