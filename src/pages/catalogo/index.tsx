@@ -1,11 +1,12 @@
 import { GetServerSideProps, NextPage } from "next"
-import { ItemsList } from "../../../interfaces/catalogue/itemsList"
+import { ItemsList } from "../../../interfaces/items/itemsList"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/router"
 import React, { useEffect } from 'react'
 import valualApi from "@/apis/valualApi"
 import Head from "next/head"
-import { CatalHeaderLayout } from "../../../layout/catal/catalHeader"
+import { CatalHeaderLayout } from "../../../layout/items/itemsHeader"
+
 
 interface Props {
     subs: ItemsList[]

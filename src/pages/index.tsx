@@ -11,6 +11,8 @@ export default function index(){
 
     const [isVisible, setIsVisible] = React.useState(false);
     const [isLoading, setIsLoading] = React.useState(false);
+    
+
 
     const toggleVisibility = () => setIsVisible(!isVisible);
 
@@ -19,10 +21,10 @@ export default function index(){
         password: ''
       })
       const { replace } = useRouter()
-      const { status } = useSession()
+      const { data: session, status } = useSession()
     
       useEffect(() => {
-        status === 'authenticated' && replace('/ind')
+        status === 'authenticated' && replace(`/catalogo?apikey=${session.user.apikey}&companyId=${session.user.companyId} `)
       }, [status])
     
       const handleSubmit: FormEventHandler<HTMLFormElement> = async e => {
@@ -71,12 +73,13 @@ export default function index(){
             <form onSubmit={handleSubmit}>
                 <CardBody>
                     <Input 
+                    value={userInfo.email}
                     placeholder='Correo electronico'
                     onChange={(e: ChangeEvent<HTMLInputElement>) =>
                     setUserInfo({ ...userInfo, email: e.target.value })
                     }  
                     size ="lg"
-                    isClearable
+                  
 
                     />
                      <Spacer y={5} />

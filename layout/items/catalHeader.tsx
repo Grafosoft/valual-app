@@ -2,7 +2,7 @@ import React, { ChangeEvent, FC, FormEventHandler, useState } from 'react'
 import { Avatar, AvatarGroup, Button, Input, Spacer } from '@nextui-org/react'
 import { TbHistory, TbSearch } from 'react-icons/tb'
 import { useRouter } from 'next/router'
-import { ItemsList } from '../../interfaces/catalogue/itemsList'
+import { ItemsList } from '../../interfaces/items/itemsList'
 import valualApi from '@/apis/valualApi'
 import second from '../../public/assets/logo.png'
 

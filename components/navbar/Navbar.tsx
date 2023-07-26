@@ -19,13 +19,12 @@ export const NavbarLogin = () => {
 
   return (
  
-    <Navbar style={{zIndex: '999' ,
-    padding:'10px'}}  > 
+    <Navbar   isBordered  > 
   
       <NavbarBrand>
         {status === 'authenticated' && (
           <>
-           
+           {/* <NavbarMenuToggle className="sm:hidden" /> */}
             <Spacer x={1} />
           </>
         )}
@@ -172,23 +171,23 @@ export const NavbarLogin = () => {
           ))}
         </Navbar.Collapse>
       )} */}
-      <NavbarContent className='xs:justify-end' style={{   width: '12px', justifyContent: 'flex-end'  }}>
+      <Spacer x={10} />
+      <NavbarContent justify="end" >
         <SwitchTheme />
         {status === 'authenticated' && (
-          <Dropdown placement="bottom-right">
+          <Dropdown placement="bottom-end">
             <NavbarItem>
               <DropdownTrigger>
                 <User
                   
-                //   size={'lg'}
+                
                  avatarProps={{
-                    radius: "md"
+                    radius: "lg",
+                    size:'md',
+                    src: data?.user.image || '',
+                    name: data?.user.name
                  }}
-                 
-                 
-                 
-                  as="button"
-                  
+                  as="button"          
                   name={`${data?.user.name}`}
                   description={`${data?.user.email}`}
                 />
@@ -205,7 +204,7 @@ export const NavbarLogin = () => {
                 }
               }}
             >
-              <DropdownItem key={'logout'} color="error">
+              <DropdownItem key={'logout'} color="danger">
                 Cerrar sesión
               </DropdownItem >
             </ DropdownMenu>
