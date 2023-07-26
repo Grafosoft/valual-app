@@ -1,6 +1,6 @@
 import React ,{ ChangeEvent, FormEventHandler, useEffect, useState  }  from 'react';
 import Head from 'next/head'
-import { Card, CardBody,Spacer , Button , Input} from '@nextui-org/react';
+import { Card, CardBody,Spacer , Button , Input, CardHeader, CardFooter} from '@nextui-org/react';
 import { Layout } from '../../layout/layout';
 import { signIn, useSession } from "next-auth/react"
 import { useRouter } from 'next/router';
@@ -57,38 +57,38 @@ export default function index(){
         
         <Layout>
         
-        <section className=' mx-auto flex flex-col gap-10'>
-              <Card isHoverable className="text-center py-10  "> 
+        
+        <Card style={{ padding: '50px 20px' }}>
+          <CardHeader className="flex flex-col justify-center">
               
-                <h1  className='text-gray-800 text-6xl font-bold py-4' >Valual</h1>
+                <h1 className="text-7xl font-bold" >Valual</h1>
 
-              <Spacer y={2} />
-              <p className='mx-auto text-gray-400'>Programa Adminstrativo</p>
-           
+              <Spacer y={5} />
+              <h3 className="text-2xl text-gray-500 font-bold">Programa Adminstrativo</h3>
+              <Spacer y={3} />
+           </CardHeader>
             
-            <form className='flex flex-col gap-5' onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit}>
                 <CardBody>
                     <Input 
-                    type="email"
-                    value={userInfo.email}
                     placeholder='Correo electronico'
                     onChange={(e: ChangeEvent<HTMLInputElement>) =>
                     setUserInfo({ ...userInfo, email: e.target.value })
                     }  
                     size ="lg"
-                    clearable
-                   shadow={false}
+                    isClearable
+
                     />
-                     <Spacer y={3} />
+                     <Spacer y={5} />
                
                 
                     <Input  
-                    value={userInfo.password}
                      onChange={(e: ChangeEvent<HTMLInputElement>) =>
                     setUserInfo({ ...userInfo, password: e.target.value })
                       
-                   } clearable
-                   shadow={false}
+                   } 
+                   
+                   
                     placeholder='Contraseña'           
                     size ="lg"
                     endContent={
@@ -101,31 +101,26 @@ export default function index(){
                         </button>
                         }
                         type={isVisible ? "text" : "password"}
-                    />  
-               
+                    /> 
+
+               </CardBody>
                 <Spacer y={3} />
+                <CardFooter>
 
-                {/* login buttons */}
-                <div className="input-button">
-                    <Button type='submit' isLoading={isLoading}
-                  style={{ width: '100%' }} size ="lg"  color="primary">
-                        Iniciar sesion
+
+                <Button
+                size={'lg'}
+                className="text-white"
+                type="submit"
+                style={{ width: '100%' }}
+                color="primary"
+                isLoading={isLoading}
+              >
+                Iniciar sesión
                     </Button>
-                    
-                </div>
-                
-                
-              </CardBody>
-            </form>
-            
+                </CardFooter>
+              </form>
             </Card>
-          
-
-           
-           
-        </section>
-       
-
         </Layout> 
         </>
         

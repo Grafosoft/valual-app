@@ -31,7 +31,7 @@ export default function FourOhFour() {
               fontSize: '200px',
               letterSpacing: '5px',
               width: '200px',
-              color: '#f5a524'
+              color: '#006FEE'
             }}
           >
             
@@ -52,7 +52,7 @@ export default function FourOhFour() {
             size={'lg'}
             variant={'flat'}
             onPress={handleClickHome}
-            color={'warning'}
+            color={'primary'}
             startContent={<TbArrowBigLeftFilled />}
           >
             <p className="px-12 pl-11">Volver</p>

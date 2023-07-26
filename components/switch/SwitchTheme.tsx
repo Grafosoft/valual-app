@@ -1,38 +1,40 @@
 import { Switch } from '@nextui-org/react'
-import { useTheme as useNextTheme } from 'next-themes'
+import { useTheme  } from 'next-themes'
 import React, { FC, useEffect, useState } from 'react'
 import { TbMoonFilled, TbSunFilled } from 'react-icons/tb'
 
 export const SwitchTheme: FC = () => {
-  const { theme, setTheme } = useNextTheme()
-  const [isactive, setisactive] = useState() 
+  const { theme, setTheme } = useTheme()
+  const [IsActiveTheme, setIsActiveTheme] = useState(false) 
   
-  // useEffect(() => {
-  //   setisactive(localStorage.getItem('blanco') || '')
+  useEffect(() => {
+    setIsActiveTheme(localStorage.getItem('IsActiveTheme') !== 'false')
   
   
-  // }, [])
+  }, [])
   
   
 
-  const handleClick=()=> {
+  const handleChage=()=> {
 
    
     if(theme === 'dark' ){
-      localStorage.setItem('blanco','false')
-      setTheme('light')
+     
+      setTheme('light') 
+      setIsActiveTheme(false)
+      localStorage.setItem('IsActiveTheme','false')
     }else{
-      localStorage.setItem('blanco',"true")
-  setTheme('dark')
-    
+      setTheme('dark')
+      setIsActiveTheme(true)
+    localStorage.setItem('IsActiveTheme',"true")
     }
   }
 
 
   return (
     <Switch
-    isSelected={isactive} 
-    onChange={handleClick}
+    isSelected={IsActiveTheme} 
+    onChange={handleChage}
       size={'lg'}
       color={'primary'}
      endContent={<TbSunFilled  />}

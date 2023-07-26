@@ -5,6 +5,7 @@ import { useRouter } from "next/router"
 import React, { useEffect } from 'react'
 import valualApi from "@/apis/valualApi"
 import Head from "next/head"
+import { CatalHeaderLayout } from "../../../layout/catal/catalHeader"
 
 interface Props {
     subs: ItemsList[]
@@ -26,6 +27,8 @@ return (
 
       </title>
     </Head>
+    <CatalHeaderLayout subs={subs}  apikey={apikey} />
+
     <h1></h1>
     </>
     )
