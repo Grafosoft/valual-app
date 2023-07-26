@@ -4,21 +4,22 @@ import { Avatar, Link, Spacer } from '@nextui-org/react'
 export const SocialFooter = () => {
   return (
     <div
-      style={{
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignContent: 'center',
-        alignItems: 'center',
-        height: '100px',
-        minWidth: '100vw',
-        maxWidth: '100vw',
-        margin: '0'
-      }}
-    >
+    className="container"
+    style={{
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignContent: 'center',
+      alignItems: 'center',
+      height: '100px',
+      minWidth: '100vw',
+      maxWidth: '100vw',
+      margin: '0'
+    }}
+  >
       <Spacer x={1} />
       <Link
-        href="https://co.linkedin.com/company/grafosoft"
+        href="https://co.linkedin.com/showcase/valual/"
         target="_blank"
         rel="noreferrer"
       >
@@ -30,7 +31,7 @@ export const SocialFooter = () => {
       </Link>
       <Spacer x={1} />
       <Link
-        href="https://twitter.com/grafosoft"
+        href="https://twitter.com/ValualApi"
         target="_blank"
         rel="noreferrer"
       >
@@ -41,7 +42,7 @@ export const SocialFooter = () => {
         />
       </Link>
       <Spacer x={1} />
-      <Link href="https://grafosoft.com" target="_blank" rel="noreferrer">
+      <Link href="https://valual.com/" target="_blank" rel="noreferrer">
         <Avatar
           style={{ cursor: 'pointer' }}
           size={'md'}

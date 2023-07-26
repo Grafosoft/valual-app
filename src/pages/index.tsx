@@ -1,12 +1,10 @@
 import React ,{ ChangeEvent, FormEventHandler, useEffect, useState  }  from 'react';
 import Head from 'next/head'
-import { Card, CardBody, Image,Spacer , Button , Input} from '@nextui-org/react';
+import { Card, CardBody,Spacer , Button , Input} from '@nextui-org/react';
 import { Layout } from '../../layout/layout';
 import { signIn, useSession } from "next-auth/react"
-import styles from '../styles/Form.module.css';
 import { useRouter } from 'next/router';
 import { TbEye,TbEyeOff } from 'react-icons/tb'
-import second from '../../public/assets/Valualfon.png'
 
 
 export default function index(){
@@ -24,7 +22,7 @@ export default function index(){
       const { status } = useSession()
     
       useEffect(() => {
-        status === 'authenticated' && replace('/')
+        status === 'authenticated' && replace('/ind')
       }, [status])
     
       const handleSubmit: FormEventHandler<HTMLFormElement> = async e => {
@@ -39,7 +37,6 @@ export default function index(){
           redirect: false
         })
     
-        status === 'authenticated' 
 
         if(status === 'authenticated'){
 
@@ -62,11 +59,7 @@ export default function index(){
         
         <section className=' mx-auto flex flex-col gap-10'>
               <Card isHoverable className="text-center py-10  "> 
-              {/* <Image src={second.src}
-               width={400}
-               className="text-center py-5  "
               
-            /> */}
                 <h1  className='text-gray-800 text-6xl font-bold py-4' >Valual</h1>
 
               <Spacer y={2} />
