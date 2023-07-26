@@ -45,7 +45,7 @@ export const CatalHeaderLayout: FC<Props> = ({ subs , apikey }) => {
       >
         <Avatar
           src={second.src}
-          style={{ width: '65px', height: '65px' }}
+          style={{ width: '70px', height: '70px' }}
         />
         <h1>Tus Productos </h1>
         <AvatarGroup
@@ -62,10 +62,10 @@ export const CatalHeaderLayout: FC<Props> = ({ subs , apikey }) => {
                 <Avatar
                 name={element.name}
                   key={index}
-                  size={'lg'}
+                  size={'md'}
                   src={element.image || ''}
                   alt={element.name}
-                  radius="md"
+                  radius="lg"
                 />
               )
           )}

@@ -79,7 +79,6 @@ export default function index(){
                     setUserInfo({ ...userInfo, email: e.target.value })
                     }  
                     size ="lg"
-                  
 
                     />
                      <Spacer y={5} />
