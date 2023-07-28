@@ -12,8 +12,8 @@ import {
   } from "@nextui-org/navbar";
 
 export const NavbarLogin = () => {
-  const { data, status } = useSession()
-  const { push, pathname } = useRouter()
+  const { data: session, status } = useSession()
+  const { push } = useRouter()
 
 
 
@@ -24,12 +24,12 @@ export const NavbarLogin = () => {
       <NavbarBrand>
         {status === 'authenticated' && (
           <>
-           {/* <NavbarMenuToggle className="sm:hidden" /> */}
+            
             <Spacer x={1} />
           </>
         )}
         <Image
-          onClick={() => push('/')}
+          onClick={() => push(`/catalogo?apikey=${session?.user.apikey}&companyId=${session?.user.companyId} `)}
           src="/assets/valualfon.png"
           alt="Logo"
           style={{ cursor: 'pointer' ,
@@ -184,12 +184,12 @@ export const NavbarLogin = () => {
                  avatarProps={{
                     radius: "lg",
                     size:'md',
-                    src: data?.user.image || '',
-                    name: data?.user.name
+                    src: session?.user.image || '',
+                    name: session?.user.name
                  }}
                   as="button"          
-                  name={`${data?.user.name}`}
-                  description={`${data?.user.email}`}
+                  name={`${session?.user.name}`}
+                  description={`${session?.user.email}`}
                 />
               </DropdownTrigger>
             </NavbarItem>
@@ -204,7 +204,7 @@ export const NavbarLogin = () => {
                 }
               }}
             >
-              <DropdownItem key={'logout'} color="danger">
+              <DropdownItem key={'logout'} color="primary">
                 Cerrar sesión
               </DropdownItem >
             </ DropdownMenu>

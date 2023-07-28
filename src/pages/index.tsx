@@ -43,7 +43,7 @@ export default function index(){
         if(status === 'authenticated'){
 
           setIsLoading(false) 
-           replace('/ind')
+           replace(`/catalogo?apikey=${session.user.apikey}&companyId=${session.user.companyId} `)
         }
       }
 
@@ -90,7 +90,8 @@ export default function index(){
                       
                    } 
                    
-                   
+                   value={userInfo.password}
+
                     placeholder='Contraseña'           
                     size ="lg"
                     endContent={
