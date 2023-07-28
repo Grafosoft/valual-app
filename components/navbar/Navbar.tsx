@@ -1,5 +1,5 @@
 import React from 'react'
-import { Dropdown, Image, Spacer, User, DropdownTrigger, DropdownMenu, DropdownItem, Card } from '@nextui-org/react'
+import { Dropdown, Image, Spacer, User, DropdownTrigger, DropdownMenu, DropdownItem } from '@nextui-org/react'
 import { useSession, signOut } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import { SwitchTheme } from '../switch/SwitchTheme'
@@ -8,7 +8,6 @@ import {
     NavbarBrand, 
     NavbarContent, 
     NavbarItem, 
-    NavbarMenuToggle,
   } from "@nextui-org/navbar";
 
 export const NavbarLogin = () => {

@@ -1,21 +1,9 @@
 import React, { FC, useEffect, useState } from 'react'
-
 import {    
   TbArrowBigRightLinesFilled,
-  TbBuilding,
-  TbCopy,
-  TbDots,
-  TbShoppingCart,
-  TbUsers
 } from 'react-icons/tb'
-
 import {
   Chip,
-  Dropdown,
-  DropdownItem,
-  DropdownMenu,
-  DropdownTrigger,
-  Spacer,
   User
 } from '@nextui-org/react'
 import { useRouter } from 'next/router'
@@ -36,15 +24,6 @@ export const RenderCell: FC<Props> = ({
   const { push } = useRouter()
 
   
-
-  let colorText:
-    | 'default'
-    | 'primary'
-    | 'secondary'
-    | 'success'
-    | 'warning'
-    | 'danger'
-    | undefined = 'default'
 
  
 

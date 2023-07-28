@@ -8,7 +8,7 @@ export const columns = [
       uid: 'isInventory'
     },
     {
-      name: 'Actividad',
+      name: 'Estado',
       uid: 'isActive'
     },
     
@@ -25,9 +25,6 @@ export const columns = [
       name: 'IVA',
       uid: 'tax'
     },
-   
-   
- 
     {
       name: '',
       uid: 'details'

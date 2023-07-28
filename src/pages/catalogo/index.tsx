@@ -7,7 +7,7 @@ import valualApi from "@/apis/valualApi"
 import Head from "next/head"
 
 import { CatalHeaderLayout } from "../../../layout/items/itemsHeader"
-import { Button, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@nextui-org/react"
+import {  Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@nextui-org/react"
 import { columns } from "@/global/items/itemsColumns"
 import { RenderCell } from "../../../layout/items/RenderCell"
 import { PaginationList } from "../../../components/pagination/PaginationList"
@@ -15,24 +15,40 @@ import { PaginationList } from "../../../components/pagination/PaginationList"
 
 
 interface Props {
-    subs: ItemsList[]
+  items: ItemsList[]
     apikey: string | undefined
+    companyId: string | undefined
     page: string | undefined
+
 
   } 
 
 
   
-  const CatalogueList : NextPage<Props> = ({ subs, apikey,page }) => {
+  const CatalogueList : NextPage<Props> = ({ items,  apikey, companyId ,page }) => {
 
     const [currentPage, setCurrentPage] = React.useState(0)
-    const { status } = useSession()
-    const { replace ,push } = useRouter()
+    const { data , status } = useSession()
+    const { replace  } = useRouter()
 
     useEffect(() => {
       setCurrentPage(parseInt(page || '0') + 1)
       status === 'unauthenticated' && replace('/')
     }, [status, replace, page])
+
+    useEffect(() => {
+      if (!localStorage.getItem('apikey')) {
+        localStorage.setItem('apikey', data?.user.apikey || '')
+      }
+  
+      if (!localStorage.getItem('companyId')) {
+        localStorage.setItem('companyId', data?.user.companyId?.toString() || '')
+      }
+    }, [data?.user.apikey, data?.user.companyId])
+    let firstName = ''
+  
+    const dataWord = data?.user.name?.split(' ') || 'Usuario'
+    firstName = dataWord[0]
 
   
    
@@ -43,7 +59,7 @@ return (
 
       </title>
     </Head>
-    <CatalHeaderLayout subs={subs}  apikey={apikey} />
+    <CatalHeaderLayout items={items}  apikey={apikey}  companyId={companyId}/>
 <Table
         aria-label="Lista de Productos"
         style={{ height: 'auto', minWidth: '100%' }}
@@ -60,7 +76,7 @@ return (
             </TableColumn>
           )}
         </TableHeader>
-        <TableBody items={subs} emptyContent={'No hay datos por mostrar.'}>
+        <TableBody items={items} emptyContent={'No hay datos por mostrar.'}>
           {item => (
             <TableRow key={item.id}>
               {columnKey => (
@@ -76,10 +92,10 @@ return (
         </TableBody>
       </Table>
       <PaginationList
-        urlBack={`catalogo/?companyId=2&apikey=${apikey}&page=${
+        urlBack={`catalogo/?companyId=${companyId}&apikey=${apikey}&page=${
           currentPage - 2
         }`}
-        urlNext={`catalogo/?companyId=2&apikey=${apikey}&page=${currentPage}`}
+        urlNext={`catalogo/?companyId=${companyId}&apikey=${apikey}&page=${currentPage}`}
         currentPage={currentPage}
         color={"primary"}
       />
@@ -95,11 +111,13 @@ return (
        
         const name = ctx.query.name || ''
         const page = ctx.query.page || '0'
+        const companyId = ctx.query.page || '0'
+      
       
        
       
         const response = await valualApi.get<ItemsList>(
-          `items/?companyId=2&apikey=${ctx.query.apikey}&page=${page}&name=${name}`
+          `items/?companyId=${companyId}&apikey=${ctx.query.apikey}&page=${page}&name=${name}`
         )
       
             console.log(response.data)
@@ -110,8 +128,9 @@ return (
       
         return {
           props: {
-            subs: response.data,
-            apikey: ctx.query?.apikey,     
+            items: response.data,
+            apikey: ctx.query?.apikey,  
+            companyId: ctx.query?.companyId, 
              page
 
           }

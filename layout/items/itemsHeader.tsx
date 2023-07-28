@@ -7,31 +7,32 @@ import second from '../../public/assets/logo.png'
 
 
 interface Props {
-  subs: ItemsList[]
+  items: ItemsList[]
   apikey: string | undefined
+  companyId: string | undefined
 }
 
-export const CatalHeaderLayout: FC<Props> = ({ subs , apikey }) => {
+export const CatalHeaderLayout: FC<Props> = ({ items , apikey,companyId }) => {
   const { push } = useRouter()
-  const [searchSub, setSearchSub] = useState('')
+  const [searchitems, setSearchitems] = useState('')
   const limitAvatar = 5
 
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchSub(e.target.value)
+    setSearchitems(e.target.value)
   }
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = e => {
     e.preventDefault()
     push(
-      `catalogo/?companyId=2&apikey=${apikey}${
-        searchSub !== '' ? `&name=${searchSub}` : ''
+      `catalogo/?companyId=${companyId}&apikey=${apikey}${
+        searchitems !== '' ? `&name=${searchitems}` : ''
       }`
     )
   }
   const handleClean = () => {
-    setSearchSub('')
-    push(`catalogo/?companyId=2&apikey=${apikey}&page=0`)
+    setSearchitems('')
+    push(`catalogo/?companyId=${companyId}&apikey=${apikey}&page=0`)
   }
   
 
@@ -60,15 +61,15 @@ export const CatalHeaderLayout: FC<Props> = ({ subs , apikey }) => {
         isBordered
                 max={5}
           total={
-            subs.length - limitAvatar > 5
-              ? subs.length - limitAvatar
+            items.length - limitAvatar > 5
+              ? items.length - limitAvatar
               : undefined
           }
           renderCount={(count: number) => (
             <p className="text-small text-foreground ml-2">+{count}</p>
           )} 
         >
-          {subs.map(
+          {items.map(
             (element, index) =>
               index < limitAvatar && (
                 <Avatar
@@ -89,7 +90,7 @@ export const CatalHeaderLayout: FC<Props> = ({ subs , apikey }) => {
             <form onSubmit={handleSubmit}>
               <Input
                 onChange={handleChange}
-                value={searchSub}
+                value={searchitems}
                 aria-label="Buscar"
                 placeholder="Buscar"
                 
