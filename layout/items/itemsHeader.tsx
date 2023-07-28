@@ -1,9 +1,8 @@
 import React, { ChangeEvent, FC, FormEventHandler, useState } from 'react'
 import { Avatar, AvatarGroup, Button, Input, Spacer } from '@nextui-org/react'
-import { TbHistory, TbSearch, TbTrashFilled } from 'react-icons/tb'
+import {  TbSearch, TbTrashFilled } from 'react-icons/tb'
 import { useRouter } from 'next/router'
 import { ItemsList } from '../../interfaces/items/itemsList'
-import valualApi from '@/apis/valualApi'
 import second from '../../public/assets/logo.png'
 
 
@@ -25,21 +24,21 @@ export const CatalHeaderLayout: FC<Props> = ({ subs , apikey }) => {
   const handleSubmit: FormEventHandler<HTMLFormElement> = e => {
     e.preventDefault()
     push(
-      `/suscripcion/${valualApi}/?apikey=${apikey}${
+      `catalogo/?companyId=2&apikey=${apikey}${
         searchSub !== '' ? `&name=${searchSub}` : ''
       }`
     )
   }
   const handleClean = () => {
     setSearchSub('')
-    push(`/suscripcion/${valualApi}/?apikey=${apikey}&page=0`)
+    push(`catalogo/?companyId=2&apikey=${apikey}&page=0`)
   }
-
+  
 
 
   return (
     <>
-      <Spacer y={3} />  
+ 
       <div
         className="container py-10"
         style={{
@@ -56,7 +55,7 @@ export const CatalHeaderLayout: FC<Props> = ({ subs , apikey }) => {
           src={second.src}
           style={{ width: '75px', height: '75px' }}
         />
-        <h1 className="text-4xl font-bold">Tus Productos </h1>
+        <h1 className="text-5xl font-bold">Tus Productos </h1>
         <AvatarGroup
         isBordered
                 max={5}
@@ -83,9 +82,7 @@ export const CatalHeaderLayout: FC<Props> = ({ subs , apikey }) => {
               )
           )}
         </AvatarGroup>
-      </div>
-      <Spacer y={5} />
-    
+      </div>  
       <div className="container m-auto pb-10">
         <div className="grid grid-cols-12 justify-between">
           <div className="grid col-span-8 flex-col">
@@ -95,9 +92,8 @@ export const CatalHeaderLayout: FC<Props> = ({ subs , apikey }) => {
                 value={searchSub}
                 aria-label="Buscar"
                 placeholder="Buscar"
-                type="search"
+                
                 startContent={<TbSearch />}
-                isClearable
                 width="100%"
                 size="lg"
               />
@@ -112,7 +108,6 @@ export const CatalHeaderLayout: FC<Props> = ({ subs , apikey }) => {
             }}
           >
             
-            <Spacer x={10} />
             <Button onPress={handleClean} variant={'flat'} color={'danger'}>
               <TbTrashFilled size={20} /> <Spacer x={1} /> Limpiar filtros
             </Button>
