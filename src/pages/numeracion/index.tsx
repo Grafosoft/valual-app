@@ -1,0 +1,120 @@
+import valualApi from '@/apis/valualApi'
+import { NumerationsList } from '../../../interfaces/numerations/numerationsList'
+import { NumerationsHeadersLayout } from '../../../layout/numerations/numerationsHeader'
+import { numerationsColumns } from '@/global/numerations/numerationsColumns'
+import { RenderCellNumerations } from '../../../layout/numerations/RenderCellNumerations'
+
+import {
+  Spacer,
+  Table,
+  TableBody,
+  TableCell,
+  TableColumn,
+  TableHeader,
+  TableRow
+} from '@nextui-org/react'
+import { GetServerSideProps, NextPage } from 'next'
+import { useSession } from 'next-auth/react'
+import Head from 'next/head'
+import { useRouter } from 'next/router'
+import React, { useEffect, useState } from 'react'
+import { PaginationList } from '../../../components/pagination/PaginationList'
+
+
+
+
+interface Props {
+    numerations: NumerationsList[]
+  apikey: string | undefined
+  companyId: string | undefined
+  page: string | undefined
+}
+
+const NumerationsList: NextPage<Props> = ({
+numerations,
+  apikey,
+  companyId,
+  page
+}) => {
+  const [currentPage, setCurrentPage] = useState(0)
+  const { status } = useSession()
+  const { replace } = useRouter()
+
+  useEffect(() => {
+    setCurrentPage(parseInt(page || '0') + 1)
+    status === 'unauthenticated' && replace('/')
+  }, [replace, status, page])
+
+  return (
+    <>
+      <Head>
+        <title>Clientes</title>
+      </Head>
+      <NumerationsHeadersLayout
+        numerations={numerations}
+        apikey={apikey}
+        companyId={companyId}
+      />
+      <Spacer y={1} />
+      <Table
+        aria-label="Factura"
+        style={{ height: 'auto', minWidth: '100%' }}
+        isStriped
+      >
+        <TableHeader columns={numerationsColumns}>
+          {column => <TableColumn key={column.uid}>{column.name}</TableColumn>}
+        </TableHeader>
+        <TableBody items={numerations}>
+          {item => (
+            <TableRow key={item.id}>
+              {columnKey => (
+                <TableCell>
+                  <RenderCellNumerations Numeration={item} columnKey={columnKey} />
+                </TableCell>
+              )}
+            </TableRow>
+          )}
+        </TableBody>
+      </Table>
+      <PaginationList
+        urlBack={`numeracion/?companyId=${companyId}&apikey=${apikey}&page=${
+          currentPage - 2
+        }`}
+        urlNext={`numeracion/?companyId=${companyId}&apikey=${apikey}&page=${currentPage}`}
+        currentPage={currentPage}
+        color={"primary"}
+
+      />
+    </>
+  )
+}
+
+export default NumerationsList
+
+export const getServerSideProps: GetServerSideProps = async ctx => {
+  const apikey = ctx.query.apikey?.toString() || ''
+  const companyId = ctx.query.companyId?.toString() || ''
+  const name = ctx.query.name?.toString() || ''
+  const page = ctx.query.page || '0'
+
+  const response = await valualApi.get<NumerationsList[]>(
+    `numerations/?companyId=${companyId}&apikey=${ctx.query.apikey}&page=${page}&name=${name}`
+  )
+
+  if (!response) {
+    return {
+      notFound: true,
+      redirect: '/404'
+    }
+  }
+
+  return {
+    props: {
+    numerations:response.data,
+      apikey,
+      companyId,
+      page,
+      
+    }
+  }
+}
