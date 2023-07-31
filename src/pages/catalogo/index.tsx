@@ -120,7 +120,6 @@ return (
           `items/?companyId=${companyId}&apikey=${ctx.query.apikey}&page=${page}&name=${name}`
         )
       
-            console.log(response.data)
 
         if (!response ) {
           return { notFound: true, redirect: '/404' }

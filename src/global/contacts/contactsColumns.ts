@@ -1,4 +1,4 @@
-export const columns = [
+export const contactsColumns = [
     {
       name: 'Nombre Comercial',
       uid: 'commercialName'

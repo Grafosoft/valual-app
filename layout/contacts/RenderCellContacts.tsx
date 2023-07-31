@@ -5,6 +5,7 @@ import {
 
 import {
   Chip,
+  Spacer,
   User
 } from '@nextui-org/react'
 import { useRouter } from 'next/router'
@@ -16,7 +17,7 @@ interface Props {
  
 }
 
-export const RenderCell: FC<Props> = ({
+export const RenderCellContacts: FC<Props> = ({
     contact,
   columnKey,
   
@@ -24,8 +25,6 @@ export const RenderCell: FC<Props> = ({
   const { push } = useRouter()
 
   
-
- 
 
   let colorIcon = '#0072F5'
 
@@ -36,7 +35,7 @@ export const RenderCell: FC<Props> = ({
   }, [])
 
   switch (columnKey) {
-    case 'name':
+    case 'commercialName':
       return (
         <User
           avatarProps={{
@@ -70,17 +69,24 @@ export const RenderCell: FC<Props> = ({
     case 'city':
       return (
         <p className="font-medium" style={{ fontSize: '15px' }}>
-          {contact.email}
+          {contact.city.name}
 
         </p>
       )
         
-      case 'contact':
+      case 'email':
         return (
-          <p className="font-medium" style={{ fontSize: '15px' }}>
-            {contact.identificationType.code}   
-            description={contact.phone}
+     
+          <div className="flex flex-col">
+          <p className="font-medium lowercase" style={{ fontSize: '15px' }}>
+            {contact.email}   
+         
+          </p> 
+          <Spacer y={1} />
+          <p className="text-bold text-tiny text-default-400">
+            {contact.phone}
           </p>
+          </div>
         )
    
     default:
