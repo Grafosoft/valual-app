@@ -9,6 +9,7 @@ export interface NumerationsList {
     fromNumber:    number;
     toNumber:      number;
     startNumber:   number;
+    currentNumber: number;
     status:        string;
     type:          Software;
     software:      Software;
