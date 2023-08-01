@@ -12,6 +12,9 @@ import {
     NavbarMenuItem
     
   } from "@nextui-org/navbar";
+  import {
+    BsChevronDown
+  } from 'react-icons/bs'
 
 export const NavbarLogin = () => {
   const { data: session, status } = useSession()
@@ -44,15 +47,18 @@ export const NavbarLogin = () => {
           <Dropdown>
             <NavbarItem>
               <DropdownTrigger>
-                <Button
-                  variant="light"
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'center'
-                  }}
-                  disableRipple
-                >
-                  <Link>Opciones</Link>
+              <Button
+                disableRipple
+                className="p-0 bg-transparent data-[hover=true]:bg-transparent"
+                endContent={<BsChevronDown/>}
+                size="lg"
+                radius="md"
+                variant="light"
+              >
+                
+                  Opciones
+                
+              
                 </Button>
               </DropdownTrigger>
             </NavbarItem>
@@ -64,24 +70,17 @@ export const NavbarLogin = () => {
               }}
             >
               <DropdownItem
+                size="lg"
                 key={'Numeracion'}
-               
-              >
-                <Button
-              color="foreground"
-              onClick={() =>
-                push(
-                  `/numeracion?apikey=${localStorage.getItem(
-                    'apikey'
-                  )}&companyId=${localStorage.getItem('companyId')}`
-                  
-                 
-                )
-              }
-            >
+                onClick={() =>
+                  push(
+                    `/numeracion?apikey=${localStorage.getItem(
+                      'apikey'
+                    )}&companyId=${localStorage.getItem('companyId')}`
+                  )
+                }
+              >  
               Numeracion
-              
-            </Button>
               </DropdownItem>
               </DropdownMenu>
     </Dropdown>
@@ -123,26 +122,7 @@ export const NavbarLogin = () => {
               Clientes
               
             </Link>
-          </NavbarItem>
-          <NavbarItem>
-            <Link
-              color="foreground"
-              onClick={() =>
-                push(
-                  `/numeracion?apikey=${localStorage.getItem(
-                    'apikey'
-                  )}&companyId=${localStorage.getItem('companyId')}`
-                  
-                 
-                )
-              }
-            >
-              Numeracion
-              
-            </Link>
-          </NavbarItem>
-          
-          
+          </NavbarItem>      
           </NavbarContent>
       
           
