@@ -24,7 +24,7 @@ export const NavbarLogin = () => {
 
 
   return (
-    <Navbar  isBordered  > 
+    <Navbar  isBordered > 
       <NavbarBrand>
         {status === 'authenticated' && (
           <>

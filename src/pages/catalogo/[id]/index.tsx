@@ -28,7 +28,7 @@ interface Props {
         <Head>
           <title>{data.name}</title>
         </Head>
-        <ItemsDetailsHeader data={data} color={'primary'} />
+        <ItemsDetailsHeader data={data} />
         </>
     )
 }
