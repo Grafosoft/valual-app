@@ -12,7 +12,6 @@ export const columns = [
       uid: 'isActive'
     },
     
-    
     {
       name: 'Precio de venta',
       uid: 'salePrice'

@@ -52,6 +52,7 @@ export const RenderCellContacts: FC<Props> = ({
         case 'isActive':
         return (
           <Chip
+          radius="sm"
             variant={'flat'}
             size="sm"
             color={contact.isActive ? 'success' : 'danger'}

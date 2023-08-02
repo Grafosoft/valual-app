@@ -3,7 +3,7 @@ import { NumerationsList } from '../../../interfaces/numerations/numerationsList
 import { NumerationsHeadersLayout } from '../../../layout/numerations/numerationsHeader'
 import { numerationsColumns } from '@/global/numerations/numerationsColumns'
 import { RenderCellNumerations } from '../../../layout/numerations/RenderCellNumerations'
-
+import { PaginationList } from '../../../components/pagination/PaginationList'
 import {
   Spacer,
   Table,
@@ -18,7 +18,6 @@ import { useSession } from 'next-auth/react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
-import { PaginationList } from '../../../components/pagination/PaginationList'
 
 
 
@@ -48,7 +47,7 @@ numerations,
   return (
     <>
       <Head>
-        <title>Clientes</title>
+        <title>Numeracion</title>
       </Head>
       <NumerationsHeadersLayout
         numerations={numerations}

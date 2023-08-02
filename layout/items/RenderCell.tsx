@@ -62,6 +62,7 @@ export const RenderCell: FC<Props> = ({
         case 'isActive':
         return (
           <Chip
+          radius="sm"
             variant={'flat'}
             size="sm"
             color={user.isActive ? 'success' : 'danger'}
@@ -138,7 +139,9 @@ export const RenderCell: FC<Props> = ({
         <TbArrowBigRightLinesFilled
           cursor={'pointer'}
           color={colorIcon}
-          // onClick={() => push(`${sendUrl}?apikey=${apikey}`)}
+          onClick={() => push(`/catalogo/${user.id}/?apikey=${localStorage.getItem(
+            'apikey'
+          )}&companyId=${localStorage.getItem('companyId')}`)}
           size={20}
         />
       )

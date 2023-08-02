@@ -60,6 +60,7 @@ export const RenderCellNumerations: FC<Props> = ({
         case 'status':
           return (
             <Chip
+            radius="sm"
               variant={'flat'}
               size="sm"
               color={Numeration.status ? 'success' : 'danger'}
