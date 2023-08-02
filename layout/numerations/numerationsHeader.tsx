@@ -1,45 +1,51 @@
-import React, { ChangeEvent, FC, FormEventHandler, useState } from 'react'
 import { Avatar, AvatarGroup, Button, Input, Spacer } from '@nextui-org/react'
-import {  TbSearch, TbTrashFilled } from 'react-icons/tb'
 import { useRouter } from 'next/router'
-import { ItemsList } from '../../interfaces/items/itemsList'
+import React, { ChangeEvent, FC, FormEventHandler, useState } from 'react'
+import { TbSearch, TbTrashFilled } from 'react-icons/tb'
+import { NumerationsList } from '../../interfaces/numerations/numerationsList'
+
 import second from '../../public/assets/logo.png'
 
-
 interface Props {
-  items: ItemsList[]
+  numerations: NumerationsList[]
   apikey: string | undefined
   companyId: string | undefined
 }
 
-export const CatalHeaderLayout: FC<Props> = ({ items , apikey,companyId }) => {
+export const NumerationsHeadersLayout: FC<Props> = ({
+    numerations,
+    apikey,
+    companyId
+}) => {
   const { push } = useRouter()
-  const [searchitems, setSearchitems] = useState('')
+  const [searchNumerations , setSearchNumerations] = useState('')
+
   const limitAvatar = 5
+
+  const handleClean = () => {
+    setSearchNumerations('')
+    push(`numeracion/?companyId=${companyId}&apikey=${apikey}&page=0`)
+  }
+
 
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchitems(e.target.value)
+    setSearchNumerations(e.target.value)
   }
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = e => {
     e.preventDefault()
     push(
-      `catalogo/?companyId=${companyId}&apikey=${apikey}${
-        searchitems !== '' ? `&name=${searchitems}` : ''
+      `/numeracion?apikey=${apikey}&companyId=${companyId}${
+        searchNumerations !== '' ? `&name=${searchNumerations}` : ''
       }`
     )
-  }
-  const handleClean = () => {
-    setSearchitems('')
-    push(`catalogo/?companyId=${companyId}&apikey=${apikey}&page=0`)
-  }
-  
 
+    
+  }
 
   return (
     <>
- 
       <div
         className="container py-10"
         style={{
@@ -53,48 +59,50 @@ export const CatalHeaderLayout: FC<Props> = ({ items , apikey,companyId }) => {
       >
         <Avatar
         
-          src={second.src}
-          style={{ width: '75px', height: '75px' }}
-        />
-        <h1 className="text-5xl font-bold">Tus Productos </h1>
+        src={second.src}
+        style={{ width: '75px', height: '75px' }}
+      />
+        <h1 className="text-5xl font-bold">Numeracion</h1>
         <AvatarGroup
-        isBordered
-                max={5}
+          isBordered
+          max={5}
           total={
-            items.length - limitAvatar > 5
-              ? items.length - limitAvatar
+            numerations.length - limitAvatar > 5
+              ? numerations.length - limitAvatar
               : undefined
           }
           renderCount={(count: number) => (
             <p className="text-small text-foreground ml-2">+{count}</p>
-          )} 
+          )}
         >
-          {items.map(
+          {numerations.map(
             (element, index) =>
               index < limitAvatar && (
                 <Avatar
-                name={element.name}
+                  name={element.name}
                   key={index}
                   size={'md'}
-                  src={element.image || ''}
-                  alt={element.name}
                   radius="lg"
+                  src=""
+                  alt={element.name}
+
+                 
                 />
               )
           )}
         </AvatarGroup>
-      </div>  
+      </div>
       <div className="container m-auto pb-10">
         <div className="grid grid-cols-12 justify-between">
           <div className="grid col-span-8 flex-col">
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} style={{ width: '60vw' }}>
               <Input
-                onChange={handleChange}
-                value={searchitems}
-                aria-label="Buscar"
-                placeholder="Buscar"
-                
+                aria-label="Buscar Numeracio"
+                placeholder="Buscar Numeracio"
+                type="search"
                 startContent={<TbSearch />}
+                onChange={handleChange}
+                value={searchNumerations}
                 width="100%"
                 size="lg"
               />
@@ -108,11 +116,9 @@ export const CatalHeaderLayout: FC<Props> = ({ items , apikey,companyId }) => {
               alignItems: 'flex-end'
             }}
           >
-            
-            <Button onPress={handleClean} variant={'flat'} color={'danger'}>
+            <Button onPress={handleClean} variant={'flat'} color="danger">
               <TbTrashFilled size={20} /> <Spacer x={1} /> Limpiar filtros
             </Button>
-           
           </div>
         </div>
       </div>
