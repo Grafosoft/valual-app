@@ -10,7 +10,7 @@ import {
 } from '@nextui-org/react'
 import { ItemsList } from '../../interfaces/items/itemsList'
 import { MdOutlineInventory2 } from 'react-icons/md'
-import { TbCheck,TbX ,TbHeart,TbHeartFilled  ,TbReceiptTax,TbMoneybag,TbEdit } from 'react-icons/tb'
+import { TbCheck,TbX ,TbHeart,TbHeartFilled  ,TbReceiptTax,TbMoneybag,TbEdit,TbList } from 'react-icons/tb'
 
 
 
@@ -29,26 +29,29 @@ const currencyFormat = new Intl.NumberFormat('en-DE')
 
 
     <div
-      className="grid grid-rows-12 p-5 h-screen gap-5 "
-      
-      
+      className="grid grid-rows-12 p-5 h-screen gap-5 "     
     >
     
-      <Card className="row-span-1 ">
-      <div className="flex items-center grid grid-cols-12">
-        <div className="grid-row-1">
-      <Button  color="success" size="sm" endContent={<
+      <Card className="row-span-1 " style={{justifyContent:'center'}}>
+    
+        <div style={{justifyContent:' space-between', display:'flex'}}>
+          <div >
+      <Button variant="light"  className='ml-10 mr-3' color="success" size="sm" startContent={<
         TbEdit/>}>
         Editar
-      </Button></div>
-      <div className="col-span-2">
-      <Button  classname="col-start-4 col-end-5" color="primary" size="sm" >
+      </Button>
+      
+      <Button variant="light" className="mx-3" color="primary" size="sm" startContent={<
+        TbList/>}>
         Ver movimientos
-      </Button>     </div>
-      <Button color="warning" size="sm" >
+      </Button>    
+     
+      <Button variant="light" className="mx-3" color="warning" size="sm"  startContent={<
+        MdOutlineInventory2/>}>
      Inventario
-      </Button> 
-      <Button color="danger" size="sm" endContent={<
+      </Button> </div>
+      
+      <Button variant="light" className="mx-10" color="danger" size="sm" startContent={<
         TbX/>}>
         cerrar
       </Button>
@@ -178,7 +181,7 @@ const currencyFormat = new Intl.NumberFormat('en-DE')
         <Card className="col-span-10 ">
         <Spacer y={10} />
         <div       
-              style={{ justifyContent: 'space-between' }}
+              // style={{ justifyContent: 'space-between' }}
             >
               <div
               className='text-center'            
@@ -189,22 +192,23 @@ const currencyFormat = new Intl.NumberFormat('en-DE')
 
                   <div  className="grid grid-cols-2 p-5 " >    
                 <div className="grid-row-1"  >
-                  <h1 className="text-3xl font-bold py-2">Precios</h1>                          
-                        <div className="flex"  style={{ justifyContent: 'center' }}>            
-                        <p className="py-2 text-gray-400">Costo</p>
+                  <h1 className="text-3xl font-bold py-2">Precios</h1>  
+                          
+                        <div className="flex "  style={{ justifyContent: 'center' }}>            
+                        <p className="py-2 text-gray-400 ">Costo</p>
                      <h1 className="font-medium py-2 pl-5 " style={{ textTransform: 'capitalize' }}>
                     {currencyFormat.format(data.costPrice)}
                      </h1></div>
                   
                  
-                  <div className=" flex">
+                  <div className=" flex" style={{ justifyContent: 'center' }}>
                 <p className="py-2 text-gray-400">Ultimo Precio</p>
                      <p className="font-medium py-2 pl-5" style={{ textTransform: 'capitalize' }}>
                      {currencyFormat.format(data.lastcostPrice)}
                     </p></div>
                
                   
-                  <div className="flex items-center">
+                  <div className="flex" style={{ justifyContent: 'center' }}>
                   <p className="py-2 text-gray-400">Venta</p>
                     <p className="font-medium py-2 pl-5" style={{ textTransform: 'capitalize' }}>
                   {currencyFormat.format(data.salePrice)}
@@ -213,25 +217,19 @@ const currencyFormat = new Intl.NumberFormat('en-DE')
                 <div className="grid-row-2">
                 <h1 className="text-3xl font-bold py-2">Codigos</h1>
 
-                <div className="flex items-center">
+                <div className="flex " style={{ justifyContent: 'center' }}>
                   <p className="py-2 text-gray-400">Codigo</p>
                     <p className="font-medium py-2 pl-5" >
                   {data.code}
                 </p></div>  
 
-                <div className="flex items-center">
+                <div className="flex " style={{ justifyContent: 'center' }}>
                   <p className="py-2 text-gray-400">Codigo de barras</p>
                     <p className="font-medium py-2 pl-5" >
                   {data.barcode}
                 </p></div> 
 
-                <h1 className="text-3xl font-bold py-2">WooCommerce</h1>
-
-                <div className="flex items-center">
-                  <p className="py-2 text-gray-400">Codigo WOO</p>
-                    <p className="font-medium py-2 pl-5" style={{ textTransform: 'capitalize' }}>
-                  {(data.wooCode)}
-                </p></div>  
+                
                 </div>
                 </div>
                 <div className="grid grid-cols-2 p-5">
@@ -239,28 +237,47 @@ const currencyFormat = new Intl.NumberFormat('en-DE')
                 <div className="grid-row-1">
                 <h1 className="text-3xl font-bold py-2 ">Impuesto</h1>
 
-                <div className="flex items-center ">
+                <div className="flex items-center " style={{ justifyContent: 'center' }}>
                   <TbMoneybag  size={20} color="#17c964"/>  
 
-                   <p className="font-medium  " >
+                   <p className="font-medium text-gray-400 " >
                    Impuesto en la bolsa   
                       </p>   
                     <p className="font-medium py-2 pl-2  " >
                       {data.bagtaxPrice}%
                       </p>
              </div>
-                <div className="flex items-center ">
-                  <TbReceiptTax  size={20} color="#17c964"/>       
-
-                      <p className="font-medium py-2 " >
+                <div className="flex items-center " style={{ justifyContent: 'center' }}>
+                  <TbReceiptTax  size={20} color="#17c964"/> 
+                        
+                  <p className="font-medium text-gray-400 " >
+                   Nombre
+                      </p> 
+                      <p className="font-medium py-2 pl-2 " >
                       {data.tax.name}
+                      
                       </p>
              </div>
-             <div className="flex items-center ">
-                      <p className="font-medium py-2 " >
-                     Porcentaje {data.tax.value}%
+             <div className="flex" style={{ justifyContent: 'center' }}>
+                      <p className="font-medium py-2 text-gray-400 " >
+                     Porcentaje 
+                    </p>
+
+                    <p className="font-medium py-2 pl-2 " >
+                      {data.tax.value}%
                     </p></div>
+                    
                     </div>
+                    <div className="grid-row-2">
+                    <h1 className="text-3xl font-bold py-2">WooCommerce</h1>
+
+           <div className="flex" style={{ justifyContent: 'center' }}>
+           <p className="py-2 text-gray-400">Codigo WOO</p>
+            <p className="font-medium py-2 pl-5" >
+           {data.wooCode}
+            </p></div> </div>
+
+                    
              </div>
         
              <div
