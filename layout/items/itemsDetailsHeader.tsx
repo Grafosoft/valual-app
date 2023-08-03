@@ -3,15 +3,14 @@ import {
   Card,
   CardBody,
   CardHeader,
-  Chip,
   Spacer,
-  User,
   Avatar,
-  Switch
+  Switch,
+  Button
 } from '@nextui-org/react'
 import { ItemsList } from '../../interfaces/items/itemsList'
 import { MdOutlineInventory2 } from 'react-icons/md'
-import { TbCheck,TbX ,TbHeart,TbHeartFilled ,TbBrandCashapp ,TbReceiptTax } from 'react-icons/tb'
+import { TbCheck,TbX ,TbHeart,TbHeartFilled  ,TbReceiptTax,TbMoneybag } from 'react-icons/tb'
 
 
 
@@ -20,19 +19,27 @@ interface Props {
  
 }
 
+
 export const ItemsDetailsHeader: FC<Props> = ({ data }) => {
   
 const currencyFormat = new Intl.NumberFormat('en-DE')
 
+
   return (
     <div
       className="grid grid-rows-12 p-5 gap-5"
-      style={{ minHeight: "92vh" }}
+      style={{  minWidth: '80vh' }}
+      
     >
     
-      <Card className="row-span-1"></Card>
-  
-      
+      <Card className="row-span-1">
+      <div className="flex p-5 items-center">
+        
+      <Button color="success" size="sm" endContent={''}>
+        Take a photo
+      </Button>    </div>
+      </Card>
+
       <div
       className="grid grid-cols-12 row-span-11  gap-5"
       style={{ justifyContent: 'center'}}
@@ -153,9 +160,6 @@ const currencyFormat = new Intl.NumberFormat('en-DE')
           
         </Card>
 
-       
-
-     
         <Card className="col-span-10 ">
         <Spacer y={10} />
         <div       
@@ -166,67 +170,108 @@ const currencyFormat = new Intl.NumberFormat('en-DE')
               >
                <h1 className="text-5xl font-bold py-2">{data.name}</h1>
                 <h3 className="text-2xl font-bold pt-2 ">{data.group.name}</h3>
-
                   </div>
-                  <div  className="grid grid-cols-2 p-5 gap-5">
-               
-                  <Card >   
-                        <div className="flex">
-                    <TbBrandCashapp className=" w-20 h-20 text-default-500"   color="#17c964"/>       
-                 
-                    
-                     <p className="text-2xl font-bold py-7 " style={{ textTransform: 'capitalize' }}>
-                     Precio de costo COP {currencyFormat.format(data.costPrice)}
+
+                  <div  className="grid grid-cols-2 p-5 ">    
+                <div className="grid-row-1">
+                  <h1 className="text-3xl font-bold py-2">Precios</h1>          
+                        <div className="flex items-center">            
+                        <p className="py-2 text-gray-400">Costo</p>
+                     <p className="font-medium py-2 pl-5 " style={{ textTransform: 'capitalize' }}>
+                    {currencyFormat.format(data.costPrice)}
                      </p></div>
-                  </Card>
-                  <Card >
-                  <div className=" justify-center items-center p-5">
-                    <TbBrandCashapp className=" w-10 h-10 text-default-500"   color="#17c964"/>     
-                     <p className="text-2xl font-bold " style={{ textTransform: 'capitalize' }}>
-                     Ultimo precio de costo COP {currencyFormat.format(data.lastcostPrice)}
+                  
+                 
+                  <div className=" flex items-center">
+                <p className="py-2 text-gray-400">Ultimo Precio</p>
+                     <p className="font-medium py-2 pl-5" style={{ textTransform: 'capitalize' }}>
+                     {currencyFormat.format(data.lastcostPrice)}
                     </p></div>
-                  </Card>
-                  <Card >
-                  <div className="flex">
-                    <TbBrandCashapp className=" w-20 h-20 text-default-500"   color="#17c964"/> 
-                    <p className="text-2xl font-bold py-7" style={{ textTransform: 'capitalize' }}>
-                Precio de venta COP {currencyFormat.format(data.salePrice)}
-                </p></div>
+               
+                  
+                  <div className="flex items-center">
+                  <p className="py-2 text-gray-400">Venta</p>
+                    <p className="font-medium py-2 pl-5" style={{ textTransform: 'capitalize' }}>
+                  {currencyFormat.format(data.salePrice)}
+                </p></div>        </div>
+                
+                <div className="grid-row-2">
+                <h1 className="text-3xl font-bold py-2">Codigos</h1>
 
-                  </Card>
-                  <Card >
-                  <TbReceiptTax className=" w-20 h-20 text-default-500"  size={800} color="#17c964"/>       
+                <div className="flex items-center">
+                  <p className="py-2 text-gray-400">Codigo</p>
+                    <p className="font-medium py-2 pl-5" >
+                  {data.code}
+                </p></div>  
 
-                      <p className="font-medium" style={{ textTransform: 'capitalize' }}>
+                <div className="flex items-center">
+                  <p className="py-2 text-gray-400">Codigo de barras</p>
+                    <p className="font-medium py-2 pl-5" >
+                  {data.barcode}
+                </p></div> 
+
+                <h1 className="text-3xl font-bold py-2">WooCommerce</h1>
+
+                <div className="flex items-center">
+                  <p className="py-2 text-gray-400">Codigo WOO</p>
+                    <p className="font-medium py-2 pl-5" style={{ textTransform: 'capitalize' }}>
+                  {(data.wooCode)}
+                </p></div>  
+                </div>
+                </div>
+                <div className="grid grid-cols-2 p-5">
+
+                <div className="grid-row-1">
+                <h1 className="text-3xl font-bold py-2 ">Impuesto</h1>
+
+                <div className="flex items-center ">
+                  <TbMoneybag  size={20} color="#17c964"/>  
+
+                   <p className="font-medium  " >
+                   Impuesto en la bolsa   
+                      </p>   
+                    <p className="font-medium py-2 pl-2  " >
+                      {data.bagtaxPrice}%
+                      </p>
+             </div>
+                <div className="flex items-center ">
+                  <TbReceiptTax  size={20} color="#17c964"/>       
+
+                      <p className="font-medium py-2 " >
                       {data.tax.name}
                       </p>
-                  </Card>
-             
-
-               
-
-               
-                
-                
-              
-              
-               
-                </div>
-
+             </div>
+             <div className="flex items-center ">
+                      <p className="font-medium py-2 " >
+                     Porcentaje {data.tax.value}%
+                    </p></div>
+                    </div>
+             </div>
         
+             <div
+              className='text-center'
+              >
+ 
+                  </div>
+
+                 {
+                  data.observations!==''&& (
+                <div className="container" style={{ padding: '0 25px' }}>
+                <blockquote className="bg-gray-100 dark:bg-transparent p-5 rounded-2xl">
+                  {data.observations}
+                </blockquote>
+              </div>
+                  )
+                 }
+         
+
               
               </div>
-
-              
-
-
         </Card>
+        
     </div>
- 
     </div>
-                
               
-            
   )
 }
 
