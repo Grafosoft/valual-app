@@ -10,7 +10,7 @@ import {
 } from '@nextui-org/react'
 import { ItemsList } from '../../interfaces/items/itemsList'
 import { MdOutlineInventory2 } from 'react-icons/md'
-import { TbCheck,TbX ,TbHeart,TbHeartFilled  ,TbReceiptTax,TbMoneybag } from 'react-icons/tb'
+import { TbCheck,TbX ,TbHeart,TbHeartFilled  ,TbReceiptTax,TbMoneybag,TbEdit } from 'react-icons/tb'
 
 
 
@@ -26,18 +26,33 @@ const currencyFormat = new Intl.NumberFormat('en-DE')
 
 
   return (
+
+
     <div
-      className="grid grid-rows-12 p-5 gap-5"
-      style={{  minWidth: '80vh' }}
+      className="grid grid-rows-12 p-5 h-screen gap-5 "
+      
       
     >
     
-      <Card className="row-span-1">
-      <div className="flex p-5 items-center">
-        
-      <Button color="success" size="sm" endContent={''}>
-        Take a photo
-      </Button>    </div>
+      <Card className="row-span-1 ">
+      <div className="flex items-center grid grid-cols-12">
+        <div className="grid-row-1">
+      <Button  color="success" size="sm" endContent={<
+        TbEdit/>}>
+        Editar
+      </Button></div>
+      <div className="col-span-2">
+      <Button  classname="col-start-4 col-end-5" color="primary" size="sm" >
+        Ver movimientos
+      </Button>     </div>
+      <Button color="warning" size="sm" >
+     Inventario
+      </Button> 
+      <Button color="danger" size="sm" endContent={<
+        TbX/>}>
+        cerrar
+      </Button>
+      </div>
       </Card>
 
       <div
@@ -166,23 +181,23 @@ const currencyFormat = new Intl.NumberFormat('en-DE')
               style={{ justifyContent: 'space-between' }}
             >
               <div
-              className='text-center'
+              className='text-center'            
               >
                <h1 className="text-5xl font-bold py-2">{data.name}</h1>
                 <h3 className="text-2xl font-bold pt-2 ">{data.group.name}</h3>
-                  </div>
+               
 
-                  <div  className="grid grid-cols-2 p-5 ">    
-                <div className="grid-row-1">
-                  <h1 className="text-3xl font-bold py-2">Precios</h1>          
-                        <div className="flex items-center">            
+                  <div  className="grid grid-cols-2 p-5 " >    
+                <div className="grid-row-1"  >
+                  <h1 className="text-3xl font-bold py-2">Precios</h1>                          
+                        <div className="flex"  style={{ justifyContent: 'center' }}>            
                         <p className="py-2 text-gray-400">Costo</p>
-                     <p className="font-medium py-2 pl-5 " style={{ textTransform: 'capitalize' }}>
+                     <h1 className="font-medium py-2 pl-5 " style={{ textTransform: 'capitalize' }}>
                     {currencyFormat.format(data.costPrice)}
-                     </p></div>
+                     </h1></div>
                   
                  
-                  <div className=" flex items-center">
+                  <div className=" flex">
                 <p className="py-2 text-gray-400">Ultimo Precio</p>
                      <p className="font-medium py-2 pl-5" style={{ textTransform: 'capitalize' }}>
                      {currencyFormat.format(data.lastcostPrice)}
@@ -265,7 +280,7 @@ const currencyFormat = new Intl.NumberFormat('en-DE')
                  }
          
 
-              
+         </div>
               </div>
         </Card>
         
