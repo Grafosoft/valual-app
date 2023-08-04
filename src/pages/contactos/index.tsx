@@ -56,7 +56,8 @@ const ContactList: NextPage<Props> = ({
       <Table
         aria-label="Lista de Clientes"
         style={{ height: 'auto', minWidth: '100%' }}
-        isStriped
+        isStriped shadow="none"
+       
       >
         <TableHeader columns={contactsColumns}>
           {column => <TableColumn key={column.uid}>{column.name}</TableColumn>}

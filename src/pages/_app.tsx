@@ -3,8 +3,8 @@ import type { AppProps } from "next/app";
 import { NextUIProvider } from "@nextui-org/react";
 import { SessionProvider } from 'next-auth/react'
 import React from "react";
-import { NavbarLogin } from "../../components/navbar/Navbar";
 import {ThemeProvider as NextThemesProvider} from "next-themes";
+import { DashboardLayout } from "../../layout/board/DashboardLayout";
 
 
 export default function App({ Component, 
@@ -15,10 +15,10 @@ export default function App({ Component,
     <NextUIProvider>
     <NextThemesProvider attribute="class" defaultTheme="system"  >
       <SessionProvider session={session}>
-      <NavbarLogin />
+      <DashboardLayout>
       
       <Component {...pageProps} />
-      
+      </DashboardLayout>
       </SessionProvider>
       </NextThemesProvider>
     </NextUIProvider>

@@ -10,7 +10,7 @@ import {
 } from '@nextui-org/react'
 import { ItemsList } from '../../interfaces/items/itemsList'
 import { MdOutlineInventory2 } from 'react-icons/md'
-import { TbCheck,TbX ,TbHeart,TbHeartFilled ,TbEdit,TbList } from 'react-icons/tb'
+import { TbCheck,TbX ,TbHeart,TbHeartFilled ,TbEdit,TbList,TbArrowBackUp } from 'react-icons/tb'
 
 
 
@@ -29,37 +29,37 @@ const currencyFormat = new Intl.NumberFormat('en-DE')
 
 
     <div
-      className="grid grid-rows-12 p-5 h-screen gap-5 "     
+      className="grid grid-rows-8 p-5 gap-5 "     
     >
     
-      <Card className="row-span-1 " style={{justifyContent:'center'}}>
+      <Card className="row-span-1" style={{justifyContent:'center'}}>
     
         <div style={{justifyContent:' space-between', display:'flex'}}>
           <div >
-      <Button variant="light"  className='ml-10 mr-3' color="primary" size="sm" startContent={<
+      <Button variant="light"  className='ml-10 mr-3' color="primary" size="md" startContent={<
         TbEdit/>}>
         Editar
       </Button>
       
-      <Button variant="light" className="mx-3" color="primary" size="sm" startContent={<
+      <Button variant="light" className="mx-3" color="primary" size="md" startContent={<
         TbList/>}>
         Ver movimientos
       </Button>    
      
-      <Button variant="light" className="mx-3" color="primary" size="sm"  startContent={<
+      <Button variant="light" className="mx-3" color="primary" size="md"  startContent={<
         MdOutlineInventory2/>}>
      Inventario
       </Button> </div>
       
-      <Button variant="light" className="mx-10" color="danger" size="sm" startContent={<
-        TbX/>}>
-        cerrar
+      <Button variant="flat" className="mx-10" color="warning" size="md" startContent={<
+        TbArrowBackUp/>}>
+        Volver
       </Button>
       </div>
       </Card>
 
       <div
-      className="grid grid-cols-12 row-span-11  gap-5"
+      className="grid grid-cols-12 row-span-7  gap-5"
       style={{ justifyContent: 'center'}}
     >
         <Card className="col-span-2 ">
@@ -180,12 +180,12 @@ const currencyFormat = new Intl.NumberFormat('en-DE')
 
         <Card className="col-span-10 ">
 
-          <div className="text-center " >
-             <h1 className="text-5xl font-bold pt-5 ">{data.name}</h1>
+          <div className="text-center py-10 " >
+             <h1 className="text-5xl font-bold  ">{data.name}</h1>
              <h3 className="text-2xl font-medium  pt-5">{data.group.name}</h3>               
                </div> 
         
-              <div  className="grid grid-cols-2  p-5 gap-5" > 
+              <div  className="grid grid-cols-2  px-5 gap-5" > 
               <div className="grid-row-1 "  >              
                <div className="grid grid-cols-4 gap-3" >
                <h3 className="text-gray-400 text-right">Costo</h3>
@@ -239,16 +239,13 @@ const currencyFormat = new Intl.NumberFormat('en-DE')
                 
                 </div>
                 </div>            
-             <div
-              className='text-center'
-              >
-                  <h1 className="text-3xl font-bold p-5 ">Observaciones</h1>
-                  </div>
+             
                  {
                   data.observations!==''&& (
-                <div className="container" style={{ padding: '0 25px' }}>
+                <div className="container p-10" >
                 <blockquote className="bg-gray-100 dark:bg-transparent p-5 rounded-2xl">
                   {data.observations}
+                  
                 </blockquote>
               </div>
                   )

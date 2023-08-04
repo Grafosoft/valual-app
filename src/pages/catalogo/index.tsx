@@ -63,7 +63,7 @@ return (
 <Table
         aria-label="Lista de Productos"
         style={{ height: 'auto', minWidth: '100%' }}
-        isStriped
+          shadow="none"
       >
         <TableHeader columns={columns}>
           {column => (

@@ -5,6 +5,7 @@ import { useRouter } from 'next/router'
 import React, { useEffect } from 'react'
 import valualApi from '@/apis/valualApi'
 import { ContactsDetailsList } from '../../../../interfaces/contacts/contactsDetailsList'
+import { ContactsDetails } from '../../../../layout/contacts/contactsDetails'
 
 interface Props {
     data: ContactsDetailsList
@@ -14,7 +15,7 @@ interface Props {
 
   }
 
-  const Init: NextPage<Props> = ({ data, id, apikey }) => {
+  const Detallescontactos: NextPage<Props> = ({ data, id, apikey }) => {
     const { status } = useSession()
     const { replace } = useRouter()
   
@@ -26,8 +27,10 @@ interface Props {
         <>
         <Head>
           <title>{data.commercialName}</title>
+         
+
         </Head>
-      
+       <ContactsDetails data={data} />
         </>
     )
 }
@@ -62,4 +65,4 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
       }
     }
   }
-  export default Init
+  export default Detallescontactos

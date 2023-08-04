@@ -58,7 +58,7 @@ numerations,
       <Table
         aria-label="Factura"
         style={{ height: 'auto', minWidth: '100%' }}
-        isStriped
+        isStriped shadow="none"
       >
         <TableHeader columns={numerationsColumns}>
           {column => <TableColumn key={column.uid}>{column.name}</TableColumn>}
