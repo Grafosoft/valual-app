@@ -180,112 +180,82 @@ const currencyFormat = new Intl.NumberFormat('en-DE')
 
         <Card className="col-span-10 ">
         <Spacer y={10} />
-        <div       
-              // style={{ justifyContent: 'space-between' }}
-            >
-              <div
-              className='text-center'            
-              >
-               <h1 className="text-5xl font-bold py-2">{data.name}</h1>
-                <h3 className="text-2xl font-bold pt-2 ">{data.group.name}</h3>
-               
+       
+              <div  className="grid grid-cols-2  p-5 gap-5" > 
 
-                  <div  className="grid grid-cols-2 p-5 " >    
-                <div className="grid-row-1"  >
-                  <h1 className="text-3xl font-bold py-2">Precios</h1>  
-                          
-                        <div className="flex "  style={{ justifyContent: 'center' }}>            
-                        <p className="py-2 text-gray-400 ">Costo</p>
-                     <h1 className="font-medium py-2 pl-5 " style={{ textTransform: 'capitalize' }}>
-                    {currencyFormat.format(data.costPrice)}
-                     </h1></div>
-                  
+              <div className="grid-row-1 "  >
+              <div className="grid grid-cols-2 gap-3" >
+              <h1 className="text-2xl font-bold text-right">Descripcion</h1>
+               <h1 className="text-2xl font-bold text-left">{data.name}</h1>
+               </div>
+               <div className="grid grid-cols-2 gap-3" >
+               <h3 className="text-2xl font-bold text-right">Grupo</h3>
+                <h3 className="text-2xl font-bold text-left">{data.group.name}</h3>
+               </div>
+               <div className="grid grid-cols-2 gap-3" >
+               <h3 className="text-gray-400 text-right">Costo</h3>
+                <h3 className="font-medium text-left " style={{ textTransform: 'capitalize' }}> {currencyFormat.format(data.costPrice)}</h3>
+               </div>
+               <div className="grid grid-cols-2 gap-3" >
+               <h3 className="text-gray-400 text-right">Ultimo Precio</h3>
+                <h3 className="font-medium text-left " style={{ textTransform: 'capitalize' }}> {currencyFormat.format(data.lastcostPrice)}</h3>
+               </div>
+               <div className="grid grid-cols-2 gap-3" >
+               <h3 className="text-gray-400 text-right">Venta</h3>
+                <h3 className="font-medium text-left " style={{ textTransform: 'capitalize' }}> {currencyFormat.format(data.salePrice)}</h3>
+               </div>
+               <div className="grid grid-cols-2 gap-3" >
+               <h3 className="text-gray-400 text-right">Codigo</h3>
+                <h3 className="font-medium text-left " style={{ textTransform: 'capitalize' }}>  {data.code}</h3>
+               </div>
+               <div className="grid grid-cols-2 gap-3" >
+               <h3 className="text-gray-400 text-right">Codigo de barras</h3>
+                <h3 className="font-medium text-left " style={{ textTransform: 'capitalize' }}>  {data.barcode}</h3>
+               </div>
+
+
+
+          
                  
-                  <div className=" flex" style={{ justifyContent: 'center' }}>
-                <p className="py-2 text-gray-400">Ultimo Precio</p>
-                     <p className="font-medium py-2 pl-5" style={{ textTransform: 'capitalize' }}>
-                     {currencyFormat.format(data.lastcostPrice)}
-                    </p></div>
+                  
                
                   
-                  <div className="flex" style={{ justifyContent: 'center' }}>
-                  <p className="py-2 text-gray-400">Venta</p>
-                    <p className="font-medium py-2 pl-5" style={{ textTransform: 'capitalize' }}>
-                  {currencyFormat.format(data.salePrice)}
-                </p></div>        </div>
+                 </div>
                 
                 <div className="grid-row-2">
-                <h1 className="text-3xl font-bold py-2">Codigos</h1>
 
-                <div className="flex " style={{ justifyContent: 'center' }}>
-                  <p className="py-2 text-gray-400">Codigo</p>
-                    <p className="font-medium py-2 pl-5" >
-                  {data.code}
-                </p></div>  
+                <div className="grid grid-cols-2 gap-3" >
+                  <p className="text-gray-400 text-right">Codigo del WOOCOMMERCE</p>
+                    <p className="font-medium text-left" >
+                  {data.wooCode}
+                </p></div> 
 
-                <div className="flex " style={{ justifyContent: 'center' }}>
-                  <p className="py-2 text-gray-400">Codigo de barras</p>
-                    <p className="font-medium py-2 pl-5" >
-                  {data.barcode}
+                <div className="grid grid-cols-2 gap-3" >
+                  <p className="text-gray-400 text-right"> Impuesto en la bolsa </p>
+                    <p className="font-medium text-left" >
+                  {data.bagtaxPrice}
+                </p></div> 
+
+                <div className="grid grid-cols-2 gap-3" >
+                  <p className="text-gray-400 text-right"> Nombre</p>
+                    <p className="font-medium text-left" >
+                  {data.tax.name}
+                </p></div> 
+
+                <div className="grid grid-cols-2 gap-3" >
+                  <p className="text-gray-400 text-right"> Porcentaje</p>
+                    <p className="font-medium text-left" >
+                  {data.tax.value}%
                 </p></div> 
 
                 
                 </div>
-                </div>
-                <div className="grid grid-cols-2 p-5">
-
-                <div className="grid-row-1">
-                <h1 className="text-3xl font-bold py-2 ">Impuesto</h1>
-
-                <div className="flex items-center " style={{ justifyContent: 'center' }}>
-                  <TbMoneybag  size={20} color="#17c964"/>  
-
-                   <p className="font-medium text-gray-400 " >
-                   Impuesto en la bolsa   
-                      </p>   
-                    <p className="font-medium py-2 pl-2  " >
-                      {data.bagtaxPrice}%
-                      </p>
-             </div>
-                <div className="flex items-center " style={{ justifyContent: 'center' }}>
-                  <TbReceiptTax  size={20} color="#17c964"/> 
-                        
-                  <p className="font-medium text-gray-400 " >
-                   Nombre
-                      </p> 
-                      <p className="font-medium py-2 pl-2 " >
-                      {data.tax.name}
-                      
-                      </p>
-             </div>
-             <div className="flex" style={{ justifyContent: 'center' }}>
-                      <p className="font-medium py-2 text-gray-400 " >
-                     Porcentaje 
-                    </p>
-
-                    <p className="font-medium py-2 pl-2 " >
-                      {data.tax.value}%
-                    </p></div>
-                    
-                    </div>
-                    <div className="grid-row-2">
-                    <h1 className="text-3xl font-bold py-2">WooCommerce</h1>
-
-           <div className="flex" style={{ justifyContent: 'center' }}>
-           <p className="py-2 text-gray-400">Codigo WOO</p>
-            <p className="font-medium py-2 pl-5" >
-           {data.wooCode}
-            </p></div> </div>
-
-                    
-             </div>
-        
+                </div>            
              <div
               className='text-center'
               >
- 
+                  <h1 className="text-3xl font-bold p-5 ">Observaciones</h1>
                   </div>
-
                  {
                   data.observations!==''&& (
                 <div className="container" style={{ padding: '0 25px' }}>
@@ -295,10 +265,8 @@ const currencyFormat = new Intl.NumberFormat('en-DE')
               </div>
                   )
                  }
-         
 
-         </div>
-              </div>
+             
         </Card>
         
     </div>
