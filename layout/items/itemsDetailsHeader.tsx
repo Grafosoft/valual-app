@@ -10,7 +10,7 @@ import {
 } from '@nextui-org/react'
 import { ItemsList } from '../../interfaces/items/itemsList'
 import { MdOutlineInventory2 } from 'react-icons/md'
-import { TbCheck,TbX ,TbHeart,TbHeartFilled  ,TbReceiptTax,TbMoneybag,TbEdit,TbList } from 'react-icons/tb'
+import { TbCheck,TbX ,TbHeart,TbHeartFilled ,TbEdit,TbList } from 'react-icons/tb'
 
 
 
@@ -36,7 +36,7 @@ const currencyFormat = new Intl.NumberFormat('en-DE')
     
         <div style={{justifyContent:' space-between', display:'flex'}}>
           <div >
-      <Button variant="light"  className='ml-10 mr-3' color="success" size="sm" startContent={<
+      <Button variant="light"  className='ml-10 mr-3' color="primary" size="sm" startContent={<
         TbEdit/>}>
         Editar
       </Button>
@@ -46,7 +46,7 @@ const currencyFormat = new Intl.NumberFormat('en-DE')
         Ver movimientos
       </Button>    
      
-      <Button variant="light" className="mx-3" color="warning" size="sm"  startContent={<
+      <Button variant="light" className="mx-3" color="primary" size="sm"  startContent={<
         MdOutlineInventory2/>}>
      Inventario
       </Button> </div>
@@ -179,72 +179,60 @@ const currencyFormat = new Intl.NumberFormat('en-DE')
         </Card>
 
         <Card className="col-span-10 ">
-        <Spacer y={10} />
-       
+
+          <div className="text-center " >
+             <h1 className="text-5xl font-bold pt-5 ">{data.name}</h1>
+             <h3 className="text-2xl font-medium  pt-5">{data.group.name}</h3>               
+               </div> 
+        
               <div  className="grid grid-cols-2  p-5 gap-5" > 
-
-              <div className="grid-row-1 "  >
-              <div className="grid grid-cols-2 gap-3" >
-              <h1 className="text-2xl font-bold text-right">Descripcion</h1>
-               <h1 className="text-2xl font-bold text-left">{data.name}</h1>
-               </div>
-               <div className="grid grid-cols-2 gap-3" >
-               <h3 className="text-2xl font-bold text-right">Grupo</h3>
-                <h3 className="text-2xl font-bold text-left">{data.group.name}</h3>
-               </div>
-               <div className="grid grid-cols-2 gap-3" >
+              <div className="grid-row-1 "  >              
+               <div className="grid grid-cols-4 gap-3" >
                <h3 className="text-gray-400 text-right">Costo</h3>
-                <h3 className="font-medium text-left " style={{ textTransform: 'capitalize' }}> {currencyFormat.format(data.costPrice)}</h3>
+                <h3 className="font-medium text-left col-start-2 col-end-4 " style={{ textTransform: 'capitalize' }}> {currencyFormat.format(data.costPrice)}</h3>
                </div>
-               <div className="grid grid-cols-2 gap-3" >
+               <div className="grid grid-cols-4 gap-3" >
                <h3 className="text-gray-400 text-right">Ultimo Precio</h3>
-                <h3 className="font-medium text-left " style={{ textTransform: 'capitalize' }}> {currencyFormat.format(data.lastcostPrice)}</h3>
+                <h3 className="font-medium text-left col-start-2 col-end-4 " style={{ textTransform: 'capitalize' }}> {currencyFormat.format(data.lastcostPrice)}</h3>
                </div>
-               <div className="grid grid-cols-2 gap-3" >
+               <div className="grid grid-cols-4 gap-3" >
                <h3 className="text-gray-400 text-right">Venta</h3>
-                <h3 className="font-medium text-left " style={{ textTransform: 'capitalize' }}> {currencyFormat.format(data.salePrice)}</h3>
+                <h3 className="font-medium text-left col-start-2 col-end-4  " style={{ textTransform: 'capitalize' }}> {currencyFormat.format(data.salePrice)}</h3>
                </div>
-               <div className="grid grid-cols-2 gap-3" >
+               <div className="grid grid-cols-4 gap-3" >
                <h3 className="text-gray-400 text-right">Codigo</h3>
-                <h3 className="font-medium text-left " style={{ textTransform: 'capitalize' }}>  {data.code}</h3>
+                <h3 className="font-medium text-left col-start-2 col-end-4  " style={{ textTransform: 'capitalize' }}>  {data.code}</h3>
                </div>
-               <div className="grid grid-cols-2 gap-3" >
+               <div className="grid grid-cols-4 gap-3" >
                <h3 className="text-gray-400 text-right">Codigo de barras</h3>
-                <h3 className="font-medium text-left " style={{ textTransform: 'capitalize' }}>  {data.barcode}</h3>
-               </div>
-
-
-
-          
-                 
-                  
-               
+                <h3 className="font-medium text-left col-start-2 col-end-4 " style={{ textTransform: 'capitalize' }}>  {data.barcode}</h3>
+               </div>   
                   
                  </div>
                 
                 <div className="grid-row-2">
 
-                <div className="grid grid-cols-2 gap-3" >
+                <div className="grid grid-cols-4 gap-3" >
                   <p className="text-gray-400 text-right">Codigo del WOOCOMMERCE</p>
-                    <p className="font-medium text-left" >
+                    <p className="font-medium text-left col-start-2 col-end-4 " >
                   {data.wooCode}
                 </p></div> 
 
-                <div className="grid grid-cols-2 gap-3" >
+                <div className="grid grid-cols-4 gap-3" >
                   <p className="text-gray-400 text-right"> Impuesto en la bolsa </p>
-                    <p className="font-medium text-left" >
+                    <p className="font-medium text-left col-start-2 col-end-4 " >
                   {data.bagtaxPrice}
                 </p></div> 
 
-                <div className="grid grid-cols-2 gap-3" >
+                <div className="grid grid-cols-4 gap-3" >
                   <p className="text-gray-400 text-right"> Nombre</p>
-                    <p className="font-medium text-left" >
+                    <p className="font-medium text-left col-start-2 col-end-4 " >
                   {data.tax.name}
                 </p></div> 
 
-                <div className="grid grid-cols-2 gap-3" >
+                <div className="grid grid-cols-4 gap-3" >
                   <p className="text-gray-400 text-right"> Porcentaje</p>
-                    <p className="font-medium text-left" >
+                    <p className="font-medium text-left col-start-2 col-end-4 " >
                   {data.tax.value}%
                 </p></div> 
 

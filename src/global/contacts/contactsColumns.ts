@@ -19,4 +19,8 @@ export const contactsColumns = [
       name: 'Informacion',
       uid: 'email'
     },
+    {
+      name: '',
+      uid: 'details'
+    }
   ]

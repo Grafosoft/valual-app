@@ -89,6 +89,17 @@ export const RenderCellContacts: FC<Props> = ({
           </p>
           </div>
         )
+        case 'details':
+          return (
+            <TbArrowBigRightLinesFilled
+              cursor={'pointer'}
+              color={colorIcon}     
+              onClick={() => push(`/contactos/${contact.id}/?apikey=${localStorage.getItem(
+                'apikey'
+              )}&companyId=${localStorage.getItem('companyId')}`)}
+              size={20}
+            />
+          )
    
     default:
       return (
