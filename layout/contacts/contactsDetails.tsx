@@ -6,33 +6,29 @@ import {
   Spacer,
   Avatar,
   Switch,
-  Button
+  Button,
+  Link,
 } from '@nextui-org/react'
 import { MdOutlineInventory2 } from 'react-icons/md'
 import { TbCheck,TbX ,TbBellFilled ,TbEdit,TbList,TbArrowBackUp,TbWorld } from 'react-icons/tb'
 import { AiOutlineFacebook,AiOutlineInstagram,AiOutlineLinkedin,AiOutlineWhatsApp } from 'react-icons/ai'
 import { ContactsDetailsList } from '../../interfaces/contacts/contactsDetailsList'
+import { TabletContactsDetails } from './tabletContactsDetails'
+
 
 
 
 interface Props {
   data: ContactsDetailsList
- 
 }
 
-
 export const ContactsDetails: FC<Props> = ({ data }) => {
-  
-
-
   return (
-
-
+    <>
     <div
-      className="grid grid-rows-8 p-5 gap-5 "     
+      className=" p-5 gap-5 "     
     >
-    
-      <Card className="row-span-1" style={{justifyContent:'center'}}>
+      <Card  style={{justifyContent:'center' , height:'70px'}}>
     
         <div style={{justifyContent:' space-between', display:'flex'}}>
           <div >
@@ -57,44 +53,39 @@ export const ContactsDetails: FC<Props> = ({ data }) => {
       </Button>
       </div>
       </Card>
+      <Spacer y={5} />
+
 
       <div
-      className="grid grid-cols-12 row-span-7  gap-5"
+      className="grid grid-cols-12 row-span-9  gap-5"
       style={{ justifyContent: 'center'}}
     >
-        <Card className="col-span-2 ">
+        <Card className="col-span-3 ">
           <CardHeader style={{ padding: '0' }}>
             <div
-              className="container"
+              className=" pt-10 container"
               style={{
-                backgroundImage: `linear-gradient(#0070F0, white)`,
-                height: '150px',
-                padding: '0',
+                backgroundImage: `linear-gradient(#0070F0, white)`,                          
                 opacity: '0.3',
                 minWidth: '100%',
-                margin: '0'
+                margin: '0',
+                display:'flex',
+                justifyContent: 'center'          
               }}
-            ></div>
-
-        <Avatar
+            >
+              <Avatar
               isBordered
               alt={data.commercialName}
               style={{
                 borderRadius: '40px',
                 width: '125px',
                 height: '125px',
-                position: 'absolute',
-                left: '80px',
-                right: '0',
-                top: '70px'
-              }}
-              src={''}
+              }}        
             />
-            
+            </div>          
           </CardHeader>
-
-          <CardBody style={{}}>
-          <Spacer y={20} />
+          <CardBody >
+          <Spacer y={5} />
             <div className="flex justify-between w-auto">
               <h4 className="flex text-lg font-medium">Cumpleaños</h4>         
               <Switch
@@ -128,7 +119,6 @@ export const ContactsDetails: FC<Props> = ({ data }) => {
             > 
                </Switch>
                 </div>
-
                 <Spacer y={5} />       
                  <div className="flex justify-between w-auto">
                 <h4 className="flex text-lg font-medium pt-2">
@@ -146,7 +136,6 @@ export const ContactsDetails: FC<Props> = ({ data }) => {
             >
                </Switch>
                 </div>
-
                 <Spacer y={5} />
                  <div className="flex justify-between w-auto">
                 <h4 className="flex text-lg font-medium pt-2">
@@ -162,59 +151,67 @@ export const ContactsDetails: FC<Props> = ({ data }) => {
                 )
                 }
             >
-               </Switch> </div>
+               </Switch> 
+               </div>
                <Spacer y={5} />
-               <div className="flex justify-between">
+
+               <div>
+                 <Link target="_blank" href={data.media.website} >               
                 <TbWorld
-                 size={35}
+                 size={25}
                  className="cursor-pointer mx-3"
                  color="#52525B"
-                />
-                <AiOutlineFacebook
-                 size={35}
+                /><p className="text-black-400" style={{textDecoration:'none', color:'black'}} >Website</p>
+                </Link>
+               </div>
+              <div>
+                 <Link target="_blank" href={data.media.facebook} >
+                 <AiOutlineFacebook
+                 size={25}
                  className="cursor-pointer mx-3"
-                 color="#006FEE"/>
+                 color="#006FEE"    
+                /><p className="text-black-400" style={{textDecoration:'none', color:'black'}} >Facebook</p>
+                </Link>
+              </div>
+              {}
+               <div>
+                 <Link target="_blank" href={data.media.instagram} >
                 <AiOutlineInstagram
-                size={35}
+                size={25}
                 className="cursor-pointer mx-3"
-                color="#f31260"/>
-                
-               </div>
-               
-               <Spacer y={5} />
-               <div className="flex justify-around">
-             
+                color="#f31260"
+                /><p className="text-black-400" style={{textDecoration:'none', color:'black'}} >Instagram</p>
+                </Link>
+               </div>       
+               <div>
+                  <Link target="_blank" href={data.media.linkedin} >
                 <AiOutlineLinkedin
-                 size={35}
+                 size={25}
                  className="cursor-pointer mx-3"
-                 color="#006FEE"/>
+                 color="#006FEE"          
+              /><p className="text-black-400" style={{textDecoration:'none', color:'black'}} >Linkedin</p></Link>
+                </div>
+               <div>
+                <Link target="_blank" href={data.communication.whatsapp} >
                 <AiOutlineWhatsApp
-                size={35}
+                size={25}
                 className="cursor-pointer mx-3"
-                color="#17C964"/>
-               </div>
-               
-                 
-               
-               
-             
-
-              
-                
+                color="#17C964"
+               /><p className="text-black-400" style={{textDecoration:'none', color:'black'}} >Whatsapp</p>
+              </Link> 
+                </div>        
           </CardBody>
-          
         </Card>
 
-        <Card className="col-span-10 ">
 
+        <Card className="col-span-9 ">
           <div className="text-center py-10 " >
              <h1 className="text-5xl font-bold  ">{data.commercialName}</h1>
              <h3 className="text-2xl font-medium  pt-5">{data.type}</h3>               
                </div> 
-        
-              <div  className="grid grid-cols-2  px-5 gap-5" > 
-              <div className="grid-row-1 "  >    
-              <div className="grid grid-cols-4 gap-3" >
+              <div  className="grid grid-cols-2  px-5 gap-5 " > 
+              <div className="grid-row-1"  >    
+              <div className="grid grid-cols-4 gap-3 " >
                <h3 className="text-gray-400 text-right">Nombre comercial</h3>
                 <h3 className="font-medium text-left col-start-2 col-end-4" > {data.commercialName}</h3>
                </div> 
@@ -255,31 +252,30 @@ export const ContactsDetails: FC<Props> = ({ data }) => {
                 <h3 className="font-medium text-left col-start-2 col-end-4 "> {data.adress}</h3>
                </div>   
                <div className="grid grid-cols-4 gap-3" >
-               <h3 className="text-gray-400 text-right">Comisión del vendedor</h3>
-                <h3 className="font-medium text-left col-start-2 col-end-4 "> {data.comissionSeller}</h3>
-               </div> 
-               <div className="grid grid-cols-4 gap-3" >
                <h3 className="text-gray-400 text-right">Pais</h3>
                 <h3 className="font-medium text-left col-start-2 col-end-4 "> {data.city.country}</h3>
                </div>
                <div className="grid grid-cols-4 gap-3" >               
                <h3 className="text-gray-400 text-right">Cuidad</h3>
                 <h3 className="font-medium text-left col-start-2 col-end-4 "> {data.city.name}</h3>
-               </div>                             
-               <div className="grid grid-cols-4 gap-3" >
+               </div>                                   
+                 </div>
+                
+
+
+                <div className="grid-row-2" style={{marginLeft:'90px'}}>
+                <div className="grid grid-cols-4 gap-3" >
                <h3 className="text-gray-400 text-right">Codigo Postal</h3>
                 <h3 className="font-medium text-left col-start-2 col-end-4 "> {data.postalCode}</h3>
                </div>
                <div className="grid grid-cols-4 gap-3" >
                <h3 className="text-gray-400 text-right">Codigo Cuidad</h3>
                 <h3 className="font-medium text-left col-start-2 col-end-4 "> {data.city.code}</h3>
-               </div>
-              
-                  
-                 </div>
-                
-                <div className="grid-row-2">
-
+               </div>                 
+                <div className="grid grid-cols-4 gap-3" >
+               <h3 className="text-gray-400 text-right">Comisión del vendedor</h3>
+                <h3 className="font-medium text-left col-start-2 col-end-4 "> {data.comissionSeller}</h3>
+               </div> 
                 <div className="grid grid-cols-4 gap-3" >
                   <p className="text-gray-400 text-right">Persona</p>
                     <p className="font-medium text-left col-start-2 col-end-4 " >
@@ -323,6 +319,7 @@ export const ContactsDetails: FC<Props> = ({ data }) => {
                 </div>
                 </div>            
              
+
                  {
                   data.observations!==''&& (
                 <div className="container p-10" >
@@ -332,15 +329,22 @@ export const ContactsDetails: FC<Props> = ({ data }) => {
                 </blockquote>
               </div>
                   )
-                 }
+                 }   
+        </Card>   
+    </div> 
+    </div> 
+   
 
-             
-        
-        </Card>
-        
-    </div>
-    </div>
-              
+    <div
+      className="grid grid-cols-12 row-span-9 p-5  gap-10"      
+      >
+    <div className="col-span-3 ">      
+       </div>
+       <div className="col-span-9 ">
+        <TabletContactsDetails table={data.contacts}
+                  />
+       </div></div>
+    </>
   )
 }
 

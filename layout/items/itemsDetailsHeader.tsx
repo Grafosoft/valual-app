@@ -27,12 +27,12 @@ const currencyFormat = new Intl.NumberFormat('en-DE')
 
   return (
 
-
+      <>
     <div
-      className="grid grid-rows-8 p-5 gap-5 "     
+      className=" p-5 gap-5 "     
     >
     
-      <Card className="row-span-1" style={{justifyContent:'center'}}>
+      <Card   style={{justifyContent:'center', height:'70px' }}>
     
         <div style={{justifyContent:' space-between', display:'flex'}}>
           <div >
@@ -57,46 +57,47 @@ const currencyFormat = new Intl.NumberFormat('en-DE')
       </Button>
       </div>
       </Card>
-
+      <Spacer y={5} />
       <div
-      className="grid grid-cols-12 row-span-7  gap-5"
+      className="grid grid-cols-12 row-span-9  gap-5"
       style={{ justifyContent: 'center'}}
     >
-        <Card className="col-span-2 ">
+        <Card className="col-span-3 ">
           <CardHeader style={{ padding: '0' }}>
             <div
-              className="container"
+              className="pt-10 container"
               style={{
                 backgroundImage: `linear-gradient(#0070F0, white)`,
                 height: '150px',
-                padding: '0',
                 opacity: '0.3',
                 minWidth: '100%',
-                margin: '0'
+                margin: '0',
+                display:'flex',
+                justifyContent: 'center'
               }}
-            ></div>
-
-        <Avatar
+            >
+          <Avatar
               isBordered
               alt={data.name}
               showFallback
-              fallback={<MdOutlineInventory2 className=" w-12 h-12 text-default-500"  size={800} />}
+              fallback={<MdOutlineInventory2 className=" w-12 h-12 text-default-500"  />}
               style={{
                 borderRadius: '40px',
                 width: '125px',
                 height: '125px',
-                position: 'absolute',
-                left: '80px',
-                right: '0',
-                top: '70px'
+              
               }}
               src={data.image}
             />
+
+            </div>
+
+       
             
           </CardHeader>
 
-          <CardBody style={{}}>
-          <Spacer y={20} />
+          <CardBody >
+          <Spacer y={5} />
             <div className="flex justify-between w-auto">
               <h4 className="flex text-lg font-medium">Favorito</h4>         
               <Switch
@@ -178,7 +179,7 @@ const currencyFormat = new Intl.NumberFormat('en-DE')
           
         </Card>
 
-        <Card className="col-span-10 ">
+        <Card className="col-span-9 ">
 
           <div className="text-center py-10 " >
              <h1 className="text-5xl font-bold  ">{data.name}</h1>
@@ -256,6 +257,8 @@ const currencyFormat = new Intl.NumberFormat('en-DE')
         
     </div>
     </div>
+    
+    </>
               
   )
 }
