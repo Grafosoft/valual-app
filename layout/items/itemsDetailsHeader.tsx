@@ -11,6 +11,7 @@ import {
 import { ItemsList } from '../../interfaces/items/itemsList'
 import { MdOutlineInventory2 } from 'react-icons/md'
 import { TbCheck,TbX ,TbHeart,TbHeartFilled ,TbEdit,TbList,TbArrowBackUp } from 'react-icons/tb'
+import { Infodiv } from '../../components/texto/div'
 
 
 
@@ -187,7 +188,8 @@ const currencyFormat = new Intl.NumberFormat('en-DE')
                </div> 
         
               <div  className="grid grid-cols-2  px-5 gap-5" > 
-              <div className="grid-row-1 "  >              
+              <div className="grid-row-1 "  >    
+                     
                <div className="grid grid-cols-4 gap-3" >
                <h3 className="text-gray-400 text-right">Costo</h3>
                 <h3 className="font-medium text-left col-start-2 col-end-4 " style={{ textTransform: 'capitalize' }}> {currencyFormat.format(data.costPrice)}</h3>

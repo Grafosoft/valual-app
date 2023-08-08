@@ -14,6 +14,7 @@ import { TbCheck,TbX ,TbBellFilled ,TbEdit,TbList,TbArrowBackUp,TbWorld } from '
 import { AiOutlineFacebook,AiOutlineInstagram,AiOutlineLinkedin,AiOutlineWhatsApp } from 'react-icons/ai'
 import { ContactsDetailsList } from '../../interfaces/contacts/contactsDetailsList'
 import { TabletContactsDetails } from './tabletContactsDetails'
+import { Infodiv } from '../../components/texto/div'
 
 
 
@@ -264,6 +265,10 @@ export const ContactsDetails: FC<Props> = ({ data }) => {
 
 
                 <div className="grid-row-2" style={{marginLeft:'90px'}}>
+                <Infodiv
+              texto={"Codigo Postal"}
+              info={(data.postalCode)}
+              />  
                 <div className="grid grid-cols-4 gap-3" >
                <h3 className="text-gray-400 text-right">Codigo Postal</h3>
                 <h3 className="font-medium text-left col-start-2 col-end-4 "> {data.postalCode}</h3>
