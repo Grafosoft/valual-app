@@ -10,8 +10,9 @@ import {
 } from '@nextui-org/react'
 import { ItemsList } from '../../interfaces/items/itemsList'
 import { MdOutlineInventory2 } from 'react-icons/md'
-import { TbCheck,TbX ,TbHeart,TbHeartFilled ,TbEdit,TbList,TbArrowBackUp } from 'react-icons/tb'
-import { Infodiv } from '../../components/texto/div'
+import { TbCheck,TbX ,TbHeart,TbHeartFilled ,TbList } from 'react-icons/tb'
+import { Cardbuttondetails } from '../../components/componentsDetails/cardbuttondetails'
+import { Infodiv } from '../../components/componentsDetails/div'
 
 
 
@@ -32,33 +33,18 @@ const currencyFormat = new Intl.NumberFormat('en-DE')
     <div
       className=" p-5 gap-5 "     
     >
+       
+      <Cardbuttondetails
+      TextoBoton1={"ver movimientos"}
+      TextoBoton2={"Inventario"}
+      IconoBoton1={<TbList/>}
+      IconoBoton2={<MdOutlineInventory2/>}
+
+
+      />
+
     
-      <Card   style={{justifyContent:'center', height:'70px' }}>
-    
-        <div style={{justifyContent:' space-between', display:'flex'}}>
-          <div >
-      <Button variant="light"  className='ml-10 mr-3' color="primary" size="md" startContent={<
-        TbEdit/>}>
-        Editar
-      </Button>
-      
-      <Button variant="light" className="mx-3" color="primary" size="md" startContent={<
-        TbList/>}>
-        Ver movimientos
-      </Button>    
      
-      <Button variant="light" className="mx-3" color="primary" size="md"  startContent={<
-        MdOutlineInventory2/>}>
-     Inventario
-      </Button> </div>
-      
-      <Button variant="flat" className="mx-10" color="warning" size="md" startContent={<
-        TbArrowBackUp/>}>
-        Volver
-      </Button>
-      </div>
-      </Card>
-      <Spacer y={5} />
       <div
       className="grid grid-cols-12 row-span-9  gap-5"
       style={{ justifyContent: 'center'}}
@@ -168,81 +154,48 @@ const currencyFormat = new Intl.NumberFormat('en-DE')
             >
                </Switch>
                 </div>
-
-                <Spacer y={5} />
-                <div className="flex justify-between w-auto">
-                 <p className=" flex text-lg font-medium pt-2">
-              {data.isInventory ? 'Con control de inventario' : 'Sin control de inventario'}
-               </p>
-                </div>
                 <Spacer y={5} />
           </CardBody>
-          
         </Card>
-
         <Card className="col-span-9 ">
-
           <div className="text-center py-10 " >
              <h1 className="text-5xl font-bold  ">{data.name}</h1>
              <h3 className="text-2xl font-medium  pt-5">{data.group.name}</h3>               
-               </div> 
-        
+               </div>      
               <div  className="grid grid-cols-2  px-5 gap-5" > 
-              <div className="grid-row-1 "  >    
-                     
-               <div className="grid grid-cols-4 gap-3" >
-               <h3 className="text-gray-400 text-right">Costo</h3>
-                <h3 className="font-medium text-left col-start-2 col-end-4 " style={{ textTransform: 'capitalize' }}> {currencyFormat.format(data.costPrice)}</h3>
-               </div>
-               <div className="grid grid-cols-4 gap-3" >
-               <h3 className="text-gray-400 text-right">Ultimo Precio</h3>
-                <h3 className="font-medium text-left col-start-2 col-end-4 " style={{ textTransform: 'capitalize' }}> {currencyFormat.format(data.lastcostPrice)}</h3>
-               </div>
-               <div className="grid grid-cols-4 gap-3" >
-               <h3 className="text-gray-400 text-right">Venta</h3>
-                <h3 className="font-medium text-left col-start-2 col-end-4  " style={{ textTransform: 'capitalize' }}> {currencyFormat.format(data.salePrice)}</h3>
-               </div>
-               <div className="grid grid-cols-4 gap-3" >
-               <h3 className="text-gray-400 text-right">Codigo</h3>
-                <h3 className="font-medium text-left col-start-2 col-end-4  " style={{ textTransform: 'capitalize' }}>  {data.code}</h3>
-               </div>
-               <div className="grid grid-cols-4 gap-3" >
-               <h3 className="text-gray-400 text-right">Codigo de barras</h3>
-                <h3 className="font-medium text-left col-start-2 col-end-4 " style={{ textTransform: 'capitalize' }}>  {data.barcode}</h3>
-               </div>   
-                  
-                 </div>
-                
-                <div className="grid-row-2">
-
-                <div className="grid grid-cols-4 gap-3" >
-                  <p className="text-gray-400 text-right">Codigo del WOOCOMMERCE</p>
-                    <p className="font-medium text-left col-start-2 col-end-4 " >
-                  {data.wooCode}
-                </p></div> 
-
-                <div className="grid grid-cols-4 gap-3" >
-                  <p className="text-gray-400 text-right"> Impuesto en la bolsa </p>
-                    <p className="font-medium text-left col-start-2 col-end-4 " >
-                  {data.bagtaxPrice}
-                </p></div> 
-
-                <div className="grid grid-cols-4 gap-3" >
-                  <p className="text-gray-400 text-right"> Nombre</p>
-                    <p className="font-medium text-left col-start-2 col-end-4 " >
-                  {data.tax.name}
-                </p></div> 
-
-                <div className="grid grid-cols-4 gap-3" >
-                  <p className="text-gray-400 text-right"> Porcentaje</p>
-                    <p className="font-medium text-left col-start-2 col-end-4 " >
-                  {data.tax.value}%
-                </p></div> 
-
-                
+              <div className="grid-row-1 " style={{marginLeft:'90px'}} >    
+              <Infodiv
+              texto={"Costo"}
+              info={currencyFormat.format(data.costPrice)}/>  
+                  <Infodiv
+              texto={"Ultimo Precio"}
+              info={currencyFormat.format(data.lastcostPrice)}/>  
+                  <Infodiv
+              texto={"Venta"}
+              info={currencyFormat.format(data.salePrice)}/>  
+                  <Infodiv
+              texto={"Codigo"}
+              info={data.code}/>  
+                  <Infodiv
+              texto={"Codigo de barras"}
+              info={data.barcode}/>            
+                 </div>               
+                <div className="grid-row-2" style={{marginLeft:'90px'}}>
+                <Infodiv
+              texto={"Codigo del WOOCOMMERCE"}
+              info={data.wooCode.toString()}/>  
+                  <Infodiv
+              texto={"Impuesto en la bolsa"}
+              info={data.bagtaxPrice.toString()}/>  
+                  <Infodiv
+              texto={"Nombre"}
+              info={data.tax.name}/>  
+                  <Infodiv
+              texto={"Porcentaje"}
+              info={`${data.tax.value.toString()} %`} 
+              />                     
                 </div>
-                </div>            
-             
+                </div>                     
                  {
                   data.observations!==''&& (
                 <div className="container p-10" >

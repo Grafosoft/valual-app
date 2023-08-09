@@ -38,6 +38,14 @@ export interface Activity {
     name:     string;
     country?: string;
 }
+export interface Attachment {
+    id:        number;
+    date:      Date;
+    name:      string;
+    size:      number;
+    extension: string;
+    url:       string;
+}
 
 export interface Bank {
     name:    string;

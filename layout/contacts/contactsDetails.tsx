@@ -9,12 +9,14 @@ import {
   Button,
   Link,
 } from '@nextui-org/react'
-import { MdOutlineInventory2 } from 'react-icons/md'
-import { TbCheck,TbX ,TbBellFilled ,TbEdit,TbList,TbArrowBackUp,TbWorld } from 'react-icons/tb'
+import { TbCheck,TbX ,TbBellFilled ,TbList,TbWorld } from 'react-icons/tb'
 import { AiOutlineFacebook,AiOutlineInstagram,AiOutlineLinkedin,AiOutlineWhatsApp } from 'react-icons/ai'
 import { ContactsDetailsList } from '../../interfaces/contacts/contactsDetailsList'
 import { TabletContactsDetails } from './tabletContactsDetails'
-import { Infodiv } from '../../components/texto/div'
+import { Infodiv } from '../../components/componentsDetails/div'
+import { Cardbuttondetails } from '../../components/componentsDetails/cardbuttondetails'
+import { IconsDestailsContact } from '../../components/componentsDetails/iconsdetailscontact'
+import { ContactsAttachments } from './contactsAttachments'
 
 
 
@@ -29,32 +31,14 @@ export const ContactsDetails: FC<Props> = ({ data }) => {
     <div
       className=" p-5 gap-5 "     
     >
-      <Card  style={{justifyContent:'center' , height:'70px'}}>
-    
-        <div style={{justifyContent:' space-between', display:'flex'}}>
-          <div >
-      <Button variant="light"  className='ml-10 mr-3' color="primary" size="md" startContent={<
-        TbEdit/>}>
-        Editar
-      </Button>
-      
-      <Button variant="light" className="mx-3" color="primary" size="md" startContent={<
-        TbList/>}>
-        Ver movimientos
-      </Button>    
-     
-      <Button variant="light" className="mx-3" color="primary" size="md"  startContent={<
-        MdOutlineInventory2/>}>
-     Inventario
-      </Button> </div>
-      
-      <Button variant="flat" className="mx-10" color="warning" size="md" startContent={<
-        TbArrowBackUp/>}>
-        Volver
-      </Button>
-      </div>
-      </Card>
-      <Spacer y={5} />
+      <Cardbuttondetails
+      TextoBoton1={"ver"}
+      TextoBoton2={"ver"}
+      IconoBoton1={<TbList/>}
+      IconoBoton2={<TbList/>}
+
+
+      />
 
 
       <div
@@ -154,53 +138,10 @@ export const ContactsDetails: FC<Props> = ({ data }) => {
             >
                </Switch> 
                </div>
-               <Spacer y={5} />
-
-               <div>
-                 <Link target="_blank" href={data.media.website} >               
-                <TbWorld
-                 size={25}
-                 className="cursor-pointer mx-3"
-                 color="#52525B"
-                /><p className="text-black-400" style={{textDecoration:'none', color:'black'}} >Website</p>
-                </Link>
-               </div>
-              <div>
-                 <Link target="_blank" href={data.media.facebook} >
-                 <AiOutlineFacebook
-                 size={25}
-                 className="cursor-pointer mx-3"
-                 color="#006FEE"    
-                /><p className="text-black-400" style={{textDecoration:'none', color:'black'}} >Facebook</p>
-                </Link>
-              </div>
-              {}
-               <div>
-                 <Link target="_blank" href={data.media.instagram} >
-                <AiOutlineInstagram
-                size={25}
-                className="cursor-pointer mx-3"
-                color="#f31260"
-                /><p className="text-black-400" style={{textDecoration:'none', color:'black'}} >Instagram</p>
-                </Link>
-               </div>       
-               <div>
-                  <Link target="_blank" href={data.media.linkedin} >
-                <AiOutlineLinkedin
-                 size={25}
-                 className="cursor-pointer mx-3"
-                 color="#006FEE"          
-              /><p className="text-black-400" style={{textDecoration:'none', color:'black'}} >Linkedin</p></Link>
-                </div>
-               <div>
-                <Link target="_blank" href={data.communication.whatsapp} >
-                <AiOutlineWhatsApp
-                size={25}
-                className="cursor-pointer mx-3"
-                color="#17C964"
-               /><p className="text-black-400" style={{textDecoration:'none', color:'black'}} >Whatsapp</p>
-              </Link> 
-                </div>        
+               
+               <IconsDestailsContact
+                data={data}               
+               />
           </CardBody>
         </Card>
 
@@ -210,56 +151,45 @@ export const ContactsDetails: FC<Props> = ({ data }) => {
              <h1 className="text-5xl font-bold  ">{data.commercialName}</h1>
              <h3 className="text-2xl font-medium  pt-5">{data.type}</h3>               
                </div> 
+
               <div  className="grid grid-cols-2  px-5 gap-5 " > 
-              <div className="grid-row-1"  >    
-              <div className="grid grid-cols-4 gap-3 " >
-               <h3 className="text-gray-400 text-right">Nombre comercial</h3>
-                <h3 className="font-medium text-left col-start-2 col-end-4" > {data.commercialName}</h3>
-               </div> 
-               <div className="grid grid-cols-4 gap-3" >
-               <h3 className="text-gray-400 text-right">Tipo de Identifiacion</h3>
-                <h3 className="font-medium text-left col-start-2 col-end-4"> {data.identificationType.name}</h3>
-               </div> 
-               <div className="grid grid-cols-4 gap-3" >
-               <h3 className="text-gray-400 text-right">Identificacion</h3>
-                <h3 className="font-medium text-left col-start-2 col-end-4"> {data.identification}</h3>
-               </div>        
-               <div className="grid grid-cols-4 gap-3" >
-               <h3 className="text-gray-400 text-right">Primer Nombre</h3>
-                <h3 className="font-medium text-left col-start-2 col-end-4" > {data.firstName}</h3>
-               </div>
-               <div className="grid grid-cols-4 gap-3" >
-               <h3 className="text-gray-400 text-right">Segundo Nombre</h3>
-                <h3 className="font-medium text-left col-start-2 col-end-4" > {data.middleName}</h3>
-               </div>
-               <div className="grid grid-cols-4 gap-3" >
-               <h3 className="text-gray-400 text-right">Primer Apellido</h3>
-                <h3 className="font-medium text-left col-start-2 col-end-4"> {data.firstSurname}</h3>
-               </div>
-               <div className="grid grid-cols-4 gap-3" >
-               <h3 className="text-gray-400 text-right">Segundo Apellido</h3>
-                <h3 className="font-medium text-left col-start-2 col-end-4"> {data.secondSurname}</h3>
-               </div>             
-               <div className="grid grid-cols-4 gap-3" >
-               <h3 className="text-gray-400 text-right">Correo</h3>
-                <h3 className="font-medium text-left col-start-2 col-end-4 "> {data.email}</h3>
-               </div>                         
-               <div className="grid grid-cols-4 gap-3" >
-               <h3 className="text-gray-400 text-right">Numero telefonico</h3>
-                <h3 className="font-medium text-left col-start-2 col-end-4 ">  {data.phone}</h3>
-               </div>   
-               <div className="grid grid-cols-4 gap-3" >
-               <h3 className="text-gray-400 text-right">Direccion</h3>
-                <h3 className="font-medium text-left col-start-2 col-end-4 "> {data.adress}</h3>
-               </div>   
-               <div className="grid grid-cols-4 gap-3" >
-               <h3 className="text-gray-400 text-right">Pais</h3>
-                <h3 className="font-medium text-left col-start-2 col-end-4 "> {data.city.country}</h3>
-               </div>
-               <div className="grid grid-cols-4 gap-3" >               
-               <h3 className="text-gray-400 text-right">Cuidad</h3>
-                <h3 className="font-medium text-left col-start-2 col-end-4 "> {data.city.name}</h3>
-               </div>                                   
+              <div className="grid-row-1" style={{marginLeft:'90px'}} >    
+              <Infodiv
+              texto={"Nombre comercial"}
+              info={data.commercialName}/>  
+                <Infodiv
+              texto={"Tipo de Identifiacion"}
+              info={data.identificationType.name}/>  
+                <Infodiv
+              texto={"Identificacion"}
+              info={data.identification}/>  
+                <Infodiv
+              texto={"Primer Nombre"}
+              info={data.firstName}/>
+              <Infodiv
+              texto={"Segundo Nombre"}
+              info={data.middleName}/>  
+              <Infodiv
+              texto={"Primer Apellido"}
+              info={data.firstSurname}/>  
+              <Infodiv
+              texto={"Segundo Apellido"}
+              info={data.secondSurname}/>  
+              <Infodiv
+              texto={"Correo"}
+              info={data.email}/>  
+                <Infodiv
+              texto={"Numero telefonico"}
+              info={data.phone}/>   
+                <Infodiv
+              texto={"Direccion"}
+              info={data.adress}/>   
+                <Infodiv
+              texto={"Pais"}
+              info={data.city.country}/>
+                <Infodiv
+              texto={"Cuidad"}
+              info={data.city.name}/>                                      
                  </div>
                 
 
@@ -267,64 +197,39 @@ export const ContactsDetails: FC<Props> = ({ data }) => {
                 <div className="grid-row-2" style={{marginLeft:'90px'}}>
                 <Infodiv
               texto={"Codigo Postal"}
-              info={(data.postalCode)}
-              />  
-                <div className="grid grid-cols-4 gap-3" >
-               <h3 className="text-gray-400 text-right">Codigo Postal</h3>
-                <h3 className="font-medium text-left col-start-2 col-end-4 "> {data.postalCode}</h3>
-               </div>
-               <div className="grid grid-cols-4 gap-3" >
-               <h3 className="text-gray-400 text-right">Codigo Cuidad</h3>
-                <h3 className="font-medium text-left col-start-2 col-end-4 "> {data.city.code}</h3>
-               </div>                 
-                <div className="grid grid-cols-4 gap-3" >
-               <h3 className="text-gray-400 text-right">Comisión del vendedor</h3>
-                <h3 className="font-medium text-left col-start-2 col-end-4 "> {data.comissionSeller}</h3>
-               </div> 
-                <div className="grid grid-cols-4 gap-3" >
-                  <p className="text-gray-400 text-right">Persona</p>
-                    <p className="font-medium text-left col-start-2 col-end-4 " >
-                  {data.tax.person}
-                </p></div> 
-                <div className="grid grid-cols-4 gap-3" >
-                  <p className="text-gray-400 text-right">Regimen</p>
-                    <p className="font-medium text-left col-start-2 col-end-4 " >
-                  {data.tax.regime}
-                </p></div> 
-                <div className="grid grid-cols-4 gap-3" >
-                  <p className="text-gray-400 text-right">Responsabilidad</p>
-                    <p className="font-medium text-left col-start-2 col-end-4 " >
-                  {data.tax.responsibility}
-                </p></div> 
-                <div className="grid grid-cols-4 gap-3" >
-                  <p className="text-gray-400 text-right">Actividad</p>
-                    <p className="font-medium text-left col-start-2 col-end-4 " >
-                  {data.activity.name}
-                </p></div> 
-                <div className="grid grid-cols-4 gap-3" >
-                  <p className="text-gray-400 text-right">Banco</p>
-                    <p className="font-medium text-left col-start-2 col-end-4 " >
-                  {data.bank.name}
-                </p></div> 
-                <div className="grid grid-cols-4 gap-3" >
-                  <p className="text-gray-400 text-right">Tipo de cuenta</p>
-                    <p className="font-medium text-left col-start-2 col-end-4 " >
-                  {data.bank.type}
-                </p></div> 
-                <div className="grid grid-cols-4 gap-3" >
-                  <p className="text-gray-400 text-right">No. Cuenta</p>
-                    <p className="font-medium text-left col-start-2 col-end-4 " >
-                  {data.bank.account}
-                </p></div> 
-                <div className="grid grid-cols-4 gap-3" >
-                  <p className="text-gray-400 text-right"> Precio de lista</p>
-                    <p className="font-medium text-left col-start-2 col-end-4 " >
-                  {data.priceList.name}
-                </p></div>            
+              info={data.postalCode}/>  
+                <Infodiv
+              texto={"Codigo Cuidad"}
+              info={data.city.code || ""}/>  
+                <Infodiv
+              texto={"Comisión del vendedor"}
+              info={data.comissionSeller.toString()}/>  
+                <Infodiv
+              texto={"Persona"}
+              info={data.tax.person}/>
+              <Infodiv
+              texto={"Regimen"}
+              info={data.tax.regime}/>  
+              <Infodiv
+              texto={"Responsabilidad"}
+              info={data.tax.responsibility}/>  
+              <Infodiv
+              texto={"Actividad"}
+              info={data.activity.name}/>  
+              <Infodiv
+              texto={"Banco"}
+              info={data.bank.name}/>  
+                <Infodiv
+              texto={"Tipo de cuenta"}
+              info={data.bank.type}/>   
+                <Infodiv
+              texto={"No. Cuenta"}
+              info={data.bank.account}/>   
+                <Infodiv
+              texto={"Precio de lista"}
+              info={data.priceList.name}/>            
                 </div>
                 </div>            
-             
-
                  {
                   data.observations!==''&& (
                 <div className="container p-10" >
@@ -335,20 +240,25 @@ export const ContactsDetails: FC<Props> = ({ data }) => {
               </div>
                   )
                  }   
+                 
         </Card>   
     </div> 
     </div> 
    
 
     <div
-      className="grid grid-cols-12 row-span-9 p-5  gap-10"      
+      className="grid grid-cols-12 row-span-9 pl-5 px-5  gap-5"      
       >
     <div className="col-span-3 ">      
+    <ContactsAttachments download={data.attachments}
+    
+                  />
        </div>
        <div className="col-span-9 ">
         <TabletContactsDetails table={data.contacts}
                   />
-       </div></div>
+       </div>
+       </div>
     </>
   )
 }
