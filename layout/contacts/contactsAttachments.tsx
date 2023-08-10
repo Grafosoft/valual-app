@@ -31,7 +31,7 @@ isStriped shadow="none"
     <TableRow key={item.id}>
       {columnKey => (
         <TableCell>
-          <RenderCellAttachments attach={item} columnKey={columnKey} />
+          <RenderCellAttachments  attach={item} columnKey={columnKey} />
         </TableCell>
       )}
     </TableRow>

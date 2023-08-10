@@ -152,8 +152,8 @@ export const ContactsDetails: FC<Props> = ({ data }) => {
              <h3 className="text-2xl font-medium  pt-5">{data.type}</h3>               
                </div> 
 
-              <div  className="grid grid-cols-2  px-5 gap-5 " > 
-              <div className="grid-row-1" style={{marginLeft:'90px'}} >    
+              <div  className="grid grid-cols-1 lg:grid-cols-2 px-10 gap-5 " > 
+              <div className="grid-row-1"  >    
               <Infodiv
               texto={"Nombre comercial"}
               info={data.commercialName}/>  
@@ -194,7 +194,7 @@ export const ContactsDetails: FC<Props> = ({ data }) => {
                 
 
 
-                <div className="grid-row-2" style={{marginLeft:'90px'}}>
+                <div className="grid-row-2" >
                 <Infodiv
               texto={"Codigo Postal"}
               info={data.postalCode}/>  
@@ -243,11 +243,9 @@ export const ContactsDetails: FC<Props> = ({ data }) => {
                  
         </Card>   
     </div> 
-    </div> 
-   
-
+    
     <div
-      className="grid grid-cols-12 row-span-9 pl-5 px-5  gap-5"      
+      className="grid grid-cols-12 row-span-9  pt-5  gap-5"      
       >
     <div className="col-span-3 ">      
     <ContactsAttachments download={data.attachments}
@@ -259,6 +257,9 @@ export const ContactsDetails: FC<Props> = ({ data }) => {
                   />
        </div>
        </div>
+    </div> 
+   
+           
     </>
   )
 }
