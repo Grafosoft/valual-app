@@ -121,6 +121,12 @@ export const SidebarItem: FC<SidebarItemProps> = ({
                 'apikey'
               )}&companyId=${localStorage.getItem('companyId')}`
             )
+          }else if (urlPath === '/compania/[id]') {
+            push(
+              `/compania/${localStorage.getItem('companyId')}?apikey=${localStorage.getItem(
+                'apikey'
+              )}`
+            )
           }else {
           push(urlPath)
         }

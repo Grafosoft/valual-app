@@ -1,6 +1,6 @@
 import React, { FC, ReactNode, useEffect } from 'react'
 import {
-  TbCalendarDollar,
+  TbBuilding,
   TbNumber,
   TbShoppingBag,
   TbUsers
@@ -31,12 +31,10 @@ export const DashboardLayout: FC<Props> = ({ children }) => {
             
           />
           <SidebarItem
-            icon={<TbCalendarDollar size={25} />}
-            text="Suscripción"
-            urlPath={`/suscripcion`}
-            active={
-              pathname.includes('/suscripcion') || pathname.includes('/pagos')
-            }
+            icon={<TbBuilding size={25} />}
+            text="Compañia"
+            urlPath={`/compania/[id]`}
+            active={pathname===('/compania/[id]') }
           />
           <SidebarItem
             icon={<TbUsers size={25} />}
