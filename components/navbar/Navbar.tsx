@@ -27,6 +27,10 @@ export const NavbarUser = () => {
           size={25}
           className="cursor-pointer mx-3"
           style={{ color: 'rgb(156 163 175)' }}
+          onClick={() => push( `/compania/${localStorage.getItem('companyId')}?apikey=${localStorage.getItem(
+            'apikey'
+          )}`  )
+        }
         />
         <TbLogout
           size={25}

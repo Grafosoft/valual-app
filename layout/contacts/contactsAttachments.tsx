@@ -13,9 +13,9 @@ return(
     <>
     
 
-<Card>
+<div>
 <CardHeader style={{ paddingBottom: '0' }}>
-
+<h2 className="text-4xl  font-medium py-5 pl-5">Facturacion</h2>
 </CardHeader>
 <CardBody style={{ paddingTop: '0' }}>
 <Table
@@ -41,5 +41,5 @@ isStriped shadow="none"
 
   </CardBody>
   
-  </Card>
+  </div>
     </>)}

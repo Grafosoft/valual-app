@@ -247,15 +247,15 @@ export const ContactsDetails: FC<Props> = ({ data }) => {
     <div
       className="grid grid-cols-12 row-span-9  pt-5  gap-5"      
       >
-    <div className="col-span-3 ">      
+    <Card className="col-span-3 ">      
     <ContactsAttachments download={data.attachments}
     
                   />
-       </div>
-       <div className="col-span-9 ">
+       </Card>
+       <Card className="col-span-9 ">
         <TabletContactsDetails table={data.contacts}
                   />
-       </div>
+       </Card>
        </div>
     </div> 
    

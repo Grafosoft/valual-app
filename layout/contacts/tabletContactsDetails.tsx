@@ -16,7 +16,7 @@ return(
 
 
 
-<Card>
+<div>
 <CardHeader style={{ paddingBottom: '0' }}>
   <h2 className="text-4xl  font-medium py-5 pl-5">Contactos</h2>
 </CardHeader>
@@ -43,6 +43,6 @@ isStriped shadow="none"
 </Table>
 
   </CardBody>
-  </Card>
+  </div>
     </>
 )}

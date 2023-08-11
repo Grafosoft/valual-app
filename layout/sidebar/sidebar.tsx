@@ -17,6 +17,7 @@ const SidebarContext = createContext(false)
 export const Sidebar: FC<PropsWithChildren> = ({ children }) => {
   const [expanded, setExpanded] = useState(true)
   const { data } = useSession()
+  const { push } = useRouter()
 
   return (
     <div className="hidden lg:flex">
@@ -43,13 +44,16 @@ export const Sidebar: FC<PropsWithChildren> = ({ children }) => {
           <SidebarContext.Provider value={expanded}>
             <ul className="flex-1 px-3">{children}</ul>
           </SidebarContext.Provider>
+          
 
-          <div className="border-t dark:border-none flex p-3">
+          <div className="border-t dark:border-none flex p-3"
+          onClick={() => push( `/usuario/${localStorage.getItem('apikey')}?&apikey=${localStorage.getItem('apikey')}`)}> 
             <Avatar
               showFallback
               fallback={<TbUser size={25} />}
               size="md"
               radius="sm"
+              
               src={data?.user.image || ''}
             />
             <div
@@ -120,12 +124,6 @@ export const SidebarItem: FC<SidebarItemProps> = ({
               `/numeracion?apikey=${localStorage.getItem(
                 'apikey'
               )}&companyId=${localStorage.getItem('companyId')}`
-            )
-          }else if (urlPath === '/compania/[id]') {
-            push(
-              `/compania/${localStorage.getItem('companyId')}?apikey=${localStorage.getItem(
-                'apikey'
-              )}`
             )
           }else {
           push(urlPath)

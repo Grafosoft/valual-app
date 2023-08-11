@@ -30,12 +30,7 @@ export const DashboardLayout: FC<Props> = ({ children }) => {
             active={pathname===('/catalogo')}
             
           />
-          <SidebarItem
-            icon={<TbBuilding size={25} />}
-            text="Compañia"
-            urlPath={`/compania/[id]`}
-            active={pathname===('/compania/[id]') }
-          />
+          
           <SidebarItem
             icon={<TbUsers size={25} />}
             text="Clientes"
