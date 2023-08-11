@@ -44,9 +44,9 @@ export const Sidebar: FC<PropsWithChildren> = ({ children }) => {
           <SidebarContext.Provider value={expanded}>
             <ul className="flex-1 px-3">{children}</ul>
           </SidebarContext.Provider>
-          
 
-          <div className="border-t dark:border-none flex p-3"
+
+          <div className=" cursor-pointer  border-t dark:border-none flex p-3"
           onClick={() => push( `/usuario/${localStorage.getItem('apikey')}?&apikey=${localStorage.getItem('apikey')}`)}> 
             <Avatar
               showFallback
