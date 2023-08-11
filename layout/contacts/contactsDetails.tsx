@@ -240,6 +240,7 @@ export const ContactsDetails: FC<Props> = ({ data }) => {
               </div>
                   )
                  }   
+                 <Spacer y={5}/>
                  
         </Card>   
     </div> 

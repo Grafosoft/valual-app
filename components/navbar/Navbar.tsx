@@ -12,10 +12,11 @@ export const NavbarUser = () => {
     <div className="flex w-full p-5 justify-between">
       
       <Image 
+     
       onClick={() => push(`/catalogo?apikey=${localStorage.getItem('apikey')}&companyId=${localStorage.getItem('companyId')}`   
       )
     }
-      src="/assets/logo-svg.svg" className="h-10" alt="Valual Logo" />
+      src="/assets/logo-svg.svg" className=" cursor-pointer h-10" alt="Valual Logo" />
       <div className="flex items-center">
         <SwitchTheme />
         <TbBellFilled
