@@ -1,9 +1,9 @@
 import React, { FC, ReactNode, useEffect } from 'react'
 import {
-  TbBuilding,
   TbNumber,
   TbShoppingBag,
-  TbUsers
+  TbUsers,
+  TbFiles
 } from 'react-icons/tb'
 import { useRouter } from 'next/router'
 import { useSession } from 'next-auth/react'
@@ -56,6 +56,12 @@ export const DashboardLayout: FC<Props> = ({ children }) => {
             text="Bancos"
             urlPath={`/bancos`}
             active={pathname === '/bancos'}
+          />
+          <SidebarItem
+            icon={<TbFiles size={25} />}
+            text="Archivos"
+            urlPath={`/archivos`}
+            active={pathname === '/archivos'}
           />
         </Sidebar>
       )}

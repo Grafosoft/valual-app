@@ -1,9 +1,5 @@
 import valualApi from '@/apis/valualApi'
 import { PaginationList } from '../../../components/pagination/PaginationList'
-import { contactsColumns } from '@/global/contacts/contactsColumns'
-import { ContactsList } from '../../../interfaces/contacts/contactsList'
-import { ContactsHeadersLayout } from '../../../layout/contacts/contactsHeader'
-import { RenderCellContacts } from '../../../layout/contacts/RenderCellContacts'
 import {
   Spacer,
   Table,
@@ -18,17 +14,21 @@ import { useSession } from 'next-auth/react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
+import { FilesList } from '../../../interfaces/files/filesList'
+import { FilesHeaderLayout } from '../../../layout/files/filesHeader'
+import { filesColumns } from '@/global/files/filesColumns'
+import { RenderCellFiles } from '../../../layout/files/RenderCellFiles'
 
 
 interface Props {
-  contacts: ContactsList[]
+    files: FilesList[]
   apikey: string | undefined
   companyId: string | undefined
   page: string | undefined
 }
 
-const ContactList: NextPage<Props> = ({
-  contacts,
+const FilesList: NextPage<Props> = ({
+  files,
   apikey,
   companyId,
   page
@@ -45,10 +45,10 @@ const ContactList: NextPage<Props> = ({
   return (
     <>
       <Head>
-        <title>Clientes</title>
+        <title>Archivos</title>
       </Head>
-      <ContactsHeadersLayout
-        contacts={contacts}
+      <FilesHeaderLayout
+        files={files}
         apikey={apikey}
         companyId={companyId}
       />
@@ -59,15 +59,15 @@ const ContactList: NextPage<Props> = ({
         isStriped shadow="none"
        
       >
-        <TableHeader columns={contactsColumns}>
+        <TableHeader columns={filesColumns}>
           {column => <TableColumn key={column.uid}>{column.name}</TableColumn>}
         </TableHeader>
-        <TableBody items={contacts} emptyContent={'No hay datos por mostrar.'}>
+        <TableBody items={files} emptyContent={'No hay datos por mostrar.'}>
           {item => (
-            <TableRow key={item.id}>
+            <TableRow key={item.id} >
               {columnKey => (
                 <TableCell>
-                  <RenderCellContacts contact={item} columnKey={columnKey} />
+                  <RenderCellFiles files={item} columnKey={columnKey} />
                 </TableCell>
               )}
             </TableRow>
@@ -75,10 +75,10 @@ const ContactList: NextPage<Props> = ({
         </TableBody>
       </Table>
       <PaginationList
-        urlBack={`contactos/?companyId=${companyId}&apikey=${apikey}&page=${
+        urlBack={`archivos/?companyId=${companyId}&apikey=${apikey}&page=${
           currentPage - 2
         }`}
-        urlNext={`contactos/?companyId=${companyId}&apikey=${apikey}&page=${currentPage}`}
+        urlNext={`archivos/?companyId=${companyId}&apikey=${apikey}&page=${currentPage}`}
         currentPage={currentPage}
         color={"primary"}
 
@@ -87,7 +87,7 @@ const ContactList: NextPage<Props> = ({
   )
 }
 
-export default ContactList
+export default FilesList
 
 export const getServerSideProps: GetServerSideProps = async ctx => {
   const apikey = ctx.query.apikey?.toString() || ''
@@ -95,8 +95,8 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
   const name = ctx.query.name?.toString() || ''
   const page = ctx.query.page || '0'
 
-  const response = await valualApi.get<ContactsList[]>(
-    `contacts/?companyId=${companyId}&apikey=${ctx.query.apikey}&page=${page}&name=${name}`
+  const response = await valualApi.get<FilesList[]>(
+    `files/?companyId=${companyId}&apikey=${ctx.query.apikey}&page=${page}&name=${name}`
   )
 
   if (!response) {
@@ -108,7 +108,7 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
 
   return {
     props: {
-      contacts: response.data,
+      files: response.data,
       apikey,
       companyId,
       page

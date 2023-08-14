@@ -159,7 +159,8 @@ export const RenderCellAttachments: FC<Props> = ({ contact, attach, columnKey })
                 >  
              Imprimir
               </DropdownItem>
-               <DropdownItem
+
+               {/* <DropdownItem
                 color={`danger`}  
                 key="download"
                 
@@ -169,7 +170,7 @@ export const RenderCellAttachments: FC<Props> = ({ contact, attach, columnKey })
                 
               >
                 Descargar
-              </DropdownItem>
+              </DropdownItem> */}
 
               </DropdownMenu>
               </Dropdown>
@@ -185,11 +186,12 @@ export const RenderCellAttachments: FC<Props> = ({ contact, attach, columnKey })
             <ModalContent>
               <ModalHeader>
                 <h2 id="modal-title">
-                  Nombre {attach.name}
-                 Fecha {createDate}
+                  Nombre {attach.name}           
                 </h2>
+               
               </ModalHeader>
-              <ModalBody>
+              <ModalBody> 
+                Fecha {createDate}
                 {isLoadingModal ? (
                   <div
                     className="container"
@@ -221,13 +223,6 @@ export const RenderCellAttachments: FC<Props> = ({ contact, attach, columnKey })
       )
 
     default:
-      return (
-        <p
-          className="font-medium"
-          style={{ fontSize: '15px', textTransform: 'capitalize' }}
-        >
-          {attach.name}
-        </p>
-      )
+      
   }
 }
