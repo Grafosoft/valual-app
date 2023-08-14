@@ -2,6 +2,7 @@ import React, { FC, useState } from 'react'
 import { Attachment,ContactsDetailsList } from '../../interfaces/contacts/contactsDetailsList';
 import { TbDots, TbDownload, TbPrinter } from 'react-icons/tb'
 import { CircularProgress, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Modal, ModalBody, ModalContent, ModalHeader, useDisclosure } from '@nextui-org/react'
+import { ImprimirModal } from '../../components/tbDots/imprimir';
 
 import valualApi from '@/apis/valualApi';
 
@@ -103,126 +104,130 @@ export const RenderCellAttachments: FC<Props> = ({ contact, attach, columnKey })
       )
       case 'actions':
         return (
-          <div className="flex flex-row">
-            <Dropdown placement="bottom">
-              <DropdownTrigger>
-                <div className="container">
-                  <TbDots size={25} cursor={'pointer'} />
-                </div>
-              </DropdownTrigger>
+        //   <div className="flex flex-row">
+        //     <Dropdown placement="bottom">
+        //       <DropdownTrigger>
+        //         <div className="container">
+        //           <TbDots size={25} cursor={'pointer'} />
+        //         </div>
+        //       </DropdownTrigger>
 
               
              
-              <DropdownMenu 
-              onAction={actionKey => {
-                if (actionKey === 'print') {
-                  handleVisible()
-                } else {
-                  valualApi
-                    .get<ContactsDetailsList>(
-                      `/contacts/${contact?.id}/?companyId=${localStorage.getItem(
-                        'companyId'
-                      )}&apikey=${localStorage.getItem('apikey')}`
-                    )
-                    .then(response => {
-                      if (response.status === 200) {
+        //       <DropdownMenu 
+        //       onAction={actionKey => {
+        //         if (actionKey === 'print') {
+        //           handleVisible()
+        //         } else {
+        //           valualApi
+        //             .get<ContactsDetailsList>(
+        //               `/contacts/${contact?.id}/?companyId=${localStorage.getItem(
+        //                 'companyId'
+        //               )}&apikey=${localStorage.getItem('apikey')}`
+        //             )
+        //             .then(response => {
+        //               if (response.status === 200) {
                   
-                        const linkSource = `${response.data.attachments[0].url}`
-                        console.log(linkSource);
+        //                 const linkSource = `${response.data.attachments[0].url}`
+        //                 console.log(linkSource);
 
                   
-                        const n = 4
-                        const arch= (linkSource.substring(linkSource.length - n))
-                        const downloadLink = document.createElement('a')
-                        const fileName = `${attach.name}${arch}` 
+        //                 const n = 4
+        //                 const arch= (linkSource.substring(linkSource.length - n))
+        //                 const downloadLink = document.createElement('a')
+        //                 const fileName = `${attach.name}${arch}` 
 
-                        downloadLink.href = linkSource
-                        downloadLink.download = fileName
-                        downloadLink.click()
-                      }
-                    })
-                    .catch(error => {
-                      console.log(error)
-                    })
-                }
-              }}
-              aria-label="Mas acciones"
-            >
-
-
-
-
-              <DropdownItem
-                key="print"
-                startContent={<TbPrinter />}
-                onClick={onOpen}
-                >  
-             Imprimir
-              </DropdownItem>
-
-               {/* <DropdownItem
-                color={`danger`}  
-                key="download"
-                
-                startContent={<TbDownload />
-                
-              }
-                
-              >
-                Descargar
-              </DropdownItem> */}
-
-              </DropdownMenu>
-              </Dropdown>
-              <Modal
-            closeButton
-            backdrop="blur"
-            size="full"
-            aria-label="Visualización pdf"
-            isOpen={isOpen}
-            onOpenChange={onOpenChange}
-            onClose={onClose}
-          >
-            <ModalContent>
-              <ModalHeader>
-                <h2 id="modal-title">
-                  Nombre {attach.name}           
-                </h2>
+        //                 downloadLink.href = linkSource
+        //                 downloadLink.download = fileName
+        //                 downloadLink.click()
+        //               }
+        //             })
+        //             .catch(error => {
+        //               console.log(error)
+        //             })
+        //         }
+        //       }}
+        //       aria-label="Mas acciones"
+        //     >
+        //       <DropdownItem
+        //         key="print"
+        //         startContent={<TbPrinter />}
+        //         onClick={onOpen}
+        //         >  
+        //      Imprimir
+        //       </DropdownItem>          
+        //        <DropdownItem
+        //         color={`danger`}  
+        //         key="download"
+        //         startContent={<TbDownload />       
+        //       }  >
+        //         Descargar
+        //       </DropdownItem>
+        //       </DropdownMenu>
+        //       </Dropdown>
+        //       <Modal
+        //     closeButton
+        //     backdrop="blur"
+        //     size="full"
+        //     aria-label="Visualización pdf"
+        //     isOpen={isOpen}
+        //     onOpenChange={onOpenChange}
+        //     onClose={onClose}
+        //   >
+        //     <ModalContent>
+        //       <ModalHeader>
+        //         <h2 id="modal-title">
+        //           Nombre {attach.name}           
+        //         </h2>
                
-              </ModalHeader>
-              <ModalBody> 
-                Fecha {createDate}
-                {isLoadingModal ? (
-                  <div
-                    className="container"
-                    style={{
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignContent: 'center',
-                      alignItems: 'center',
-                      height: '100%',
-                      margin: 'auto'
-                    }}
-                  >
-                    <CircularProgress
-                      size="lg"
-                      label="Cargando..."
-                      color={'warning'}
-                    />
-                  </div>
-                ) : (
-                  <embed
-                    style={{ height: '100%' }}
-                    src={`${pdfView}`}
-                  />
-                )}
-              </ModalBody>
-            </ModalContent>
-          </Modal>
-        </div>
+        //       </ModalHeader>
+        //       <ModalBody> 
+        //         Fecha {createDate}
+        //         {isLoadingModal ? (
+        //           <div
+        //             className="container"
+        //             style={{
+        //               display: 'flex',
+        //               justifyContent: 'center',
+        //               alignContent: 'center',
+        //               alignItems: 'center',
+        //               height: '100%',
+        //               margin: 'auto'
+        //             }}
+        //           >
+        //             <CircularProgress
+        //               size="lg"
+        //               label="Cargando..."
+        //               color={'warning'}
+        //             />
+        //           </div>
+        //         ) : (
+        //           <embed
+        //             style={{ height: '100%' }}
+        //             src={`${pdfView}`}
+        //           />
+        //         )}
+        //       </ModalBody>
+        //     </ModalContent>
+        //   </Modal>
+        // </div>
+        <ImprimirModal
+        text={attach.name}
+        url={attach.url}
+        description={"Fecha " + createDate}
+
+        />
+
       )
 
     default:
-      
+      return (
+        <p
+          className="font-medium"
+          style={{ fontSize: '15px', textTransform: 'capitalize' }}
+        >
+          {attach.name}
+        </p>
+      )
   }
 }
