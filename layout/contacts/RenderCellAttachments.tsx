@@ -2,7 +2,7 @@ import React, { FC, useState } from 'react'
 import { Attachment,ContactsDetailsList } from '../../interfaces/contacts/contactsDetailsList';
 import { TbDots, TbDownload, TbPrinter } from 'react-icons/tb'
 import { CircularProgress, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Modal, ModalBody, ModalContent, ModalHeader, useDisclosure } from '@nextui-org/react'
-import { ImprimirModal } from '../../components/tbDots/imprimir';
+import { PrinterModal } from '../../components/tbDots/printer';
 
 import valualApi from '@/apis/valualApi';
 
@@ -211,7 +211,7 @@ export const RenderCellAttachments: FC<Props> = ({ contact, attach, columnKey })
         //     </ModalContent>
         //   </Modal>
         // </div>
-        <ImprimirModal
+        <PrinterModal
         text={attach.name}
         url={attach.url}
         description={"Fecha " + createDate}

@@ -1,22 +1,9 @@
 import React, { FC, useEffect, useState } from 'react'
-import {    
-   TbDots, TbFiles,
-} from 'react-icons/tb'
 import {
-  CircularProgress,
-  Dropdown,
-  DropdownItem,
-  DropdownMenu,
-  DropdownTrigger,
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalHeader,
   User,
-  useDisclosure
 } from '@nextui-org/react'
 import { FilesList } from '../../interfaces/files/filesList'
-import { ImprimirModal } from '../../components/tbDots/imprimir';
+import { PrinterModal } from '../../components/tbDots/printer';
 
 interface Props {
   files: FilesList
@@ -36,16 +23,7 @@ export const RenderCellFiles: FC<Props> = ({
     hour: '2-digit',
     minute: '2-digit'
   })
-  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure()
-  const [pdfView, setPdfView] = useState('')
-  const [isLoadingModal, setIsLoadingModal] = useState(false)
 
-  const handleVisible = () => {
-    setIsLoadingModal(true)
-       
-          setPdfView(files.attachment.url)
-          setIsLoadingModal(false)
-  }
 
   const [apikey, setApikey] = useState('')
   useEffect(() => {
@@ -93,7 +71,7 @@ export const RenderCellFiles: FC<Props> = ({
             )
             case 'actions':
         return (
-         <ImprimirModal
+         <PrinterModal
          text={files.attachment.fileName}
          url={files.attachment.url}
          description={""}

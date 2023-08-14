@@ -11,7 +11,7 @@ interface Props {
  
   }
   
-export const ImprimirModal: FC<Props> = ({text,url,description
+export const PrinterModal: FC<Props> = ({text,url,description
   
   }) => {
     const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure()
