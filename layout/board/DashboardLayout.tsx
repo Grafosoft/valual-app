@@ -9,6 +9,8 @@ import { useRouter } from 'next/router'
 import { useSession } from 'next-auth/react'
 import { NavbarUser } from '../../components/navbar/Navbar'
 import { Sidebar, SidebarItem } from '../sidebar/sidebar'
+import { BsBank } from 'react-icons/bs'
+import { MdWarehouse } from 'react-icons/md'
 
 interface Props {
   children: ReactNode
@@ -42,6 +44,18 @@ export const DashboardLayout: FC<Props> = ({ children }) => {
             text="Numeracion"
             urlPath={`/numeracion`}
             active={pathname === '/numeracion'}
+          />
+           <SidebarItem
+            icon={<MdWarehouse size={25} />}
+            text="Almacences"
+            urlPath={`/almacenes`}
+            active={pathname === '/almacenes'}
+          />
+           <SidebarItem
+            icon={<BsBank size={25} />}
+            text="Bancos"
+            urlPath={`/bancos`}
+            active={pathname === '/bancos'}
           />
         </Sidebar>
       )}

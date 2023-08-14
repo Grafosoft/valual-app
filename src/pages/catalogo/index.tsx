@@ -111,13 +111,13 @@ return (
        
         const name = ctx.query.name || ''
         const page = ctx.query.page || '0'
-        const companyId = ctx.query.page || '0'
+      
       
       
        
       
         const response = await valualApi.get<ItemsList>(
-          `items/?companyId=${companyId}&apikey=${ctx.query.apikey}&page=${page}&name=${name}`
+          `items/?companyId=${ctx.query.companyId}&apikey=${ctx.query.apikey}&page=${page}&name=${name}`
         )
       
 

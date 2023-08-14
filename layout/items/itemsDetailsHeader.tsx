@@ -46,10 +46,10 @@ const currencyFormat = new Intl.NumberFormat('en-DE')
     
      
       <div
-      className="grid grid-cols-12 row-span-9  gap-5"
+      className="grid grid-cols-1 lg:grid-cols-12   gap-5"
       style={{ justifyContent: 'center'}}
     >
-        <Card className="col-span-3 ">
+        <Card className="col-span-9 lg:col-span-3 grid-row-1 ">
           <CardHeader style={{ padding: '0' }}>
             <div
               className="pt-10 container"
@@ -157,7 +157,7 @@ const currencyFormat = new Intl.NumberFormat('en-DE')
                 <Spacer y={5} />
           </CardBody>
         </Card>
-        <Card className="col-span-9 ">
+        <Card className="col-span-9 grid-row-2">
           <div className="text-center py-10 " >
              <h1 className="text-5xl font-bold  ">{data.name}</h1>
              <h3 className="text-2xl font-medium  pt-5">{data.group.name}</h3>               
