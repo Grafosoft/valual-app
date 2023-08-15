@@ -6,11 +6,8 @@ import {
   Spacer,
   Avatar,
   Switch,
-  Button,
-  Link,
 } from '@nextui-org/react'
-import { TbCheck,TbX ,TbBellFilled ,TbList,TbWorld } from 'react-icons/tb'
-import { AiOutlineFacebook,AiOutlineInstagram,AiOutlineLinkedin,AiOutlineWhatsApp } from 'react-icons/ai'
+import { TbCheck,TbX ,TbBellFilled ,TbList,TbUser } from 'react-icons/tb'
 import { ContactsDetailsList } from '../../interfaces/contacts/contactsDetailsList'
 import { TabletContactsDetails } from './tabletContactsDetails'
 import { Infodiv } from '../../components/componentsDetails/div'
@@ -60,6 +57,8 @@ export const ContactsDetails: FC<Props> = ({ data }) => {
             >
               <Avatar
               isBordered
+              showFallback
+              fallback={<TbUser size={70} />}
               alt={data.commercialName}
               style={{
                 borderRadius: '40px',

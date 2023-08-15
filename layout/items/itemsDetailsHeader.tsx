@@ -67,7 +67,7 @@ const currencyFormat = new Intl.NumberFormat('en-DE')
               isBordered
               alt={data.name}
               showFallback
-              fallback={<MdOutlineInventory2 className=" w-12 h-12 text-default-500"  />}
+              fallback={<MdOutlineInventory2  size={70}  />}
               style={{
                 borderRadius: '40px',
                 width: '125px',

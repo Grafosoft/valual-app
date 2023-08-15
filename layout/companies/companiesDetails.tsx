@@ -31,7 +31,7 @@ interface Props {
               isBordered
               alt={data.name}
               showFallback
-              fallback={<TbBuilding className=" w-12 h-12 "  />}
+              fallback={<TbBuilding size={70} />}
               src={data.image}
               style={{
                 borderRadius: '40px',

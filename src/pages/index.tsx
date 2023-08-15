@@ -1,6 +1,6 @@
 import React ,{ ChangeEvent, FormEventHandler, useEffect, useState  }  from 'react';
 import Head from 'next/head'
-import { Card, CardBody,Spacer , Button , Input, CardHeader, CardFooter} from '@nextui-org/react';
+import { Card, CardBody,Spacer , Button , Input, CardHeader, CardFooter, Chip} from '@nextui-org/react';
 import { Layout } from '../../layout/layout';
 import { signIn, useSession } from "next-auth/react"
 import { useRouter } from 'next/router';
@@ -15,11 +15,13 @@ export default function index(){
 
     const [isVisible, setIsVisible] = React.useState(false);
     const [isLoading, setIsLoading] = React.useState(false);
+    const [showErrorMessage, setShowErrorMessage] = useState(false)
     const { replace } = useRouter()
     const { data: session, status } = useSession()
 
     useEffect(() => {
-        status === 'authenticated' && replace(`/catalogo?apikey=${session.user.apikey}&companyId=${session.user.companyId} `)
+     
+        status === 'authenticated' && replace(`/catalogo?apikey=${session.user.apikey===undefined ? localStorage.getItem('apikey') : session.user.apikey }&companyId=${session.user.companyId===undefined ? localStorage.getItem('companyId') :session.user.companyId } `)
     }, [replace , status])
 
 
@@ -27,20 +29,24 @@ export default function index(){
         e.preventDefault()
         setIsLoading (true)
 
-        await signIn('credentials', {
+        const response =  await signIn('credentials', {
           email: userInfo.email,
           password: userInfo.password,
           redirect: false
         })
-
+        if (response?.ok) {
         if(status === 'authenticated'){
+          setShowErrorMessage(false)
           setIsLoading(false) 
-          replace(`/catalogo?apikey=${session.user.apikey}&companyId=${session.user.companyId} `)   
-          } else {
-          setIsLoading(false)
+          replace(`/catalogo?apikey=${session.user.apikey}&companyId=${session.user.companyId}`)   
+         } } else {
+            setIsLoading(false)
+            setShowErrorMessage(true)
+            setTimeout(() => {
+              setShowErrorMessage(false)
+            }, 3000)
           }
         }
-    
     const toggleVisibility = () => setIsVisible(!isVisible);
 
     return (     
@@ -60,6 +66,20 @@ export default function index(){
             
             <form onSubmit={handleSubmit}>
                 <CardBody>
+                {showErrorMessage && (
+                <div className="container">
+                  <Chip
+                    color="danger"
+                    style={{ minWidth: '100%', textAlign: 'center' }}
+                    radius="sm"
+                    variant="flat"
+                  >
+                    <b>ERROR AL INICIAR SESIÓN</b> - Correo electrónico y/o
+                    contraseña son incorrectos
+                  </Chip>
+                  <Spacer y={5} />
+                </div>
+              )}
                     <Input 
                     value={userInfo.email}
                     placeholder='Correo electronico'

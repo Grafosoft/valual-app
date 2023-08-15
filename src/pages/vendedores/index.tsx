@@ -11,20 +11,20 @@ import {
 import { GetServerSideProps, NextPage } from 'next'
 import Head from 'next/head'
 import React from 'react'
-import { BanksList } from '../../../interfaces/banks/banksList'
-import { banksColumns } from '@/global/banks/banksColumns'
-import { RenderCellBanks } from '../../../layout/banks/RenderCellBanks'
+import { SellersList } from '../../../interfaces/sellers/sellersList'
+import { sellersColumns } from '@/global/sellers/sellersColumn'
+import { RenderCellSellers } from '../../../layout/sellers/RenderCellSellers'
 
 
 interface Props {
-    banks: BanksList[]
+    sellers: SellersList[]
     apikey: string | undefined
     companyId: string | undefined
  
  
 }
-const BanksList: NextPage<Props> = ({
-    banks,apikey, companyId
+const SellersList: NextPage<Props> = ({
+    sellers,apikey, companyId
 
 
 }) => {
@@ -35,24 +35,24 @@ const BanksList: NextPage<Props> = ({
   return (
     <>
       <Head>
-        <title>Bancos</title>
+        <title>Vendedores</title>
       </Head>
      
       <Spacer y={1} />
       <Table
-        aria-label="Bancos"
+        aria-label="Vendedores"
         style={{ height: 'auto', minWidth: '100%' }}
         isStriped shadow="none"
       >
-        <TableHeader columns={banksColumns}>
+        <TableHeader columns={sellersColumns}>
           {column => <TableColumn key={column.uid}>{column.name}</TableColumn>}
         </TableHeader>
-        <TableBody items={banks}>
+        <TableBody items={sellers}>
           {item => (
             <TableRow key={item.id}>
               {columnKey => (
                 <TableCell>
-                  <RenderCellBanks banks={item} columnKey={columnKey} />
+                  <RenderCellSellers sellers={item} columnKey={columnKey} />
                 </TableCell>
               )}
             </TableRow>
@@ -64,7 +64,7 @@ const BanksList: NextPage<Props> = ({
   )
 }
 
-export default BanksList
+export default SellersList
 
 export const getServerSideProps: GetServerSideProps = async ctx => {
     const apikey = ctx.query.apikey?.toString() || ''
@@ -72,8 +72,8 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
  
 
 
-  const response = await valualApi.get<BanksList[]>(
-    `banks/?companyId=${companyId}&apikey=${ctx.query.apikey}`
+  const response = await valualApi.get<SellersList[]>(
+    `sellers/?companyId=${companyId}&apikey=${ctx.query.apikey}`
   )
 
   if (!response) {
@@ -85,7 +85,7 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
 
   return {
     props: {
-      banks: response.data,
+      sellers: response.data,
       apikey,
       companyId,
     }
