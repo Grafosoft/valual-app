@@ -1,4 +1,4 @@
-import { Avatar } from '@nextui-org/react'
+import { Avatar, Button } from '@nextui-org/react'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import {
@@ -20,6 +20,8 @@ export const Sidebar: FC<PropsWithChildren> = ({ children }) => {
   const { push } = useRouter()
 
   return (
+    <>
+
     <div className="hidden lg:flex">
       <div style={{ minWidth: expanded ? '250px' : '75px' }}></div>
       <aside
@@ -31,7 +33,7 @@ export const Sidebar: FC<PropsWithChildren> = ({ children }) => {
             <div></div>
             <button
               onClick={() => setExpanded(curr => !curr)}
-              className="p-1.5 rounded-lg bg-gray-50 dark:bg-transparent hover:bg-gray-100"
+              className="p-1.5 rounded-lg bg-gray-50 dark:bg-transparent hover:bg-gray-100 "
             >
               {expanded ? (
                 <CgPushChevronLeft size={20} />
@@ -73,6 +75,7 @@ export const Sidebar: FC<PropsWithChildren> = ({ children }) => {
         </nav>
       </aside>
     </div>
+    </>
   )
 }
 
@@ -144,6 +147,12 @@ export const SidebarItem: FC<SidebarItemProps> = ({
           } else if (urlPath === '/vendedores') {
             push(
               `/vendedores?apikey=${localStorage.getItem(
+                'apikey'
+              )}&companyId=${localStorage.getItem('companyId')}`
+            )
+          }else if (urlPath === '/facturas') {
+            push(
+              `/facturas?apikey=${localStorage.getItem(
                 'apikey'
               )}&companyId=${localStorage.getItem('companyId')}`
             )

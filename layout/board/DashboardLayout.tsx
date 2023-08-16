@@ -4,7 +4,8 @@ import {
   TbShoppingBag,
   TbUsers,
   TbFiles,
-  TbUserDollar
+  TbUserDollar,
+  TbFileInvoice
 } from 'react-icons/tb'
 import { useRouter } from 'next/router'
 import { useSession } from 'next-auth/react'
@@ -69,6 +70,12 @@ export const DashboardLayout: FC<Props> = ({ children }) => {
             text="Vendedores"
             urlPath={`/vendedores`}
             active={pathname === '/vendedores'}
+          />
+           <SidebarItem
+            icon={<TbFileInvoice size={25} />}
+            text="Facturas"
+            urlPath={`/facturas`}
+            active={pathname === '/facturas'}
           />
         </Sidebar>
       )}
