@@ -1,10 +1,10 @@
 export const warehousesColumns = [
     {
-      name: 'Nombre',
+      name: 'NOMBRE',
       uid: 'name'
     },  
     {
-        name: 'Nombre Precio de lista',
+        name: 'NOMBRE PRECIO DE LISTA',
         uid: 'priceList'
       },
 

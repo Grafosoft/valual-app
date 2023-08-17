@@ -7,60 +7,51 @@ import valualApi from '@/apis/valualApi'
 import { CompaniesDetailsList } from '../../../../interfaces/companies/companiesDetailsList'
 import { ContactsDetails } from '../../../../layout/companies/companiesDetails'
 
-
 interface Props {
-    data: CompaniesDetailsList
-    apikey: string | undefined
-    companyId: string | undefined
-
-  }
-
-  const Detallescompania: NextPage<Props> = ({ data,  apikey }) => {
-    const { status } = useSession()
-    const { replace } = useRouter()
-  
-    useEffect(() => {
-      status === 'unauthenticated' && replace('/')
-    }, [status, replace])
-
-    return(
-        <>
-        <Head>
-          <title>{data.name}</title>
-         
-
-        </Head>
-        <ContactsDetails data={data} />
-        </>
-    )
+  data: CompaniesDetailsList
+  apikey: string | undefined
+  companyId: string | undefined
 }
 
+const Detallescompania: NextPage<Props> = ({ data, apikey }) => {
+  const { status } = useSession()
+  const { replace } = useRouter()
+
+  useEffect(() => {
+    status === 'unauthenticated' && replace('/')
+  }, [status, replace])
+
+  return (
+    <>
+      <Head>
+        <title>{data.name}</title>
+      </Head>
+      <ContactsDetails data={data} />
+    </>
+  )
+}
 
 export const getServerSideProps: GetServerSideProps = async ctx => {
-    const apikey = ctx.query.apikey?.toString() || ''
-        let id = ctx.params?.id || ''
+  const apikey = ctx.query.apikey?.toString() || ''
+  let id = ctx.params?.id || ''
 
-  
- 
-    const response = await valualApi.get<CompaniesDetailsList>(
-        `companies/${id}/?&apikey=${ctx.query.apikey}`
-    )
-  
-   
-    if (!response ) {
-      return {
-        notFound: true,
-        redirect: '/404'
-      }
-    }
-  
+  const response = await valualApi.get<CompaniesDetailsList>(
+    `companies/${id}/?&apikey=${ctx.query.apikey}`
+  )
+
+  if (!response) {
     return {
-      props: {
-        data: response.data,
-        apikey,   
-        id
-
-      }
+      notFound: true,
+      redirect: '/404'
     }
   }
-  export default Detallescompania
+
+  return {
+    props: {
+      data: response.data,
+      apikey,
+      id
+    }
+  }
+}
+export default Detallescompania

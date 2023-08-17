@@ -15,34 +15,24 @@ import { BanksList } from '../../../interfaces/banks/banksList'
 import { banksColumns } from '@/global/banks/banksColumns'
 import { RenderCellBanks } from '../../../layout/banks/RenderCellBanks'
 
-
 interface Props {
-    banks: BanksList[]
-    apikey: string | undefined
-    companyId: string | undefined
- 
- 
+  banks: BanksList[]
+  apikey: string | undefined
+  companyId: string | undefined
 }
-const BanksList: NextPage<Props> = ({
-    banks,apikey, companyId
-
-
-}) => {
-
-
-
-
+const BanksList: NextPage<Props> = ({ banks, apikey, companyId }) => {
   return (
     <>
       <Head>
         <title>Bancos</title>
       </Head>
-     
+
       <Spacer y={1} />
       <Table
         aria-label="Bancos"
         style={{ height: 'auto', minWidth: '100%' }}
-        isStriped shadow="none"
+        isStriped
+        shadow="none"
       >
         <TableHeader columns={banksColumns}>
           {column => <TableColumn key={column.uid}>{column.name}</TableColumn>}
@@ -59,7 +49,6 @@ const BanksList: NextPage<Props> = ({
           )}
         </TableBody>
       </Table>
-     
     </>
   )
 }
@@ -67,10 +56,8 @@ const BanksList: NextPage<Props> = ({
 export default BanksList
 
 export const getServerSideProps: GetServerSideProps = async ctx => {
-    const apikey = ctx.query.apikey?.toString() || ''
-    const companyId = ctx.query.companyId?.toString() || '' 
- 
-
+  const apikey = ctx.query.apikey?.toString() || ''
+  const companyId = ctx.query.companyId?.toString() || ''
 
   const response = await valualApi.get<BanksList[]>(
     `banks/?companyId=${companyId}&apikey=${ctx.query.apikey}`
@@ -87,7 +74,7 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
     props: {
       banks: response.data,
       apikey,
-      companyId,
+      companyId
     }
   }
 }

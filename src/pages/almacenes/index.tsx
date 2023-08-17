@@ -12,37 +12,27 @@ import { GetServerSideProps, NextPage } from 'next'
 import Head from 'next/head'
 import React from 'react'
 import { WarehouseList } from '../../../interfaces/warehouses/warehousesList'
-import { RenderCellWarehouses } from '../../../layout/warehouses/RenderCellWarehouses';
+import { RenderCellWarehouses } from '../../../layout/warehouses/RenderCellWarehouses'
 import { warehousesColumns } from '@/global/warehouses/warehousesColumns'
 
-
 interface Props {
-    houses: WarehouseList[]
-    apikey: string | undefined
-    companyId: string | undefined
- 
- 
+  houses: WarehouseList[]
+  apikey: string | undefined
+  companyId: string | undefined
 }
-const WarehouseList: NextPage<Props> = ({
-    houses,apikey, companyId
-
-
-}) => {
-
-
-
-
+const WarehouseList: NextPage<Props> = ({ houses, apikey, companyId }) => {
   return (
     <>
       <Head>
         <title>Almacenes</title>
       </Head>
-     
+
       <Spacer y={1} />
       <Table
         aria-label="Almacenes"
         style={{ height: 'auto', minWidth: '100%' }}
-        isStriped shadow="none"
+        isStriped
+        shadow="none"
       >
         <TableHeader columns={warehousesColumns}>
           {column => <TableColumn key={column.uid}>{column.name}</TableColumn>}
@@ -59,7 +49,6 @@ const WarehouseList: NextPage<Props> = ({
           )}
         </TableBody>
       </Table>
-     
     </>
   )
 }
@@ -68,16 +57,12 @@ export default WarehouseList
 
 export const getServerSideProps: GetServerSideProps = async ctx => {
   const apikey = ctx.query.apikey?.toString() || ''
-  const companyId = ctx.query.companyId?.toString() || '' 
-
- 
-
+  const companyId = ctx.query.companyId?.toString() || ''
 
   const response = await valualApi.get<WarehouseList[]>(
     `warehouses/?companyId=${companyId}&apikey=${ctx.query.apikey}`
   )
 
-    
   if (!response) {
     return {
       notFound: true,
@@ -89,8 +74,7 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
     props: {
       houses: response.data,
       apikey,
-      companyId,
-      
+      companyId
     }
   }
 }

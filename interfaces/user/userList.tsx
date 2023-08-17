@@ -9,7 +9,7 @@ export interface UserList {
     jobTitle:               string;
     organizationDepartment: string;
     identification:         string;
-    image:                  null;
+    image:                  string;
     signature:              string;
     isMobileApp:            boolean;
     isActive:               boolean;

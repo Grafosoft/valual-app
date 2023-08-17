@@ -6,20 +6,19 @@ import second from '../../public/assets/logo.png'
 import { InvoicesList } from '../../interfaces/invoices/invoicesList'
 
 interface Props {
-    invoices: InvoicesList[]
+  invoices: InvoicesList[]
   apikey: string | undefined
   companyId: string | undefined
 }
 
 export const InvoicesHeadersLayout: FC<Props> = ({
-    invoices,
+  invoices,
   apikey,
   companyId
 }) => {
   const { push } = useRouter()
   const [searchContact, setSearchContact] = useState('')
   const [searchNumber, setSearchNumber] = useState('')
-
 
   const limitAvatar = 5
 
@@ -28,8 +27,6 @@ export const InvoicesHeadersLayout: FC<Props> = ({
     setSearchNumber('')
     push(`facturas/?companyId=${companyId}&apikey=${apikey}&page=0`)
   }
-
-
 
   const handleContactChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchContact(e.target.value)
@@ -47,8 +44,6 @@ export const InvoicesHeadersLayout: FC<Props> = ({
     )
   }
 
-
-
   const handleSubmitnumber: FormEventHandler<HTMLFormElement> = e => {
     e.preventDefault()
     push(
@@ -57,8 +52,6 @@ export const InvoicesHeadersLayout: FC<Props> = ({
       }`
     )
   }
-
-  
 
   return (
     <>
@@ -73,11 +66,7 @@ export const InvoicesHeadersLayout: FC<Props> = ({
           alignItems: 'center'
         }}
       >
-        <Avatar
-        
-        src={second.src}
-        style={{ width: '75px', height: '75px' }}
-      />
+        <Avatar src={second.src} style={{ width: '75px', height: '75px' }} />
         <h1 className="text-5xl font-bold">Facturacion</h1>
         <AvatarGroup
           isBordered
@@ -110,7 +99,7 @@ export const InvoicesHeadersLayout: FC<Props> = ({
       <div className="container m-auto pb-10">
         <div className="grid grid-cols-12 justify-between gap-10 ">
           <div className="grid col-span-5 flex-col">
-            <form onSubmit={handleSubmitnumber} >
+            <form onSubmit={handleSubmitnumber}>
               <Input
                 aria-label="Buscar numero"
                 placeholder="Buscar numero"
@@ -120,23 +109,21 @@ export const InvoicesHeadersLayout: FC<Props> = ({
                 size="md"
               />
             </form>
-            </div>
-            <div className="grid col-span-5 flex-col">
-            <form onSubmit={handleSubmitcontact} >
+          </div>
+          <div className="grid col-span-5 flex-col">
+            <form onSubmit={handleSubmitcontact}>
               <Input
                 aria-label="Buscar contacto"
                 placeholder="Buscar contacto"
                 onChange={handleContactChange}
                 value={searchContact}
-                startContent={<TbSearch />}         
+                startContent={<TbSearch />}
                 size="md"
               />
             </form>
-            </div>
-    
-          <div
-            className="flex col-span-2 flex-row justify-end"
-          >
+          </div>
+
+          <div className="flex col-span-2 flex-row justify-end">
             <Button onPress={handleClean} variant={'flat'} color="danger">
               <TbTrashFilled size={20} /> <Spacer x={1} /> Limpiar filtros
             </Button>

@@ -1,10 +1,10 @@
 export const contactAttachmentsColumns = [
     {
-      name: 'Nombre',
+      name: 'NOMBRE',
       uid: 'name'
     },  
     {
-        name: 'Fecha',
+        name: 'FECHA',
         uid: 'date'
       },
     {

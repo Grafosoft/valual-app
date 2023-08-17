@@ -8,7 +8,7 @@ export interface ItemsList {
     costPrice:     number;
     lastcostPrice: number;
     bagtaxPrice:   number;
-    image:         null;
+    image:         string;
     observations:  string;
     isInventory:   boolean;
     isFavorite:    boolean;

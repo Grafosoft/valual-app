@@ -10,7 +10,7 @@ import {
   ReactNode
 } from 'react'
 import { CgFormatJustify, CgClose } from 'react-icons/cg'
-import {  TbUser } from 'react-icons/tb'
+import { TbUser } from 'react-icons/tb'
 
 const SidebarContext = createContext(false)
 
@@ -18,51 +18,55 @@ export const Sidebar: FC<PropsWithChildren> = ({ children }) => {
   const [expanded, setExpanded] = useState(true)
   const { data } = useSession()
   const { push } = useRouter()
-  const [isActive, setActive] = useState(true);
+  const [isActive, setActive] = useState(true)
   const handleToggle = () => {
-    setActive(!isActive);
-  };
-
-
-
-
- 
+    setActive(!isActive)
+  }
 
   return (
     <>
-      <div style={{ minWidth: isActive ? '75px' : '300px'  }}></div>
-   
-   
-<button className={`${isActive ? "" : "left-[-300px]"} absolute   text-4xl top-5 left-4 cursor-pointer`} onClick={handleToggle} >
-   <CgFormatJustify />
-  </button>
+      <div style={{ minWidth: isActive ? '75px' : '300px' }}></div>
 
-  <div className={`sidebar ${isActive ? "left-[-300px]" : "left-[0px]"}
+      <button
+        className={`${
+          isActive ? '' : 'left-[-300px]'
+        } absolute   text-4xl top-5 left-4 cursor-pointer`}
+        onClick={handleToggle}
+      >
+        <CgFormatJustify />
+      </button>
+
+      <div
+        className={`sidebar ${isActive ? 'left-[-300px]' : 'left-[0px]'}
    fixed top-0 bottom-0  duration-1000
-    p-2 w-[300px] overflow-y-auto text-center  h-screen  `}>
-
-      <div className="h-full flex flex-col border-r dark:border-none shadow-sm">
-      <div className="p-2.5 mt-1 flex row-span-1 justify-between rounded-md  ">
-       
-        <h1 className="font-medium">Opciones</h1>
-        <i className="cursor-pointer" onClick={handleToggle} ><CgClose/></i>
-        
-
-
-      </div>
-      <SidebarContext.Provider value={expanded}>
+    p-2 w-[300px] overflow-y-auto text-center  h-screen  `}
+      >
+        <div className="h-full flex flex-col border-r dark:border-none shadow-sm">
+          <div className="p-2.5 mt-1 flex row-span-1 justify-between rounded-md  ">
+            <h1 className="font-medium">Opciones</h1>
+            <i className="cursor-pointer" onClick={handleToggle}>
+              <CgClose />
+            </i>
+          </div>
+          <SidebarContext.Provider value={expanded}>
             <ul className=" flex-1 px-3">{children}</ul>
           </SidebarContext.Provider>
 
-
-          <div className=" cursor-pointer  border-t dark:border-none flex p-3"
-          onClick={() => push( `/usuario/${localStorage.getItem('apikey')}?&apikey=${localStorage.getItem('apikey')}`)}> 
+          <div
+            className=" cursor-pointer  border-t dark:border-none flex p-3"
+            onClick={() =>
+              push(
+                `/usuario/${localStorage.getItem(
+                  'apikey'
+                )}?&apikey=${localStorage.getItem('apikey')}`
+              )
+            }
+          >
             <Avatar
               showFallback
               fallback={<TbUser size={25} />}
               size="md"
               radius="sm"
-              
               src={data?.user.image || ''}
             />
             <div
@@ -78,9 +82,9 @@ export const Sidebar: FC<PropsWithChildren> = ({ children }) => {
                 </span>
               </div>
             </div>
-          </div> 
-    </div>
-    </div>
+          </div>
+        </div>
+      </div>
     </>
   )
 }
@@ -129,40 +133,42 @@ export const SidebarItem: FC<SidebarItemProps> = ({
             )}&companyId=${localStorage.getItem('companyId')}&page=0`
           )
         } else if (urlPath === '/numeracion') {
-            push(
-              `/numeracion?apikey=${localStorage.getItem(
-                'apikey'
-              )}&companyId=${localStorage.getItem('companyId')}`
-            )
-          } else if (urlPath === '/almacenes') {
-            push(
-              `/almacenes?apikey=${localStorage.getItem('apikey')}&companyId=${localStorage.getItem('companyId')}`
-            )
-          } else if (urlPath === '/bancos') {
-            push(
-              `/bancos?apikey=${localStorage.getItem(
-                'apikey'
-              )}&companyId=${localStorage.getItem('companyId')}`
-            )
-          } else if (urlPath === '/archivos') {
-            push(
-              `/archivos?apikey=${localStorage.getItem(
-                'apikey'
-              )}&companyId=${localStorage.getItem('companyId')}`
-            )
-          } else if (urlPath === '/vendedores') {
-            push(
-              `/vendedores?apikey=${localStorage.getItem(
-                'apikey'
-              )}&companyId=${localStorage.getItem('companyId')}`
-            )
-          }else if (urlPath === '/facturas') {
-            push(
-              `/facturas?apikey=${localStorage.getItem(
-                'apikey'
-              )}&companyId=${localStorage.getItem('companyId')}`
-            )
-          }else {
+          push(
+            `/numeracion?apikey=${localStorage.getItem(
+              'apikey'
+            )}&companyId=${localStorage.getItem('companyId')}`
+          )
+        } else if (urlPath === '/almacenes') {
+          push(
+            `/almacenes?apikey=${localStorage.getItem(
+              'apikey'
+            )}&companyId=${localStorage.getItem('companyId')}`
+          )
+        } else if (urlPath === '/bancos') {
+          push(
+            `/bancos?apikey=${localStorage.getItem(
+              'apikey'
+            )}&companyId=${localStorage.getItem('companyId')}`
+          )
+        } else if (urlPath === '/archivos') {
+          push(
+            `/archivos?apikey=${localStorage.getItem(
+              'apikey'
+            )}&companyId=${localStorage.getItem('companyId')}`
+          )
+        } else if (urlPath === '/vendedores') {
+          push(
+            `/vendedores?apikey=${localStorage.getItem(
+              'apikey'
+            )}&companyId=${localStorage.getItem('companyId')}`
+          )
+        } else if (urlPath === '/facturas') {
+          push(
+            `/facturas?apikey=${localStorage.getItem(
+              'apikey'
+            )}&companyId=${localStorage.getItem('companyId')}`
+          )
+        } else {
           push(urlPath)
         }
       }}

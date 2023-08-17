@@ -8,61 +8,56 @@ import { ContactsDetailsList } from '../../../../interfaces/contacts/contactsDet
 import { ContactsDetails } from '../../../../layout/contacts/contactsDetails'
 
 interface Props {
-    data: ContactsDetailsList
-    id: string | undefined
-    apikey: string | undefined
-    companyId: string | undefined
-
-  }
-
-  const Detallescontactos: NextPage<Props> = ({ data, id, apikey }) => {
-    const { status } = useSession()
-    const { replace } = useRouter()
-  
-    useEffect(() => {
-      status === 'unauthenticated' && replace('/')
-    }, [status, replace])
-
-    return(
-        <>
-        <Head>
-          <title>{data.commercialName}</title>
-         
-
-        </Head>
-       <ContactsDetails data={data} />
-        </>
-    )
+  data: ContactsDetailsList
+  id: string | undefined
+  apikey: string | undefined
+  companyId: string | undefined
 }
 
+const Detallescontactos: NextPage<Props> = ({ data, id, apikey }) => {
+  const { status } = useSession()
+  const { replace } = useRouter()
+
+  useEffect(() => {
+    status === 'unauthenticated' && replace('/')
+  }, [status, replace])
+
+  return (
+    <>
+      <Head>
+        <title>{data.commercialName}</title>
+      </Head>
+      <ContactsDetails data={data} />
+    </>
+  )
+}
 
 export const getServerSideProps: GetServerSideProps = async ctx => {
-    let id = ctx.params?.id || ''
-    const apikey = ctx.query.apikey?.toString() || ''
-        const companyId = ctx.query.companyId || '0'
+  let id = ctx.params?.id || ''
+  const apikey = ctx.query.apikey?.toString() || ''
+  const companyId = ctx.query.companyId || '0'
 
-  
- 
-    const response = await valualApi.get<ContactsDetailsList>(
-        `contacts/${id}/?companyId=${companyId}&apikey=${ctx.query.apikey}`
-    )
-  
-    console.log( `contacts/${id}/?companyId=${companyId}&apikey=${ctx.query.apikey}`)
-    if (!response ) {
-      return {
-        notFound: true,
-        redirect: '/404'
-      }
-    }
-  
+  const response = await valualApi.get<ContactsDetailsList>(
+    `contacts/${id}/?companyId=${companyId}&apikey=${ctx.query.apikey}`
+  )
+
+  console.log(
+    `contacts/${id}/?companyId=${companyId}&apikey=${ctx.query.apikey}`
+  )
+  if (!response) {
     return {
-      props: {
-        data: response.data,
-        apikey,
-        id,
-        companyId: ctx.query?.companyId, 
-
-      }
+      notFound: true,
+      redirect: '/404'
     }
   }
-  export default Detallescontactos
+
+  return {
+    props: {
+      data: response.data,
+      apikey,
+      id,
+      companyId: ctx.query?.companyId
+    }
+  }
+}
+export default Detallescontactos

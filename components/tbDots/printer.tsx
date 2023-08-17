@@ -1,60 +1,62 @@
-import { CircularProgress, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Modal, ModalBody, ModalContent, ModalHeader, useDisclosure } from '@nextui-org/react'
+import {
+  CircularProgress,
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownTrigger,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalHeader,
+  useDisclosure
+} from '@nextui-org/react'
 import React, { FC, useState } from 'react'
 import { TbDots, TbPrinter } from 'react-icons/tb'
 
 interface Props {
-   
-    text: string | undefined
-    description: string | undefined
-    url: string 
+  text: string | undefined
+  description: string | undefined
+  url: string
+}
 
- 
-  }
-  
-export const PrinterModal: FC<Props> = ({text,url,description
-  
-  }) => {
-    const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure()
+export const PrinterModal: FC<Props> = ({ text, url, description }) => {
+  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure()
   const [pdfView, setPdfView] = useState('')
   const [isLoadingModal, setIsLoadingModal] = useState(false)
 
   const handleVisible = () => {
     setIsLoadingModal(true)
-       
-          setPdfView(url)
-          setIsLoadingModal(false)
+    setPdfView(url)
+    setIsLoadingModal(false)
   }
-  
-    return (
-        <div className="flex flex-row">
-        <Dropdown placement="bottom">
-          <DropdownTrigger>
-            <div className="container">
-              <TbDots size={25} cursor={'pointer'} />
-            </div>
-          </DropdownTrigger>
 
-          
-         
-          <DropdownMenu 
+  return (
+    <div className="flex flex-row">
+      <Dropdown placement="bottom">
+        <DropdownTrigger>
+          <div className="container">
+            <TbDots size={25} cursor={'pointer'} />
+          </div>
+        </DropdownTrigger>
+
+        <DropdownMenu
           onAction={actionKey => {
             if (actionKey === 'print') {
               handleVisible()
-            } 
+            }
           }}
           aria-label="Mas acciones"
         >
-
           <DropdownItem
             key="print"
             startContent={<TbPrinter />}
             onClick={onOpen}
-            >  
-         Imprimir
+          >
+            Imprimir
           </DropdownItem>
-          </DropdownMenu>
-          </Dropdown>
-          <Modal
+        </DropdownMenu>
+      </Dropdown>
+      <Modal
         closeButton
         backdrop="blur"
         size="full"
@@ -65,14 +67,11 @@ export const PrinterModal: FC<Props> = ({text,url,description
       >
         <ModalContent>
           <ModalHeader>
-            <h2 id="modal-title">
-              Nombre {text}           
-            </h2>
-           
+            <h2 id="modal-title">Nombre {text}</h2>
           </ModalHeader>
-          <ModalBody> 
+          <ModalBody>
             {description}
-           
+
             {isLoadingModal ? (
               <div
                 className="container"
@@ -92,14 +91,11 @@ export const PrinterModal: FC<Props> = ({text,url,description
                 />
               </div>
             ) : (
-              <embed
-                style={{ height: '100%' }}
-                src={`${pdfView}`}
-              />
+              <embed style={{ height: '100%' }} src={`${pdfView}`} />
             )}
           </ModalBody>
         </ModalContent>
       </Modal>
     </div>
-
-    )} 
+  )
+}

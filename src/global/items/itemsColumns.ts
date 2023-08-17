@@ -1,23 +1,23 @@
 export const columns = [
     {
-      name: 'Productos',
+      name: 'PRODUCTOS',
       uid: 'name'
     },
     {
-      name: 'Inventario',
+      name: 'INVENTARIO',
       uid: 'isInventory'
     },
     {
-      name: 'Estado',
+      name: 'ESTADO',
       uid: 'isActive'
     },
     
     {
-      name: 'Precio de venta',
+      name: 'PRECIO DE VENTA',
       uid: 'salePrice'
     },
     {
-      name: 'Precio de costo',
+      name: 'PRECIO DE COSTO',
       uid: 'costPrice'
     },
   {

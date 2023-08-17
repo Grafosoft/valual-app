@@ -21,60 +21,65 @@ export const Sidebar: FC<PropsWithChildren> = ({ children }) => {
 
   return (
     <>
+      <div className="hidden lg:flex">
+        <div style={{ minWidth: expanded ? '250px' : '75px' }}></div>
+        <aside
+          className={`h-screen fixed`}
+          style={{ maxWidth: expanded ? '250px' : '75px', zIndex: '5' }}
+        >
+          <nav className="h-full flex flex-col border-r dark:border-none shadow-sm">
+            <div className="p-4 pb-2 flex justify-between items-center">
+              <div></div>
+              <button
+                onClick={() => setExpanded(curr => !curr)}
+                className="p-1.5 rounded-lg bg-gray-50 dark:bg-transparent hover:bg-gray-100 "
+              >
+                {expanded ? (
+                  <CgPushChevronLeft size={20} />
+                ) : (
+                  <CgPushChevronRight size={20} />
+                )}
+              </button>
+            </div>
 
-    <div className="hidden lg:flex">
-      <div style={{ minWidth: expanded ? '250px' : '75px' }}></div>
-      <aside
-        className={`h-screen fixed`}
-        style={{ maxWidth: expanded ? '250px' : '75px', zIndex: '5' }}
-      >
-        <nav className="h-full flex flex-col border-r dark:border-none shadow-sm">
-          <div className="p-4 pb-2 flex justify-between items-center">
-            <div></div>
-            <button
-              onClick={() => setExpanded(curr => !curr)}
-              className="p-1.5 rounded-lg bg-gray-50 dark:bg-transparent hover:bg-gray-100 "
-            >
-              {expanded ? (
-                <CgPushChevronLeft size={20} />
-              ) : (
-                <CgPushChevronRight size={20} />
-              )}
-            </button>
-          </div>
+            <SidebarContext.Provider value={expanded}>
+              <ul className="flex-1 px-3">{children}</ul>
+            </SidebarContext.Provider>
 
-          <SidebarContext.Provider value={expanded}>
-            <ul className="flex-1 px-3">{children}</ul>
-          </SidebarContext.Provider>
-
-
-          <div className=" cursor-pointer  border-t dark:border-none flex p-3"
-          onClick={() => push( `/usuario/${localStorage.getItem('apikey')}?&apikey=${localStorage.getItem('apikey')}`)}> 
-            <Avatar
-              showFallback
-              fallback={<TbUser size={25} />}
-              size="md"
-              radius="sm"
-              
-              src={data?.user.image || ''}
-            />
             <div
-              className={`
+              className=" cursor-pointer  border-t dark:border-none flex p-3"
+              onClick={() =>
+                push(
+                  `/usuario/${localStorage.getItem(
+                    'apikey'
+                  )}?&apikey=${localStorage.getItem('apikey')}`
+                )
+              }
+            >
+              <Avatar
+                showFallback
+                fallback={<TbUser size={25} />}
+                size="md"
+                radius="sm"
+                src={data?.user.image || ''}
+              />
+              <div
+                className={`
               flex justify-between items-center
               overflow-hidden transition-all ${expanded ? 'w-52 ml-3' : 'w-0'}
           `}
-            >
-              <div className="leading-4">
-                <h4 className="font-medium">{data?.user.name || ''}</h4>
-                <span className="text-xs text-gray-400">
-                  {data?.user.email || ''}
-                </span>
+              >
+                <div className="leading-4">
+                  <h4 className="font-medium">{data?.user.name || ''}</h4>
+                  <span className="text-xs text-gray-400">
+                    {data?.user.email || ''}
+                  </span>
+                </div>
               </div>
             </div>
-          </div>
-        </nav>
-      </aside>
-    </div>
+          </nav>
+        </aside>
+      </div>
     </>
   )
 }
@@ -123,40 +128,42 @@ export const SidebarItem: FC<SidebarItemProps> = ({
             )}&companyId=${localStorage.getItem('companyId')}&page=0`
           )
         } else if (urlPath === '/numeracion') {
-            push(
-              `/numeracion?apikey=${localStorage.getItem(
-                'apikey'
-              )}&companyId=${localStorage.getItem('companyId')}`
-            )
-          } else if (urlPath === '/almacenes') {
-            push(
-              `/almacenes?apikey=${localStorage.getItem('apikey')}&companyId=${localStorage.getItem('companyId')}`
-            )
-          } else if (urlPath === '/bancos') {
-            push(
-              `/bancos?apikey=${localStorage.getItem(
-                'apikey'
-              )}&companyId=${localStorage.getItem('companyId')}`
-            )
-          } else if (urlPath === '/archivos') {
-            push(
-              `/archivos?apikey=${localStorage.getItem(
-                'apikey'
-              )}&companyId=${localStorage.getItem('companyId')}`
-            )
-          } else if (urlPath === '/vendedores') {
-            push(
-              `/vendedores?apikey=${localStorage.getItem(
-                'apikey'
-              )}&companyId=${localStorage.getItem('companyId')}`
-            )
-          }else if (urlPath === '/facturas') {
-            push(
-              `/facturas?apikey=${localStorage.getItem(
-                'apikey'
-              )}&companyId=${localStorage.getItem('companyId')}`
-            )
-          }else {
+          push(
+            `/numeracion?apikey=${localStorage.getItem(
+              'apikey'
+            )}&companyId=${localStorage.getItem('companyId')}`
+          )
+        } else if (urlPath === '/almacenes') {
+          push(
+            `/almacenes?apikey=${localStorage.getItem(
+              'apikey'
+            )}&companyId=${localStorage.getItem('companyId')}`
+          )
+        } else if (urlPath === '/bancos') {
+          push(
+            `/bancos?apikey=${localStorage.getItem(
+              'apikey'
+            )}&companyId=${localStorage.getItem('companyId')}`
+          )
+        } else if (urlPath === '/archivos') {
+          push(
+            `/archivos?apikey=${localStorage.getItem(
+              'apikey'
+            )}&companyId=${localStorage.getItem('companyId')}`
+          )
+        } else if (urlPath === '/vendedores') {
+          push(
+            `/vendedores?apikey=${localStorage.getItem(
+              'apikey'
+            )}&companyId=${localStorage.getItem('companyId')}`
+          )
+        } else if (urlPath === '/facturas') {
+          push(
+            `/facturas?apikey=${localStorage.getItem(
+              'apikey'
+            )}&companyId=${localStorage.getItem('companyId')}`
+          )
+        } else {
           push(urlPath)
         }
       }}

@@ -34,7 +34,6 @@ export default function FourOhFour() {
               color: '#006FEE'
             }}
           >
-            
             404
           </h1>
           <h3

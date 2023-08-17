@@ -1,22 +1,22 @@
 export const filesColumns = [
     {
-      name: 'Titulo',
+      name: 'TITULO',
       uid: 'title'
     },  
     {
-        name: 'Fecha',
+        name: 'FECHA',
         uid: 'date'
       },
       {
-        name: 'Tipo',
+        name: 'TIPO',
         uid: 'type'
       },
       {
-        name: 'Fuente',
+        name: 'FUENTE',
         uid: 'source'
       },
       {
-        name: 'Ubicacion',
+        name: 'UBICACION',
         uid: 'location'
       },
     {

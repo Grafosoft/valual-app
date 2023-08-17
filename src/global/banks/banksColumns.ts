@@ -1,10 +1,10 @@
 export const banksColumns = [
     {
-      name: 'Nombre',
+      name: 'NOMBRE',
       uid: 'name'
     },  
     {
-        name: 'Tipo',
+        name: 'TIPO',
         uid: 'type'
       },
 

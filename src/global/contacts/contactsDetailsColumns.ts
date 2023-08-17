@@ -4,16 +4,16 @@ export const contactsDetailsColumns = [
       uid: 'name'
     },
     {
-      name: 'Rol',
+      name: 'ROL',
       uid: 'rol'
     },
     {
-      name: 'Celular',
+      name: 'CELULAR',
       uid: 'phone'
     },
 
     {
-      name: 'Observaciones',
+      name: 'OBSERVACIONES',
       uid: 'observations'
     }
   ]

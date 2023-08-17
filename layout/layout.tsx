@@ -1,38 +1,31 @@
-import {Link, Spacer } from '@nextui-org/react'
+import { Link, Spacer } from '@nextui-org/react'
 import React, { FC, PropsWithChildren } from 'react'
-import { SocialFooter } from './socialfooter';
+import { SocialFooter } from './socialfooter'
 
-
-
-
-
-export const Layout: FC<PropsWithChildren> = ({ children })=>{
-    return (
-     
-        <div
+export const Layout: FC<PropsWithChildren> = ({ children }) => {
+  return (
+    <div
+      className="container"
+      style={{
+        minHeight: 'calc(100vh - 80px)',
+        minWidth: '100vw',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center'
+      }}
+    >
+      <div
         className="container"
         style={{
-          minHeight: 'calc(100vh - 80px)',
-          minWidth: '100vw',
+          maxWidth: '650px',
           display: 'flex',
           flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center'
+          justifyContent: 'center'
         }}
       >
-        <div
-          className="container"
-          style={{
-            maxWidth: '650px',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center'
-          }}
-        >
-           
-                
-                {children}
-                </div>
+        {children}
+      </div>
       <Spacer y={2} />
       <SocialFooter />
       <Spacer y={1} />
@@ -50,10 +43,7 @@ export const Layout: FC<PropsWithChildren> = ({ children })=>{
         <Spacer x={1} />
         <span> - </span>
         <Spacer x={1} />
-        <Link
-          href="https://valual.com/politica-de-privacidad/"
-          target="_blank"
-        >
+        <Link href="https://valual.com/politica-de-privacidad/" target="_blank">
           Políticia de privacidad
         </Link>
       </div>

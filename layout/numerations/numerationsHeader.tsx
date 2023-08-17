@@ -13,12 +13,12 @@ interface Props {
 }
 
 export const NumerationsHeadersLayout: FC<Props> = ({
-    numerations,
-    apikey,
-    companyId
+  numerations,
+  apikey,
+  companyId
 }) => {
   const { push } = useRouter()
-  const [searchNumerations , setSearchNumerations] = useState('')
+  const [searchNumerations, setSearchNumerations] = useState('')
 
   const limitAvatar = 5
 
@@ -26,8 +26,6 @@ export const NumerationsHeadersLayout: FC<Props> = ({
     setSearchNumerations('')
     push(`numeracion/?companyId=${companyId}&apikey=${apikey}&page=0`)
   }
-
-
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchNumerations(e.target.value)
@@ -40,8 +38,6 @@ export const NumerationsHeadersLayout: FC<Props> = ({
         searchNumerations !== '' ? `&name=${searchNumerations}` : ''
       }`
     )
-
-    
   }
 
   return (
@@ -57,11 +53,7 @@ export const NumerationsHeadersLayout: FC<Props> = ({
           alignItems: 'center'
         }}
       >
-        <Avatar
-        
-        src={second.src}
-        style={{ width: '75px', height: '75px' }}
-      />
+        <Avatar src={second.src} style={{ width: '75px', height: '75px' }} />
         <h1 className="text-5xl font-bold">Numeracion</h1>
         <AvatarGroup
           isBordered
@@ -85,8 +77,6 @@ export const NumerationsHeadersLayout: FC<Props> = ({
                   radius="lg"
                   src=""
                   alt={element.name}
-
-                 
                 />
               )
           )}

@@ -19,9 +19,8 @@ import { RenderCellInvoices } from '../../../layout/invoices/RenderCellInvoices'
 import { invoicesColumns } from '@/global/invoices/invoicesColumns'
 import { InvoicesHeadersLayout } from '../../../layout/invoices/invoicesHeader'
 
-
 interface Props {
-    invoices: InvoicesList[]
+  invoices: InvoicesList[]
   apikey: string | undefined
   companyId: string | undefined
   page: string | undefined
@@ -30,7 +29,7 @@ interface Props {
 }
 
 const InvoicesList: NextPage<Props> = ({
-    invoices,
+  invoices,
   apikey,
   companyId,
   page,
@@ -56,13 +55,13 @@ const InvoicesList: NextPage<Props> = ({
         apikey={apikey}
         companyId={companyId}
       />
-    
+
       <Spacer y={1} />
       <Table
         aria-label="Lista de Facturas"
         style={{ height: 'auto', minWidth: '100%' }}
-        isStriped shadow="none"
-       
+        isStriped
+        shadow="none"
       >
         <TableHeader columns={invoicesColumns}>
           {column => <TableColumn key={column.uid}>{column.name}</TableColumn>}
@@ -85,8 +84,7 @@ const InvoicesList: NextPage<Props> = ({
         }`}
         urlNext={`facturas/?companyId=${companyId}&apikey=${apikey}&page=${currentPage}`}
         currentPage={currentPage}
-        color={"primary"}
-
+        color={'primary'}
       />
     </>
   )
@@ -98,18 +96,12 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
   const apikey = ctx.query.apikey?.toString() || ''
   const companyId = ctx.query.companyId?.toString() || ''
   const page = ctx.query.page || '0'
-  const number = ctx.query.number || ""
-  const contactId = ctx.query.contactId || "" 
-  
-
-      
-  
+  const number = ctx.query.number || ''
+  const contactId = ctx.query.contactId || ''
 
   const response = await valualApi.get<InvoicesList[]>(
     `invoices/?companyId=${companyId}&apikey=${ctx.query.apikey}&page=${page}&number=${number}&contactId=${contactId}`
   )
-
-
 
   if (!response) {
     return {
@@ -118,11 +110,11 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
     }
   }
 
-console.log(response.data)
+  console.log(response.data)
 
   return {
     props: {
-        invoices: response.data,
+      invoices: response.data,
       apikey,
       companyId,
       page,

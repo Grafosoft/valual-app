@@ -1,26 +1,26 @@
 export const numerationsColumns = [
     {
-      name: 'Nombre',
+      name: 'NOMBRE',
       uid: 'name'
     },   {
-      name: 'Autorizacion',
+      name: 'AUTORIZACION',
       uid: 'authorization'
     }, 
     {
-      name: 'Estado',
+      name: 'ESTADO',
       uid: 'status'
     },
 
     {
-      name: 'Rango',
+      name: 'RANGO',
       uid: 'currentNumber'
     },
     {
-      name: 'Software',
+      name: 'SOFTWARE',
       uid: 'software'
     },
     {
-        name: 'Fecha',
+        name: 'FECHA',
         uid: 'date'
       },
     

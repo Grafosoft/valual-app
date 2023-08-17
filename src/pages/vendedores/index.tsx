@@ -15,34 +15,24 @@ import { SellersList } from '../../../interfaces/sellers/sellersList'
 import { sellersColumns } from '@/global/sellers/sellersColumn'
 import { RenderCellSellers } from '../../../layout/sellers/RenderCellSellers'
 
-
 interface Props {
-    sellers: SellersList[]
-    apikey: string | undefined
-    companyId: string | undefined
- 
- 
+  sellers: SellersList[]
+  apikey: string | undefined
+  companyId: string | undefined
 }
-const SellersList: NextPage<Props> = ({
-    sellers,apikey, companyId
-
-
-}) => {
-
-
-
-
+const SellersList: NextPage<Props> = ({ sellers, apikey, companyId }) => {
   return (
     <>
       <Head>
         <title>Vendedores</title>
       </Head>
-     
+
       <Spacer y={1} />
       <Table
         aria-label="Vendedores"
         style={{ height: 'auto', minWidth: '100%' }}
-        isStriped shadow="none"
+        isStriped
+        shadow="none"
       >
         <TableHeader columns={sellersColumns}>
           {column => <TableColumn key={column.uid}>{column.name}</TableColumn>}
@@ -59,7 +49,6 @@ const SellersList: NextPage<Props> = ({
           )}
         </TableBody>
       </Table>
-     
     </>
   )
 }
@@ -67,10 +56,8 @@ const SellersList: NextPage<Props> = ({
 export default SellersList
 
 export const getServerSideProps: GetServerSideProps = async ctx => {
-    const apikey = ctx.query.apikey?.toString() || ''
-    const companyId = ctx.query.companyId?.toString() || '' 
- 
-
+  const apikey = ctx.query.apikey?.toString() || ''
+  const companyId = ctx.query.companyId?.toString() || ''
 
   const response = await valualApi.get<SellersList[]>(
     `sellers/?companyId=${companyId}&apikey=${ctx.query.apikey}`
@@ -87,7 +74,7 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
     props: {
       sellers: response.data,
       apikey,
-      companyId,
+      companyId
     }
   }
 }

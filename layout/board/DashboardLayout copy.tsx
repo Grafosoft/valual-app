@@ -22,24 +22,18 @@ interface Props {
 export const DashboardLayout: FC<Props> = ({ children }) => {
   const { pathname } = useRouter()
   const { status } = useSession()
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false)
 
-
- 
   return (
-  
-      
     <div className="flex">
-    {status === 'authenticated' && (
-        <Sidebar open={sidebarOpen} setOpen={setSidebarOpen}  >
-            <SidebarItem
+      {status === 'authenticated' && (
+        <Sidebar open={sidebarOpen} setOpen={setSidebarOpen}>
+          <SidebarItem
             icon={<TbShoppingBag size={25} />}
             text="Productos"
             urlPath={`/catalogo`}
-            active={pathname===('/catalogo')}
-            
+            active={pathname === '/catalogo'}
           />
-          
           <SidebarItem
             icon={<TbUsers size={25} />}
             text="Clientes"
@@ -52,13 +46,13 @@ export const DashboardLayout: FC<Props> = ({ children }) => {
             urlPath={`/numeracion`}
             active={pathname === '/numeracion'}
           />
-           <SidebarItem
+          <SidebarItem
             icon={<MdWarehouse size={25} />}
             text="Almacences"
             urlPath={`/almacenes`}
             active={pathname === '/almacenes'}
           />
-           <SidebarItem
+          <SidebarItem
             icon={<BsBank size={25} />}
             text="Bancos"
             urlPath={`/bancos`}
@@ -70,34 +64,27 @@ export const DashboardLayout: FC<Props> = ({ children }) => {
             urlPath={`/archivos`}
             active={pathname === '/archivos'}
           />
-           <SidebarItem
+          <SidebarItem
             icon={<TbUserDollar size={25} />}
             text="Vendedores"
             urlPath={`/vendedores`}
             active={pathname === '/vendedores'}
           />
-           <SidebarItem
+          <SidebarItem
             icon={<TbFileInvoice size={25} />}
             text="Facturas"
             urlPath={`/facturas`}
             active={pathname === '/facturas'}
           />
-          
         </Sidebar>
+      )}
 
-        
-         )}
-     
-        
-   
-    
-   
-      
-
-    <div className="w-full">
-        {status === 'authenticated' && <NavbarUser onMenuButtonClick={() => setSidebarOpen((prev) => !prev)}/>}
-         {children}
-         </div>
-        </div>
-
-  )}
+      <div className="w-full">
+        {status === 'authenticated' && (
+          <NavbarUser onMenuButtonClick={() => setSidebarOpen(prev => !prev)} />
+        )}
+        {children}
+      </div>
+    </div>
+  )
+}

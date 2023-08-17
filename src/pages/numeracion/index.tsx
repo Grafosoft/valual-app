@@ -19,18 +19,15 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 
-
-
-
 interface Props {
-    numerations: NumerationsList[]
+  numerations: NumerationsList[]
   apikey: string | undefined
   companyId: string | undefined
   page: string | undefined
 }
 
 const NumerationsList: NextPage<Props> = ({
-numerations,
+  numerations,
   apikey,
   companyId,
   page
@@ -58,7 +55,8 @@ numerations,
       <Table
         aria-label="Factura"
         style={{ height: 'auto', minWidth: '100%' }}
-        isStriped shadow="none"
+        isStriped
+        shadow="none"
       >
         <TableHeader columns={numerationsColumns}>
           {column => <TableColumn key={column.uid}>{column.name}</TableColumn>}
@@ -68,7 +66,10 @@ numerations,
             <TableRow key={item.id}>
               {columnKey => (
                 <TableCell>
-                  <RenderCellNumerations Numeration={item} columnKey={columnKey} />
+                  <RenderCellNumerations
+                    numeration={item}
+                    columnKey={columnKey}
+                  />
                 </TableCell>
               )}
             </TableRow>
@@ -81,8 +82,7 @@ numerations,
         }`}
         urlNext={`numeracion/?companyId=${companyId}&apikey=${apikey}&page=${currentPage}`}
         currentPage={currentPage}
-        color={"primary"}
-
+        color={'primary'}
       />
     </>
   )
@@ -109,11 +109,10 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
 
   return {
     props: {
-    numerations:response.data,
+      numerations: response.data,
       apikey,
       companyId,
-      page,
-      
+      page
     }
   }
 }

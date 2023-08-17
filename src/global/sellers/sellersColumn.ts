@@ -1,6 +1,6 @@
 export const sellersColumns = [
     {
-      name: 'Nombre',
+      name: 'NOMBRE',
       uid: 'name'
     },  
    

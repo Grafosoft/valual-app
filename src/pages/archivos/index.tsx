@@ -19,20 +19,14 @@ import { FilesHeaderLayout } from '../../../layout/files/filesHeader'
 import { filesColumns } from '@/global/files/filesColumns'
 import { RenderCellFiles } from '../../../layout/files/RenderCellFiles'
 
-
 interface Props {
-    files: FilesList[]
+  files: FilesList[]
   apikey: string | undefined
   companyId: string | undefined
   page: string | undefined
 }
 
-const FilesList: NextPage<Props> = ({
-  files,
-  apikey,
-  companyId,
-  page
-}) => {
+const FilesList: NextPage<Props> = ({ files, apikey, companyId, page }) => {
   const [currentPage, setCurrentPage] = useState(0)
   const { status } = useSession()
   const { replace } = useRouter()
@@ -47,24 +41,20 @@ const FilesList: NextPage<Props> = ({
       <Head>
         <title>Archivos</title>
       </Head>
-      <FilesHeaderLayout
-        files={files}
-        apikey={apikey}
-        companyId={companyId}
-      />
+      <FilesHeaderLayout files={files} apikey={apikey} companyId={companyId} />
       <Spacer y={1} />
       <Table
         aria-label="Lista de Clientes"
         style={{ height: 'auto', minWidth: '100%' }}
-        isStriped shadow="none"
-       
+        isStriped
+        shadow="none"
       >
         <TableHeader columns={filesColumns}>
           {column => <TableColumn key={column.uid}>{column.name}</TableColumn>}
         </TableHeader>
         <TableBody items={files} emptyContent={'No hay datos por mostrar.'}>
           {item => (
-            <TableRow key={item.id} >
+            <TableRow key={item.id}>
               {columnKey => (
                 <TableCell>
                   <RenderCellFiles files={item} columnKey={columnKey} />
@@ -80,8 +70,7 @@ const FilesList: NextPage<Props> = ({
         }`}
         urlNext={`archivos/?companyId=${companyId}&apikey=${apikey}&page=${currentPage}`}
         currentPage={currentPage}
-        color={"primary"}
-
+        color={'primary'}
       />
     </>
   )

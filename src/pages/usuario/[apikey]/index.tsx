@@ -7,67 +7,52 @@ import valualApi from '@/apis/valualApi'
 import { UserList } from '../../../../interfaces/user/userList'
 import { UsersDetails } from '../../../../layout/users/usersDetails'
 
-
-
 interface Props {
-    data: UserList
-    apikey1: string | undefined
-    apikey: string | undefined
-  
-
-  }
-
-  const DetallesUsuarios: NextPage<Props> = ({ data,  apikey }) => {
-    const { status } = useSession()
-    const { replace } = useRouter()
-  
-    useEffect(() => {
-      status === 'unauthenticated' && replace('/')
-    }, [status, replace])
-
-    return(
-        <>
-        <Head>
-          <title>{data.name}</title>
-         
-
-        </Head>
-        <UsersDetails data={data} />
-
-
-        
-        </>
-    )
+  data: UserList
+  apikey1: string | undefined
+  apikey: string | undefined
 }
 
+const DetallesUsuarios: NextPage<Props> = ({ data, apikey }) => {
+  const { status } = useSession()
+  const { replace } = useRouter()
+
+  useEffect(() => {
+    status === 'unauthenticated' && replace('/')
+  }, [status, replace])
+
+  return (
+    <>
+      <Head>
+        <title>{data.name}</title>
+      </Head>
+      <UsersDetails data={data} />
+    </>
+  )
+}
 
 export const getServerSideProps: GetServerSideProps = async ctx => {
-    const apikey1 = ctx.query.apikey1?.toString() || ''
+  const apikey1 = ctx.query.apikey1?.toString() || ''
 
-        let apikey = ctx.params?.apikey || ''
+  let apikey = ctx.params?.apikey || ''
 
-  
- 
-    const response = await valualApi.get<UserList>(
-        `users/${apikey}?&apikey=${ctx.query.apikey1}`
-    )
-  
-   
-    if (!response ) {
-      return {
-        notFound: true,
-        redirect: '/404'
-      }
-    }
-  
+  const response = await valualApi.get<UserList>(
+    `users/${apikey}?&apikey=${ctx.query.apikey1}`
+  )
+
+  if (!response) {
     return {
-      props: {
-        data: response.data,
-        apikey1,
-        apikey,   
-   
-
-      }
+      notFound: true,
+      redirect: '/404'
     }
   }
-  export default DetallesUsuarios
+
+  return {
+    props: {
+      data: response.data,
+      apikey1,
+      apikey
+    }
+  }
+}
+export default DetallesUsuarios

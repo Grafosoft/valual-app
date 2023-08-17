@@ -1,87 +1,93 @@
-import { Avatar } from "@nextui-org/react";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/router";
-import React, { useRef, useState , useContext,
+import { Avatar } from '@nextui-org/react'
+import { useSession } from 'next-auth/react'
+import { useRouter } from 'next/router'
+import React, {
+  useRef,
+  useState,
+  useContext,
   createContext,
   FC,
-  ReactNode} from "react";
-import { TbUser } from "react-icons/tb";
-import { useOnClickOutside } from "usehooks-ts";
+  ReactNode
+} from 'react'
+import { TbUser } from 'react-icons/tb'
+import { useOnClickOutside } from 'usehooks-ts'
 import { CgPushChevronLeft, CgPushChevronRight } from 'react-icons/cg'
 const SidebarContext = createContext(false)
 
-
-
-
 interface Props {
   children: ReactNode
-  open: boolean;
-  setOpen(open: boolean): void;
+  open: boolean
+  setOpen(open: boolean): void
 }
 
-  export const Sidebar: FC<Props> = ({ children,open,setOpen }) => {
-
+export const Sidebar: FC<Props> = ({ children, open, setOpen }) => {
   const [expanded, setExpanded] = useState(true)
   const { data } = useSession()
   const { push } = useRouter()
-  const ref = useRef<HTMLDivElement>(null);
-  useOnClickOutside(ref, (e) => {
-    setOpen(false);
-  });
+  const ref = useRef<HTMLDivElement>(null)
+  useOnClickOutside(ref, e => {
+    setOpen(false)
+  })
   return (
     <div
-    style={{ width: expanded ? '250px' : '75px' , zIndex: '20'}}
-    className={`flex flex-col justify-between bg-gray-50 md:h-screen  md:sticky   top-0 fixed  h-full transition-transform .3s ease-in-out md:-translate-x-0
-    ${!open ? "-translate-x-full " : ""}` }
+      style={{ width: expanded ? '250px' : '75px', zIndex: '20' }}
+      className={`flex flex-col justify-between bg-gray-50 md:h-screen  md:sticky   top-0 fixed  h-full transition-transform .3s ease-in-out md:-translate-x-0
+    ${!open ? '-translate-x-full ' : ''}`}
       ref={ref}
-
     >
       <div className="p-4 pb-2 flex justify-between items-center">
-            <div></div>
-            <button
-              onClick={() => setExpanded(curr => !curr)}
-              className="p-1.5 rounded-lg dark:bg-transparent hover:bg-gray-100 "
-            >
-              {expanded ? (
-                <CgPushChevronLeft size={20} />
-              ) : (
-                <CgPushChevronRight size={20} />
-              )}
-            </button>
-          </div>
-      
-         <SidebarContext.Provider value={expanded}>
-         <ul className=" flex-1 px-3">{children}</ul>
-          </SidebarContext.Provider>
+        <div></div>
+        <button
+          onClick={() => setExpanded(curr => !curr)}
+          className="p-1.5 rounded-lg dark:bg-transparent hover:bg-gray-100 "
+        >
+          {expanded ? (
+            <CgPushChevronLeft size={20} />
+          ) : (
+            <CgPushChevronRight size={20} />
+          )}
+        </button>
+      </div>
 
-     <div className=" cursor-pointer  border-t dark:border-none flex p-3"
-          onClick={() => push( `/usuario/${localStorage.getItem('apikey')}?&apikey=${localStorage.getItem('apikey')}`)}> 
-            <Avatar
-              showFallback
-              fallback={<TbUser size={25} />}
-              size="md"
-              radius="sm"
-              
-              src={data?.user.image || ''}
-            />
-            <div
-              className={`
+      <SidebarContext.Provider value={expanded}>
+        <ul className=" flex-1 px-3">{children}</ul>
+      </SidebarContext.Provider>
+
+      <div
+        className=" cursor-pointer  border-t dark:border-none flex p-3"
+        onClick={() =>
+          push(
+            `/usuario/${localStorage.getItem(
+              'apikey'
+            )}?&apikey=${localStorage.getItem('apikey')}`
+          )
+        }
+      >
+        <Avatar
+          showFallback
+          fallback={<TbUser size={25} />}
+          size="md"
+          radius="sm"
+          src={data?.user.image || ''}
+        />
+        <div
+          className={`
               flex justify-between items-center
               overflow-hidden transition-all ${expanded ? 'w-52 ml-3' : 'w-0'}
           `}
-            >
-              <div className="leading-4">
-                <h4 className="font-medium">{data?.user.name || ''}</h4>
-                <span className="text-xs text-gray-400">
-                  {data?.user.email || ''}
-                </span>
-              </div>
-            </div>
-          </div> 
+        >
+          <div className="leading-4">
+            <h4 className="font-medium">{data?.user.name || ''}</h4>
+            <span className="text-xs text-gray-400">
+              {data?.user.email || ''}
+            </span>
           </div>
+        </div>
+      </div>
+    </div>
   )
 }
-export default Sidebar;
+export default Sidebar
 
 interface SidebarItemProps {
   icon: ReactNode
@@ -127,40 +133,42 @@ export const SidebarItem: FC<SidebarItemProps> = ({
             )}&companyId=${localStorage.getItem('companyId')}&page=0`
           )
         } else if (urlPath === '/numeracion') {
-            push(
-              `/numeracion?apikey=${localStorage.getItem(
-                'apikey'
-              )}&companyId=${localStorage.getItem('companyId')}`
-            )
-          } else if (urlPath === '/almacenes') {
-            push(
-              `/almacenes?apikey=${localStorage.getItem('apikey')}&companyId=${localStorage.getItem('companyId')}`
-            )
-          } else if (urlPath === '/bancos') {
-            push(
-              `/bancos?apikey=${localStorage.getItem(
-                'apikey'
-              )}&companyId=${localStorage.getItem('companyId')}`
-            )
-          } else if (urlPath === '/archivos') {
-            push(
-              `/archivos?apikey=${localStorage.getItem(
-                'apikey'
-              )}&companyId=${localStorage.getItem('companyId')}`
-            )
-          } else if (urlPath === '/vendedores') {
-            push(
-              `/vendedores?apikey=${localStorage.getItem(
-                'apikey'
-              )}&companyId=${localStorage.getItem('companyId')}`
-            )
-          }else if (urlPath === '/facturas') {
-            push(
-              `/facturas?apikey=${localStorage.getItem(
-                'apikey'
-              )}&companyId=${localStorage.getItem('companyId')}`
-            )
-          }else {
+          push(
+            `/numeracion?apikey=${localStorage.getItem(
+              'apikey'
+            )}&companyId=${localStorage.getItem('companyId')}`
+          )
+        } else if (urlPath === '/almacenes') {
+          push(
+            `/almacenes?apikey=${localStorage.getItem(
+              'apikey'
+            )}&companyId=${localStorage.getItem('companyId')}`
+          )
+        } else if (urlPath === '/bancos') {
+          push(
+            `/bancos?apikey=${localStorage.getItem(
+              'apikey'
+            )}&companyId=${localStorage.getItem('companyId')}`
+          )
+        } else if (urlPath === '/archivos') {
+          push(
+            `/archivos?apikey=${localStorage.getItem(
+              'apikey'
+            )}&companyId=${localStorage.getItem('companyId')}`
+          )
+        } else if (urlPath === '/vendedores') {
+          push(
+            `/vendedores?apikey=${localStorage.getItem(
+              'apikey'
+            )}&companyId=${localStorage.getItem('companyId')}`
+          )
+        } else if (urlPath === '/facturas') {
+          push(
+            `/facturas?apikey=${localStorage.getItem(
+              'apikey'
+            )}&companyId=${localStorage.getItem('companyId')}`
+          )
+        } else {
           push(urlPath)
         }
       }}

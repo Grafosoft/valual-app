@@ -19,7 +19,6 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 
-
 interface Props {
   contacts: ContactsList[]
   apikey: string | undefined
@@ -56,8 +55,8 @@ const ContactList: NextPage<Props> = ({
       <Table
         aria-label="Lista de Clientes"
         style={{ height: 'auto', minWidth: '100%' }}
-        isStriped shadow="none"
-       
+        isStriped
+        shadow="none"
       >
         <TableHeader columns={contactsColumns}>
           {column => <TableColumn key={column.uid}>{column.name}</TableColumn>}
@@ -80,8 +79,7 @@ const ContactList: NextPage<Props> = ({
         }`}
         urlNext={`contactos/?companyId=${companyId}&apikey=${apikey}&page=${currentPage}`}
         currentPage={currentPage}
-        color={"primary"}
-
+        color={'primary'}
       />
     </>
   )

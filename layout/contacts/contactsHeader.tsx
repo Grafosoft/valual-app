@@ -26,8 +26,6 @@ export const ContactsHeadersLayout: FC<Props> = ({
     push(`contactos/?companyId=${companyId}&apikey=${apikey}&page=0`)
   }
 
-
-
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchContact(e.target.value)
   }
@@ -39,8 +37,6 @@ export const ContactsHeadersLayout: FC<Props> = ({
         searchContact !== '' ? `&name=${searchContact}` : ''
       }`
     )
-
-    
   }
 
   return (
@@ -56,11 +52,7 @@ export const ContactsHeadersLayout: FC<Props> = ({
           alignItems: 'center'
         }}
       >
-        <Avatar
-        
-        src={second.src}
-        style={{ width: '75px', height: '75px' }}
-      />
+        <Avatar src={second.src} style={{ width: '75px', height: '75px' }} />
         <h1 className="text-5xl font-bold">Clientes</h1>
         <AvatarGroup
           isBordered
