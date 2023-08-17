@@ -13,7 +13,7 @@ import { NavbarUser } from '../../components/navbar/Navbar'
 
 import { BsBank } from 'react-icons/bs'
 import { MdWarehouse } from 'react-icons/md'
-import { Sidebar, SidebarItem } from '../sidebar/sidebar'
+import { Sidebar, SidebarItem } from '../sidebar/sidebar copy'
 
 interface Props {
   children: ReactNode
@@ -81,7 +81,7 @@ export const DashboardLayout: FC<Props> = ({ children }) => {
         </Sidebar>
       )}
       <div className="w-full">
-        {status === 'authenticated' && <NavbarUser onMenuButtonClick={() => setSidebarOpen((prev) => !prev)}/>}
+        {status === 'authenticated' && <NavbarUser />}
         {children}
       </div>
     </div>
