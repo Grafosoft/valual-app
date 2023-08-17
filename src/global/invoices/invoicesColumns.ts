@@ -4,17 +4,18 @@ export const invoicesColumns = [
       uid: 'contact'
     }, 
     {
-      name: 'Estado',
-      uid: 'status'
-    },  
+      name: 'Numero de factura',
+      uid: 'number'
+    }, 
+     {
+      name: 'Documento',
+      uid: 'document'
+    }, 
     {
         name: 'Fecha',
         uid: 'date'
       },
-    {
-      name: 'Fecha de vencimiento',
-      uid: 'dueDate'
-    },
+   
     {
       name: 'Fecha de creacion',
       uid: 'createDate'

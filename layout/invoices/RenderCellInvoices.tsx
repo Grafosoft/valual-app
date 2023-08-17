@@ -66,12 +66,31 @@ export const RenderCellInvoices: FC<Props> = ({
            description={invoices.contact.identification}
         />
       )
-      case 'status':
+      case 'number':
         return (
           <p className="font-medium">
-            {invoices.status}
+            {invoices.number}
           </p>
         )
+        case 'document':
+          return (
+            <div className="container">
+              <div className="flex ">
+                <p className="font-medium" style={{ textTransform: 'capitalize' }}>
+                  {invoices.document.name}
+                </p>
+              </div>
+              <div className="flex text-gray-400">
+                <p
+                  style={{
+                    textTransform: 'capitalize'
+                  }}
+                >
+                  {invoices.document.code}
+                </p>
+              </div>
+            </div>
+          )
 
       case 'date':
         return (

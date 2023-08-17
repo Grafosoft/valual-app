@@ -78,7 +78,7 @@ export const InvoicesHeadersLayout: FC<Props> = ({
         src={second.src}
         style={{ width: '75px', height: '75px' }}
       />
-        <h1 className="text-5xl font-bold">Clientes</h1>
+        <h1 className="text-5xl font-bold">Facturacion</h1>
         <AvatarGroup
           isBordered
           max={5}
