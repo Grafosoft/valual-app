@@ -1,4 +1,4 @@
-import React, { FC, ReactNode } from 'react'
+import React, { FC, ReactNode, useState } from 'react'
 import {
   TbNumber,
   TbShoppingBag,
@@ -13,7 +13,7 @@ import { NavbarUser } from '../../components/navbar/Navbar'
 
 import { BsBank } from 'react-icons/bs'
 import { MdWarehouse } from 'react-icons/md'
-import { Sidebar, SidebarItem } from '../sidebar/sidebar copy'
+import { Sidebar, SidebarItem } from '../sidebar/sidebar'
 
 interface Props {
   children: ReactNode
@@ -22,6 +22,8 @@ interface Props {
 export const DashboardLayout: FC<Props> = ({ children }) => {
   const { pathname } = useRouter()
   const { status } = useSession()
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
 
  
   return (
@@ -81,7 +83,7 @@ export const DashboardLayout: FC<Props> = ({ children }) => {
         </Sidebar>
       )}
       <div className="w-full">
-        {status === 'authenticated' && <NavbarUser />}
+        {status === 'authenticated' && <NavbarUser onMenuButtonClick={() => setSidebarOpen((prev) => !prev)}/>}
         {children}
       </div>
     </div>

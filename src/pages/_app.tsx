@@ -4,7 +4,8 @@ import { NextUIProvider } from "@nextui-org/react";
 import { SessionProvider } from 'next-auth/react'
 import React from "react";
 import {ThemeProvider as NextThemesProvider} from "next-themes";
-import { DashboardLayout } from "../../layout/board/DashboardLayout";
+import { DashboardLayout } from "../../layout/board/DashboardLayout copy";
+
 
 
 export default function App({ Component, 
