@@ -30,7 +30,7 @@ interface Props {
   });
   return (
     <div
-    style={{ width: expanded ? '250px' : '75px' , zIndex: '15'}}
+    style={{ width: expanded ? '250px' : '75px' , zIndex: '20'}}
     className={`flex flex-col justify-between bg-gray-50 md:h-screen  md:sticky   top-0 fixed  h-full transition-transform .3s ease-in-out md:-translate-x-0
     ${!open ? "-translate-x-full " : ""}` }
       ref={ref}
