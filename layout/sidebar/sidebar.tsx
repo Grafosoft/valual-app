@@ -24,18 +24,19 @@ export const Sidebar: FC<Props> = ({ children, open, setOpen }) => {
   const [expanded, setExpanded] = useState(true)
   const { data } = useSession()
   const { push } = useRouter()
+
   const ref = useRef<HTMLDivElement>(null)
   useOnClickOutside(ref, e => {
     setOpen(false)
   })
   return (
-    <div className="h-full flex flex-col border-r dark:border-none shadow-sm">
+    <div className="flex flex-col border-r dark:border-none shadow-sm">
       <div
-        style={{ width: expanded ? '250px' : '75px', zIndex: '20' }}
-        className={`flex flex-col justify-between md:bg-inherit bg-gray-50 md:h-screen md:sticky dark:bg-black md:dark:bg-inherit top-0 fixed  h-full transition-transform .3s ease-in-out md:-translate-x-0
-    ${!open ? '-translate-x-full ' : ''}`}
-
-
+        style={{ width: expanded ? '250px' : '75px' }}
+        className={`z-20 flex flex-col justify-between
+        md:bg-inherit bg-gray-50 md:h-screen md:sticky dark:bg-black
+        md:dark:bg-inherit top-0 fixed  h-full transition-transform
+        .3s ease-in-out md:-translate-x-0 ${!open ? '-translate-x-full ' : ''}`}
         ref={ref}
       >
         <div className="p-4 pb-2 flex justify-between items-center">
@@ -198,7 +199,7 @@ export const SidebarItem: FC<SidebarItemProps> = ({
           className={`
           absolute left-full rounded-md px-2 py-1 ml-6
           bg-sky-100 text-sky-800 text-sm
-          invisible opacity-20 -translate-x-3 transition-all
+          md:invisible opacity-20 -translate-x-3 transition-all
           group-hover:visible group-hover:opacity-100 group-hover:translate-x-0
       `}
         >

@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import React, { useEffect } from 'react'
 import valualApi from '@/apis/valualApi'
 import { UserList } from '../../../../interfaces/user/userList'
-import { UsersDetails } from '../../../../layout/users/usersDetails'
+import { UsersDetails } from '../../../../layout/users/UsersDetails'
 
 interface Props {
   data: UserList
