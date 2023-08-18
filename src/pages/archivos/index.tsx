@@ -15,7 +15,7 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { FilesList } from '../../../interfaces/files/filesList'
-import { FilesHeaderLayout } from '../../../layout/files/filesHeader'
+import { FilesHeaderLayout } from '../../../layout/files/FilesHeader'
 import { filesColumns } from '@/global/files/filesColumns'
 import { RenderCellFiles } from '../../../layout/files/RenderCellFiles'
 

@@ -11,7 +11,7 @@ import {
 import { ItemsList } from '../../interfaces/items/itemsList'
 import { MdOutlineInventory2 } from 'react-icons/md'
 import { TbCheck, TbX, TbHeart, TbHeartFilled, TbList } from 'react-icons/tb'
-import { Cardbuttondetails } from '../../components/componentsDetails/cardbuttondetails'
+import { CardButtonDetails } from '../../components/componentsDetails/CardButtonDetails'
 import { InformationDiv } from '../../components/componentsDetails/InformationDiv'
 
 interface Props {
@@ -24,7 +24,7 @@ export const ItemsDetailsHeader: FC<Props> = ({ data }) => {
   return (
     <>
       <div className=" p-5 gap-5 ">
-        <Cardbuttondetails
+        <CardButtonDetails
           TextoBoton1={'ver movimientos'}
           TextoBoton2={'Inventario'}
           IconoBoton1={<TbList />}

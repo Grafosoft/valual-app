@@ -4,7 +4,7 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import React, { useEffect } from 'react'
 import { ItemsList } from '../../../../interfaces/items/itemsList'
-import { ItemsDetailsHeader } from '../../../../layout/items/itemsDetailsHeader'
+import { ItemsDetailsHeader } from '../../../../layout/items/ItemsDetailsHeader'
 import valualApi from '@/apis/valualApi'
 
 interface Props {

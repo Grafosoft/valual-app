@@ -9,7 +9,7 @@ import { UsersDetails } from '../../../../layout/users/usersDetails'
 
 interface Props {
   data: UserList
-  apikey1: string | undefined
+  apikeyUrl: string | undefined
   apikey: string | undefined
 }
 
@@ -32,12 +32,12 @@ const DetallesUsuarios: NextPage<Props> = ({ data, apikey }) => {
 }
 
 export const getServerSideProps: GetServerSideProps = async ctx => {
-  const apikey1 = ctx.query.apikey1?.toString() || ''
+  const apikeyUrl = ctx.query.apikeyUrl?.toString() || ''
 
   let apikey = ctx.params?.apikey || ''
 
   const response = await valualApi.get<UserList>(
-    `users/${apikey}?&apikey=${ctx.query.apikey1}`
+    `users/${apikey}?&apikey=${ctx.query.apikeyUrl}`
   )
 
   if (!response) {
@@ -50,7 +50,7 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
   return {
     props: {
       data: response.data,
-      apikey1,
+      apikeyUrl,
       apikey
     }
   }

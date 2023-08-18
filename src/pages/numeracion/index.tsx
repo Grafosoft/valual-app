@@ -1,6 +1,6 @@
 import valualApi from '@/apis/valualApi'
 import { NumerationsList } from '../../../interfaces/numerations/numerationsList'
-import { NumerationsHeadersLayout } from '../../../layout/numerations/numerationsHeader'
+import { NumerationsHeadersLayout } from '../../../layout/numerations/NumerationsHeader'
 import { numerationsColumns } from '@/global/numerations/numerationsColumns'
 import { RenderCellNumerations } from '../../../layout/numerations/RenderCellNumerations'
 import { PaginationList } from '../../../components/pagination/PaginationList'

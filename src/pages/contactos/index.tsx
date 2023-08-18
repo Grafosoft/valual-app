@@ -2,7 +2,7 @@ import valualApi from '@/apis/valualApi'
 import { PaginationList } from '../../../components/pagination/PaginationList'
 import { contactsColumns } from '@/global/contacts/contactsColumns'
 import { ContactsList } from '../../../interfaces/contacts/contactsList'
-import { ContactsHeadersLayout } from '../../../layout/contacts/contactsHeader'
+import { ContactsHeadersLayout } from '../../../layout/contacts/ContactsHeader'
 import { RenderCellContacts } from '../../../layout/contacts/RenderCellContacts'
 import {
   Spacer,

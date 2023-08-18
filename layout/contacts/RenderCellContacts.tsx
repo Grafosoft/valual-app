@@ -1,6 +1,5 @@
 import React, { FC, useEffect, useState } from 'react'
 import { TbArrowBigRightLinesFilled } from 'react-icons/tb'
-
 import { Chip, Spacer, User } from '@nextui-org/react'
 import { useRouter } from 'next/router'
 import { ContactsList } from '../../interfaces/contacts/contactsList'

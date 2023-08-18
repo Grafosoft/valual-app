@@ -3,7 +3,6 @@ import { contactsDetailsColumns } from '@/global/contacts/contactsDetailsColumns
 import { RenderCellContactsDetails } from './RenderCellContactsDetails'
 import { Contact } from '../../interfaces/contacts/contactsDetailsList'
 import {
-  Card,
   CardBody,
   CardHeader,
   Table,

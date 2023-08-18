@@ -6,7 +6,7 @@ import React, { useEffect } from 'react'
 import valualApi from '@/apis/valualApi'
 import Head from 'next/head'
 
-import { CatalHeaderLayout } from '../../../layout/items/itemsHeader'
+import { CatalHeaderLayout } from '../../../layout/items/ItemsHeader'
 import {
   Table,
   TableBody,

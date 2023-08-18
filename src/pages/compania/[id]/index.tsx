@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import React, { useEffect } from 'react'
 import valualApi from '@/apis/valualApi'
 import { CompaniesDetailsList } from '../../../../interfaces/companies/companiesDetailsList'
-import { ContactsDetails } from '../../../../layout/companies/companiesDetails'
+import { ContactsDetails } from '../../../../layout/companies/CompaniesDetails'
 
 interface Props {
   data: CompaniesDetailsList

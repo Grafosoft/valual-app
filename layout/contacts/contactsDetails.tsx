@@ -9,11 +9,11 @@ import {
 } from '@nextui-org/react'
 import { TbCheck, TbX, TbBellFilled, TbList, TbUser } from 'react-icons/tb'
 import { ContactsDetailsList } from '../../interfaces/contacts/contactsDetailsList'
-import { TabletContactsDetails } from './tabletContactsDetails'
 import { InformationDiv } from '../../components/componentsDetails/InformationDiv'
-import { Cardbuttondetails } from '../../components/componentsDetails/cardbuttondetails'
-import { IconsDestailsContact } from '../../components/componentsDetails/iconsdetailscontact'
+import { CardButtonDetails } from '../../components/componentsDetails/CardButtonDetails'
+import { IconsDestailsContact } from '../../components/componentsDetails/IconsDetailsContact'
 import { ContactsAttachments } from './contactsAttachments'
+import { TabletContactsDetails } from './tabletContactsDetails'
 
 interface Props {
   data: ContactsDetailsList
@@ -23,7 +23,7 @@ export const ContactsDetails: FC<Props> = ({ data }) => {
   return (
     <>
       <div className=" p-5 gap-5 ">
-        <Cardbuttondetails
+        <CardButtonDetails
           TextoBoton1={'ver'}
           TextoBoton2={'ver'}
           IconoBoton1={<TbList />}

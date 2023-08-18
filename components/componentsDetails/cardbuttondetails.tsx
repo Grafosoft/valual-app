@@ -2,15 +2,16 @@ import { Button, Card, Spacer } from '@nextui-org/react'
 import React, { FC } from 'react'
 import { TbEdit, TbArrowBackUp, TbList } from 'react-icons/tb'
 import { MdOutlineInventory2 } from 'react-icons/md'
+import { IconType } from 'react-icons'
 
 interface Props {
   TextoBoton1: string
   TextoBoton2: string
-  IconoBoton1: any
-  IconoBoton2: any
+  IconoBoton1: React.ReactNode
+  IconoBoton2: React.ReactNode
 }
 
-export const Cardbuttondetails: FC<Props> = ({
+export const CardButtonDetails: FC<Props> = ({
   TextoBoton1,
   TextoBoton2,
   IconoBoton1,

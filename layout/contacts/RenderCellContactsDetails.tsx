@@ -1,9 +1,6 @@
 import { User } from '@nextui-org/react'
 import React, { FC } from 'react'
-import {
-  Contact,
-  ContactsDetailsList
-} from '../../interfaces/contacts/contactsDetailsList'
+import { Contact } from '../../interfaces/contacts/contactsDetailsList'
 
 interface Props {
   cont: Contact

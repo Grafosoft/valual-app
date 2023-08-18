@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { FC } from 'react'
 import { signOut } from 'next-auth/react'
 import { Image } from '@nextui-org/react'
 import { SwitchTheme } from '../switch/SwitchTheme'
@@ -6,16 +6,16 @@ import { TbBellFilled, TbLogout, TbSettingsFilled } from 'react-icons/tb'
 import { useRouter } from 'next/router'
 import { CgFormatJustify } from 'react-icons/cg'
 
-type Props = {
-  onMenuButtonClick(): void
+interface Props {
+  onMenuButtonClick: () => void
 }
 
-export const NavbarUser = (props: Props) => {
+export const NavbarUser: FC<Props> = ({ onMenuButtonClick }) => {
   const { push } = useRouter()
 
   return (
     <div className="flex w-full p-5 justify-between">
-      <button className="md:hidden" onClick={props.onMenuButtonClick}>
+      <button className="md:hidden" onClick={onMenuButtonClick}>
         <CgFormatJustify className="h-6 w-6" />
       </button>
 
