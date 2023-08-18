@@ -29,58 +29,62 @@ export const Sidebar: FC<Props> = ({ children, open, setOpen }) => {
     setOpen(false)
   })
   return (
-    <div
-      style={{ width: expanded ? '250px' : '75px', zIndex: '20' }}
-      className={`flex flex-col justify-between bg-gray-50 md:h-screen  md:sticky   top-0 fixed  h-full transition-transform .3s ease-in-out md:-translate-x-0
-    ${!open ? '-translate-x-full ' : ''}`}
-      ref={ref}
-    >
-      <div className="p-4 pb-2 flex justify-between items-center">
-        <div></div>
-        <button
-          onClick={() => setExpanded(curr => !curr)}
-          className="p-1.5 rounded-lg dark:bg-transparent hover:bg-gray-100 "
-        >
-          {expanded ? (
-            <CgPushChevronLeft size={20} />
-          ) : (
-            <CgPushChevronRight size={20} />
-          )}
-        </button>
-      </div>
-
-      <SidebarContext.Provider value={expanded}>
-        <ul className=" flex-1 px-3">{children}</ul>
-      </SidebarContext.Provider>
-
+    <div className="h-full flex flex-col border-r dark:border-none shadow-sm">
       <div
-        className=" cursor-pointer  border-t dark:border-none flex p-3"
-        onClick={() =>
-          push(
-            `/usuario/${localStorage.getItem(
-              'apikey'
-            )}?&apikey=${localStorage.getItem('apikey')}`
-          )
-        }
+        style={{ width: expanded ? '250px' : '75px', zIndex: '20' }}
+        className={`flex flex-col justify-between md:bg-inherit bg-gray-50 md:h-screen md:sticky dark:bg-black md:dark:bg-inherit top-0 fixed  h-full transition-transform .3s ease-in-out md:-translate-x-0
+    ${!open ? '-translate-x-full ' : ''}`}
+
+
+        ref={ref}
       >
-        <Avatar
-          showFallback
-          fallback={<TbUser size={25} />}
-          size="md"
-          radius="sm"
-          src={data?.user.image || ''}
-        />
+        <div className="p-4 pb-2 flex justify-between items-center">
+          <div></div>
+          <button
+            onClick={() => setExpanded(curr => !curr)}
+            className="p-1.5 rounded-lg dark:bg-transparent hover:bg-gray-100 "
+          >
+            {expanded ? (
+              <CgPushChevronLeft className="hidden md:flex" size={20} />
+            ) : (
+              <CgPushChevronRight className="hidden md:flex" size={20} />
+            )}
+          </button>
+        </div>
+
+        <SidebarContext.Provider value={expanded}>
+          <ul className=" flex-1 px-3">{children}</ul>
+        </SidebarContext.Provider>
+
         <div
-          className={`
+          className=" cursor-pointer  border-t dark:border-none flex p-3"
+          onClick={() =>
+            push(
+              `/usuario/${localStorage.getItem(
+                'apikey'
+              )}?&apikey=${localStorage.getItem('apikey')}`
+            )
+          }
+        >
+          <Avatar
+            showFallback
+            fallback={<TbUser size={25} />}
+            size="md"
+            radius="sm"
+            src={data?.user.image || ''}
+          />
+          <div
+            className={`
               flex justify-between items-center
               overflow-hidden transition-all ${expanded ? 'w-52 ml-3' : 'w-0'}
           `}
-        >
-          <div className="leading-4">
-            <h4 className="font-medium">{data?.user.name || ''}</h4>
-            <span className="text-xs text-gray-400">
-              {data?.user.email || ''}
-            </span>
+          >
+            <div className="leading-4">
+              <h4 className="font-medium">{data?.user.name || ''}</h4>
+              <span className="text-xs text-gray-400">
+                {data?.user.email || ''}
+              </span>
+            </div>
           </div>
         </div>
       </div>
