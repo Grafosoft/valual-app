@@ -1,12 +1,11 @@
-import React, { FC, useState } from 'react'
+import React, { FC } from 'react'
 import {
   Attachment,
   ContactsDetailsList
 } from '../../interfaces/contacts/contactsDetailsList'
-import { useDisclosure } from '@nextui-org/react'
-import { PrinterModal } from '../../components/tbDots/printer'
 
 import valualApi from '@/apis/valualApi'
+import { PrinterModal } from '../../components/tbDots/printer'
 
 interface Props {
   contact?: ContactsDetailsList

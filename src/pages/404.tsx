@@ -17,7 +17,6 @@ export default function FourOhFour() {
         style={{
           minHeight: 'calc(100vh - 100px)',
           maxHeight: '100vh',
-
           margin: 'auto'
         }}
       >

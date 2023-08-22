@@ -1,5 +1,4 @@
 import React, { FC, useEffect, useState } from 'react'
-
 import { Chip, Spacer, User } from '@nextui-org/react'
 import { NumerationsList } from '../../interfaces/numerations/numerationsList'
 

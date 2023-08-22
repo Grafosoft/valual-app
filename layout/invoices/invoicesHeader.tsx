@@ -101,8 +101,8 @@ export const InvoicesHeadersLayout: FC<Props> = ({
           <div className="grid col-span-5 flex-col">
             <form onSubmit={handleSubmitnumber}>
               <Input
-                aria-label="Buscar numero"
-                placeholder="Buscar numero"
+                aria-label="Buscar por Numero de factura"
+                placeholder="Buscar por Numero de factura"
                 onChange={handleNumberChange}
                 value={searchNumber}
                 startContent={<TbSearch />}
@@ -113,8 +113,8 @@ export const InvoicesHeadersLayout: FC<Props> = ({
           <div className="grid col-span-5 flex-col">
             <form onSubmit={handleSubmitcontact}>
               <Input
-                aria-label="Buscar contacto"
-                placeholder="Buscar contacto"
+                aria-label="Buscar por Contacto"
+                placeholder="Buscar por Contacto"
                 onChange={handleContactChange}
                 value={searchContact}
                 startContent={<TbSearch />}

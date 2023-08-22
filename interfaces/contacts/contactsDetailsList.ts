@@ -34,7 +34,7 @@ export interface ContactsDetailsList {
 
 export interface Activity {
     id:       number;
-    code:     null | string;
+    code:     string;
     name:     string;
     country?: string;
 }

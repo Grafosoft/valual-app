@@ -13,7 +13,7 @@ interface Props {
   apikey: string | undefined
 }
 
-const DetallesUsuarios: NextPage<Props> = ({ data, apikey }) => {
+const DetailsUser: NextPage<Props> = ({ data, apikey }) => {
   const { status } = useSession()
   const { replace } = useRouter()
 
@@ -55,4 +55,4 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
     }
   }
 }
-export default DetallesUsuarios
+export default DetailsUser

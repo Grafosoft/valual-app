@@ -1,7 +1,6 @@
 import React, { FC } from 'react'
 import { Attachment } from '../../interfaces/contacts/contactsDetailsList'
 import {
-  Card,
   CardBody,
   CardHeader,
   Table,
@@ -10,7 +9,6 @@ import {
   TableColumn,
   TableHeader,
   TableRow,
-  Spacer
 } from '@nextui-org/react'
 import { RenderCellAttachments } from './RenderCellAttachments'
 import { contactAttachmentsColumns } from '@/global/contacts/contactsAttachmentsColumns'

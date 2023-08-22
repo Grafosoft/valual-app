@@ -1,4 +1,11 @@
-import { Avatar } from '@nextui-org/react'
+import {
+  Accordion,
+  AccordionItem,
+  Avatar,
+  Popover,
+  PopoverContent,
+  PopoverTrigger
+} from '@nextui-org/react'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import React, {
@@ -92,13 +99,13 @@ export const Sidebar: FC<Props> = ({ children, open, setOpen }) => {
     </div>
   )
 }
-export default Sidebar
 
 interface SidebarItemProps {
   icon: ReactNode
   text: string
   active?: boolean
-  alert?: boolean
+  dropdown?: boolean
+  sidebarList?: React.JSX.Element[]
   urlPath?: string
 }
 
@@ -106,13 +113,14 @@ export const SidebarItem: FC<SidebarItemProps> = ({
   icon,
   text,
   active,
-  alert,
+  dropdown,
+  sidebarList,
   urlPath = '/'
 }) => {
   const expanded = useContext(SidebarContext)
   const { push } = useRouter()
 
-  return (
+  const children = (
     <li
       className={`
         relative flex items-center py-2 px-3 my-1
@@ -125,60 +133,21 @@ export const SidebarItem: FC<SidebarItemProps> = ({
         }
     `}
       onClick={() => {
-        if (urlPath === '/catalogo') {
-          push(
-            `/catalogo?apikey=${localStorage.getItem(
-              'apikey'
-            )}&companyId=${localStorage.getItem('companyId')}&page=0`
-          )
-        } else if (urlPath === '/contactos') {
-          push(
-            `/contactos?apikey=${localStorage.getItem(
-              'apikey'
-            )}&companyId=${localStorage.getItem('companyId')}&page=0`
-          )
-        } else if (urlPath === '/numeracion') {
-          push(
-            `/numeracion?apikey=${localStorage.getItem(
-              'apikey'
-            )}&companyId=${localStorage.getItem('companyId')}`
-          )
-        } else if (urlPath === '/almacenes') {
-          push(
-            `/almacenes?apikey=${localStorage.getItem(
-              'apikey'
-            )}&companyId=${localStorage.getItem('companyId')}`
-          )
-        } else if (urlPath === '/bancos') {
-          push(
-            `/bancos?apikey=${localStorage.getItem(
-              'apikey'
-            )}&companyId=${localStorage.getItem('companyId')}`
-          )
-        } else if (urlPath === '/archivos') {
-          push(
-            `/archivos?apikey=${localStorage.getItem(
-              'apikey'
-            )}&companyId=${localStorage.getItem('companyId')}`
-          )
-        } else if (urlPath === '/vendedores') {
-          push(
-            `/vendedores?apikey=${localStorage.getItem(
-              'apikey'
-            )}&companyId=${localStorage.getItem('companyId')}`
-          )
-        } else if (urlPath === '/facturas') {
-          push(
-            `/facturas?apikey=${localStorage.getItem(
-              'apikey'
-            )}&companyId=${localStorage.getItem('companyId')}`
-          )
-        } else {
-          push(urlPath)
+        const urlApikey = urlPath.replace(
+          '$apikey',
+          localStorage.getItem('apikey') || ''
+        )
+        const urlCompanyId = urlApikey.replace(
+          '$companyId',
+          localStorage.getItem('companyId') || ''
+        )
+
+        if (!dropdown) {
+          push(urlCompanyId)
         }
       }}
     >
-      {icon}
+      <div className="">{icon}</div>
       <span
         className={`font-medium text-md overflow-hidden transition-all ${
           expanded ? 'w-52 ml-3' : 'w-0'
@@ -186,13 +155,6 @@ export const SidebarItem: FC<SidebarItemProps> = ({
       >
         {text}
       </span>
-      {alert && (
-        <div
-          className={`absolute right-2 w-2 h-2 rounded bg-sky-400 ${
-            expanded ? '' : 'top-2'
-          }`}
-        />
-      )}
 
       {!expanded && (
         <div
@@ -207,5 +169,32 @@ export const SidebarItem: FC<SidebarItemProps> = ({
         </div>
       )}
     </li>
+  )
+
+
+
+  return dropdown && expanded ? (
+    <Accordion className="px-0" isCompact>
+      <AccordionItem
+
+        aria-label={text}
+        isCompact
+        title={text}
+        startContent={icon}
+        className="py-2 px-3"
+      >
+
+        {sidebarList}
+      </AccordionItem>
+    </Accordion>
+  ) : dropdown && !expanded ? (
+    <Popover placement="right" showArrow offset={25}>
+      <PopoverTrigger> {children}</PopoverTrigger>
+      <PopoverContent>
+        <div className="px-1 py-2">{sidebarList}</div>
+      </PopoverContent>
+    </Popover>
+  ) : (
+    children
   )
 }

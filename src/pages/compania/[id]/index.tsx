@@ -13,7 +13,7 @@ interface Props {
   companyId: string | undefined
 }
 
-const Detallescompania: NextPage<Props> = ({ data, apikey }) => {
+const DetailsCompanies: NextPage<Props> = ({ data, apikey }) => {
   const { status } = useSession()
   const { replace } = useRouter()
 
@@ -54,4 +54,4 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
     }
   }
 }
-export default Detallescompania
+export default DetailsCompanies

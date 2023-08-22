@@ -6,7 +6,6 @@ import {
   Spacer,
   Avatar,
   Switch,
-  Button
 } from '@nextui-org/react'
 import { ItemsList } from '../../interfaces/items/itemsList'
 import { MdOutlineInventory2 } from 'react-icons/md'

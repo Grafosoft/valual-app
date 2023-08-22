@@ -4,17 +4,18 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import React, { useEffect } from 'react'
 import valualApi from '@/apis/valualApi'
-import { ContactsDetailsList } from '../../../../interfaces/contacts/contactsDetailsList'
-import { ContactsDetails } from '../../../../layout/contacts/ContactsDetails'
+
+import { InvoicesDetailsList } from '../../../../interfaces/invoices/invoicesDetailsList'
+import { InvoicesDetails } from '../../../../layout/invoices/InvoicesDetails'
 
 interface Props {
-  data: ContactsDetailsList
+  data: InvoicesDetailsList
   id: string | undefined
   apikey: string | undefined
   companyId: string | undefined
 }
 
-const DetailsContact: NextPage<Props> = ({ data, id, apikey }) => {
+const DetailsInvoices: NextPage<Props> = ({ data, id, apikey }) => {
   const { status } = useSession()
   const { replace } = useRouter()
 
@@ -25,9 +26,10 @@ const DetailsContact: NextPage<Props> = ({ data, id, apikey }) => {
   return (
     <>
       <Head>
-        <title>{data.commercialName}</title>
+        <title>{data.company.name}</title>
       </Head>
-      <ContactsDetails data={data} />
+      <InvoicesDetails data={data} />
+
     </>
   )
 }
@@ -37,12 +39,12 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
   const apikey = ctx.query.apikey?.toString() || ''
   const companyId = ctx.query.companyId || '0'
 
-  const response = await valualApi.get<ContactsDetailsList>(
-    `contacts/${id}/?companyId=${companyId}&apikey=${ctx.query.apikey}`
+  const response = await valualApi.get<InvoicesDetailsList>(
+    `invoices/${id}/?companyId=${companyId}&apikey=${ctx.query.apikey}`
   )
 
   console.log(
-    `contacts/${id}/?companyId=${companyId}&apikey=${ctx.query.apikey}`
+    `invoices/${id}/?companyId=${companyId}&apikey=${ctx.query.apikey}`
   )
   if (!response) {
     return {
@@ -60,4 +62,4 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
     }
   }
 }
-export default DetailsContact
+export default DetailsInvoices
