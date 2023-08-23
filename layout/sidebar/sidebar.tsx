@@ -99,6 +99,8 @@ export const Sidebar: FC<Props> = ({ children, open, setOpen }) => {
     </div>
   )
 }
+export default Sidebar
+
 
 interface SidebarItemProps {
   icon: ReactNode
@@ -189,7 +191,7 @@ export const SidebarItem: FC<SidebarItemProps> = ({
     </Accordion>
   ) : dropdown && !expanded ? (
     <Popover placement="right" showArrow offset={25}>
-      <PopoverTrigger> {children}</PopoverTrigger>
+      <PopoverTrigger>{children}</PopoverTrigger>
       <PopoverContent>
         <div className="px-1 py-2">{sidebarList}</div>
       </PopoverContent>
@@ -198,3 +200,5 @@ export const SidebarItem: FC<SidebarItemProps> = ({
     children
   )
 }
+
+

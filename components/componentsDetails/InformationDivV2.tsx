@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 
 interface Props {
     text: string
-    info: string | undefined
+    info: string | undefined | number
 
   }
 

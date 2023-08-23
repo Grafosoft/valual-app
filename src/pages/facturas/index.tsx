@@ -17,7 +17,7 @@ import React, { useEffect, useState } from 'react'
 import { InvoicesList } from '../../../interfaces/invoices/invoicesList'
 import { RenderCellInvoices } from '../../../layout/invoices/RenderCellInvoices'
 import { invoicesColumns } from '@/global/invoices/invoicesColumns'
-import { InvoicesHeadersLayout } from '../../../layout/invoices/InvoicesHeader'
+import { InvoicesHeadersLayout } from '../../../layout/invoices/invoicesHeader'
 
 interface Props {
   invoices: InvoicesList[]
@@ -33,8 +33,7 @@ const InvoicesList: NextPage<Props> = ({
   apikey,
   companyId,
   page,
-  number,
-  contactId
+
 }) => {
   const [currentPage, setCurrentPage] = useState(0)
   const { status } = useSession()

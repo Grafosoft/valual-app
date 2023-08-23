@@ -1,20 +1,16 @@
 import React, { FC } from 'react'
 import {
   Attachment,
-  ContactsDetailsList
 } from '../../interfaces/contacts/contactsDetailsList'
+import { PrinterModal } from '../../components/tbDots/Printer'
 
-import valualApi from '@/apis/valualApi'
-import { PrinterModal } from '../../components/tbDots/printer'
 
 interface Props {
-  contact?: ContactsDetailsList
   attach: Attachment
   columnKey: React.Key
 }
 
 export const RenderCellAttachments: FC<Props> = ({
-  contact,
   attach,
   columnKey
 }) => {
@@ -42,7 +38,7 @@ export const RenderCellAttachments: FC<Props> = ({
     case 'actions':
       return (
         <PrinterModal
-          text={attach.name}
+          text={`Nombre ${attach.name}`}
           url={attach.url}
           description={'Fecha ' + createDate}
         />

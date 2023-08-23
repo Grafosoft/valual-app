@@ -12,8 +12,8 @@ import { ContactsDetailsList } from '../../interfaces/contacts/contactsDetailsLi
 import { InformationDiv } from '../../components/componentsDetails/InformationDiv'
 import { CardButtonDetails } from '../../components/componentsDetails/CardButtonDetails'
 import { IconsDestailsContact } from '../../components/componentsDetails/IconsDetailsContact'
-import { ContactsAttachments } from './ContactsAttachments'
 import { TabletContactsDetails } from './TabletContactsDetails'
+import { ContactsAttachments } from './ContactsAttachments'
 
 interface Props {
   data: ContactsDetailsList

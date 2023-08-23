@@ -14,8 +14,8 @@ import { NavbarUser } from '../../components/navbar/Navbar'
 
 import { BsBank } from 'react-icons/bs'
 import { MdWarehouse } from 'react-icons/md'
-import { Sidebar, SidebarItem } from '../sidebar/Sidebar'
 import { Divider } from '@nextui-org/react'
+import { SidebarItem, Sidebar } from '../sidebar/Sidebar'
 
 interface Props {
   children: ReactNode

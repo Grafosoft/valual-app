@@ -67,7 +67,7 @@ export const PrinterModal: FC<Props> = ({ text, url, description }) => {
       >
         <ModalContent>
           <ModalHeader>
-            <h2 id="modal-title">Nombre {text}</h2>
+            <h2 id="modal-title">{text}</h2>
           </ModalHeader>
           <ModalBody>
             {description}

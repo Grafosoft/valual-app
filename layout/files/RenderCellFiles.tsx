@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from 'react'
 import { User } from '@nextui-org/react'
 import { FilesList } from '../../interfaces/files/filesList'
-import { PrinterModal } from '../../components/tbDots/printer'
+import { PrinterModal } from '../../components/tbDots/Printer'
 
 interface Props {
   files: FilesList
@@ -63,7 +63,7 @@ export const RenderCellFiles: FC<Props> = ({ files, columnKey }) => {
     case 'actions':
       return (
         <PrinterModal
-          text={files.attachment.fileName}
+          text={`Nombre ${files.attachment.fileName}`}
           url={files.attachment.url}
           description={''}
         />
