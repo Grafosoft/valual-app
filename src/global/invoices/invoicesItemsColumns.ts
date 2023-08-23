@@ -1,19 +1,11 @@
 export const invoicesItemsColumns = [
-    {
-      name: 'CANTIDAD',
-      uid: 'quantity'
-    },
-    {
-      name: 'COP',
-      uid: 'value'
-    },
-    {
-        name: 'ANTICIPO',
-        uid: 'prepaid'
+     {
+        name: 'Nombre',
+        uid: 'item'
       },
       {
-        name: 'DESCUENTO',
-        uid: 'discount'
+        name: 'CANTIDAD',
+        uid: 'quantity'
       },
       {
         name: 'DESCRIPCION',
@@ -24,13 +16,26 @@ export const invoicesItemsColumns = [
         uid: 'isRemission'
       },
       {
+        name: 'MANDATARIO',
+        uid: 'attorney'
+      },
+      {
+        name: 'ANTICIPO',
+        uid: 'prepaid'
+      },
+      {
+        name: 'DESCUENTO',
+        uid: 'discount'
+      },
+      {
+        name: 'COP',
+        uid: 'value'
+      },
+      {
         name: 'CANTIDAD',
         uid: 'discountAmount'
       },
-      {
-        name: 'ITEM',
-        uid: 'item'
-      },
+
       {
         name: 'IMPUESTO',
         uid: 'tax'
@@ -39,10 +44,7 @@ export const invoicesItemsColumns = [
         name: 'RETENCION',
         uid: 'retention'
       },
-      {
-        name: 'MANDATARIO',
-        uid: 'attorney'
-      },
+
 
 
   ]

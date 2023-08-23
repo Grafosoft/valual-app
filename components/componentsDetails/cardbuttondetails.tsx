@@ -5,30 +5,30 @@ import { MdOutlineInventory2 } from 'react-icons/md'
 import { IconType } from 'react-icons'
 
 interface Props {
-  TextoBoton1: string
-  TextoBoton2: string
-  IconoBoton1: React.ReactNode
-  IconoBoton2: React.ReactNode
+  textboton1: string
+  textboton2: string
+  iconboton1: React.ReactNode
+  iconboton2: React.ReactNode
 }
 
 export const CardButtonDetails: FC<Props> = ({
-  TextoBoton1,
-  TextoBoton2,
-  IconoBoton1,
-  IconoBoton2
+  textboton1,
+  textboton2,
+  iconboton1,
+  iconboton2
 }) => {
   return (
     <>
-      <Card style={{ justifyContent: 'center', height: '70px' }}>
-        <div style={{ justifyContent: ' space-between', display: 'flex' }}>
+      <Card   style={{ justifyContent: 'center', height: '70px' }}>
+        <div className="flex justify-between " >
           <div>
             <Button
               variant="light"
-              className="ml-10 mr-3"
+              className=" mx-3 md:ml-10 md:mr-3"
               color="primary"
               size="md"
               startContent={<TbEdit />}
-            >
+                >
               Editar
             </Button>
             <Button
@@ -36,24 +36,24 @@ export const CardButtonDetails: FC<Props> = ({
               className="mx-3"
               color="primary"
               size="md"
-              startContent={IconoBoton1}
+              startContent={iconboton1}
             >
-              {TextoBoton1}
+              {textboton1}
             </Button>
             <Button
               variant="light"
               className="mx-3"
               color="primary"
               size="md"
-              startContent={IconoBoton2}
+              startContent={iconboton2}
             >
-              {TextoBoton2}
+              {textboton2}
             </Button>{' '}
           </div>
 
           <Button
             variant="flat"
-            className="mx-10"
+            className="mx-3 md:mx-10"
             color="warning"
             size="md"
             startContent={<TbArrowBackUp />}

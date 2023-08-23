@@ -44,10 +44,10 @@ export const InvoicesDetails: FC<Props> = ({ data }) => {
     <>
       <div className=" p-5 gap-5 ">
         <CardButtonDetails
-          TextoBoton1={'ver'}
-          TextoBoton2={'ver'}
-          IconoBoton1={<TbList />}
-          IconoBoton2={<TbList />}
+          textboton1={'ver'}
+          textboton2={'ver'}
+          iconboton1={<TbList />}
+          iconboton2={<TbList />}
         />
 
         <div

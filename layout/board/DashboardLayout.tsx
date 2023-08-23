@@ -11,7 +11,6 @@ import {
 import { useRouter } from 'next/router'
 import { useSession } from 'next-auth/react'
 import { NavbarUser } from '../../components/navbar/Navbar'
-
 import { BsBank } from 'react-icons/bs'
 import { MdWarehouse } from 'react-icons/md'
 import { Divider } from '@nextui-org/react'

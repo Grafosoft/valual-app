@@ -24,10 +24,10 @@ export const ItemsDetailsHeader: FC<Props> = ({ data }) => {
     <>
       <div className=" p-5 gap-5 ">
         <CardButtonDetails
-          TextoBoton1={'ver movimientos'}
-          TextoBoton2={'Inventario'}
-          IconoBoton1={<TbList />}
-          IconoBoton2={<MdOutlineInventory2 />}
+          textboton1={'ver movimientos'}
+          textboton2={'Inventario'}
+          iconboton1={<TbList />}
+          iconboton2={<MdOutlineInventory2 />}
         />
 
         <div
