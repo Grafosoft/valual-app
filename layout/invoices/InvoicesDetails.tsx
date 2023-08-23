@@ -102,6 +102,17 @@ export const InvoicesDetails: FC<Props> = ({ data }) => {
                 <h4 className="text-lg font-medium">Estado</h4>
                 <p>{data.status}</p>
               </div>
+              <div className="flex justify-between w-auto">
+              <h4 className="text-lg font-medium">
+                    Factura Electronica
+                  </h4>
+                  <Switch
+                    isSelected={data.numeration.isElectronic}
+                    color="success"
+                    thumbIcon={({ isSelected }: { isSelected: boolean }) =>
+                      isSelected ? <TbReceiptTax /> : <TbX />
+                    }
+                  ></Switch></div>
 
               <Spacer y={5} />
               {data.observations !== '' && (
@@ -150,31 +161,21 @@ export const InvoicesDetails: FC<Props> = ({ data }) => {
                   text={'Prefijo'}
                   info={data.numeration.prefix}
                 />
-                <div className="grid grid-cols-4 gap-3">
-                  <h4 className="text-gray-400  col-span-2 text-right">
-                    Factura Electronica
-                  </h4>
-                  <Switch
-                    isSelected={data.numeration.isElectronic}
-                    color="success"
-                    thumbIcon={({ isSelected }: { isSelected: boolean }) =>
-                      isSelected ? <TbReceiptTax /> : <TbX />
-                    }
-                  ></Switch>
-                </div>
+
                 <InformationDivV2
                   text={'Nombre de Documento'}
                   info={data.document.name}
                 />
                 <InformationDivV2 text={'Codigo'} info={data.document.code} />
                 <InformationDivV2 text={'Banco'} info={data.warehouse.name} />
-              </div>
-
-              <div className="grid-row-2">
                 <InformationDivV2
                   text={'Metodo de Pago'}
                   info={data.paymentMethod.name}
                 />
+              </div>
+
+              <div className="grid-row-2">
+
                 <InformationDivV2
                   text={'Divisa'}
                   info={`${data.currency.code} ${data.currency.baseRate}`}

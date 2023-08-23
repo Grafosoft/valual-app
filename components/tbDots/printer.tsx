@@ -54,6 +54,7 @@ export const PrinterModal: FC<Props> = ({ text, url, description }) => {
           >
             Imprimir
           </DropdownItem>
+          
         </DropdownMenu>
       </Dropdown>
       <Modal

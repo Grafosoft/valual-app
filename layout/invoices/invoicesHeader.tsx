@@ -123,6 +123,8 @@ export const InvoicesHeadersLayout: FC<Props> = ({
             </form>
           </div>
 
+
+
           <div className="flex col-span-2 flex-row justify-end">
             <Button onPress={handleClean} variant={'flat'} color="danger">
               <TbTrashFilled size={20} /> <Spacer x={1} /> Limpiar filtros
