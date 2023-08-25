@@ -26,32 +26,28 @@ export const DashboardLayout: FC<Props> = ({ children }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const dropdownList = [
     <SidebarItem
-      key={1}
       icon={<TbNumber size={25} />}
       text="Numeracion"
       urlPath={`/numeracion?apikey=$apikey&companyId=$companyId&page=0`}
-      active={pathname.includes('/numeracion') && query.type === '1'}
+      active={pathname.includes('/numeracion') }
     />,
     <SidebarItem
-      key={2}
       icon={<BsBank size={25} />}
       text="Bancos"
       urlPath={`/bancos?apikey=$apikey&companyId=$companyId&page=0`}
-      active={pathname.includes('/bancos') && query.type === '2'}
+      active={pathname.includes('/bancos') }
     />,
     <SidebarItem
-      key={3}
       icon={<MdWarehouse size={25} />}
       text="Almacences"
       urlPath={`/almacenes?apikey=$apikey&companyId=$companyId&page=0`}
-      active={pathname.includes('/almacenes') && query.type === '3'}
+      active={pathname.includes('/almacenes') }
     />,
     <SidebarItem
-      key={0}
       icon={<TbUserDollar size={25} />}
       text="Vendedores"
       urlPath={`/vendedores?apikey=$apikey&companyId=$companyId&page=0`}
-      active={pathname.includes('/vendedores') && query.type === '0'}
+      active={pathname.includes('/vendedores')}
     />
   ]
 

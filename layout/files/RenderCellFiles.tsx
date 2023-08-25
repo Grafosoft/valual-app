@@ -1,7 +1,11 @@
 import React, { FC, useEffect, useState } from 'react'
 import { User } from '@nextui-org/react'
 import { FilesList } from '../../interfaces/files/filesList'
-import { PrinterModal } from '../../components/tbDots/Printer'
+import { PrinterModal } from '../../components/tbDots/printer'
+import { FaFileImage, FaFilePdf } from 'react-icons/fa'
+import { TbFileShredder } from 'react-icons/tb'
+import { AiOutlineFileImage, AiOutlineFilePdf } from 'react-icons/ai'
+
 
 interface Props {
   files: FilesList
@@ -29,9 +33,25 @@ export const RenderCellFiles: FC<Props> = ({ files, columnKey }) => {
           avatarProps={{
             src: '',
             radius: 'md',
-            name: files.title
+            showFallback: true,
+            fallback:
+            files.attachment.extension === '.pdf' ? (
+                <AiOutlineFilePdf size={25} />
+              ) :  files.attachment.extension === '.png' ||
+              files.attachment.extension === '.jpg' ? (
+                <AiOutlineFileImage color='#E4E4E7' size={25} />
+              ): (
+                <TbFileShredder size={25} />
+              ),
+              color:
+              files.attachment.extension === '.pdf'
+                ? 'danger'
+                :  files.attachment.extension === '.png' ||  files.attachment.extension === '.jpg'
+                ? 'success'
+                : 'primary'
+
           }}
-          name={files.title}
+          name={`${files.title}${files.attachment.extension}`}
           style={{ padding: 0 }}
           description={files.description}
         />
