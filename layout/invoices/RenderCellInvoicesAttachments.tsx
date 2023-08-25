@@ -1,9 +1,7 @@
 import React, { FC } from 'react'
-import {
-  Attachment,
-} from '../../interfaces/contacts/contactsDetailsList'
-import { PrinterModal } from '../../components/tbDots/printer'
 
+import { Attachment } from '../../interfaces/invoices/invoicesDetailsList'
+import { PrinterModal } from '../../components/tbDots/printer'
 
 
 
@@ -12,7 +10,7 @@ interface Props {
   columnKey: React.Key
 }
 
-export const RenderCellAttachments: FC<Props> = ({
+export const RenderCellInvoicesAttachments: FC<Props> = ({
   attach,
   columnKey
 }) => {

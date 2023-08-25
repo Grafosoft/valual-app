@@ -26,12 +26,20 @@ export interface InvoicesDetailsList {
     retentionivaAmount: number;
     prepaidAmount:      number;
     items:              ItemElement[];
-    attachments:        any[];
+    attachments:        Attachment[];
 }
 
 export interface Accounting {
     id:   number;
     name: string;
+}
+export interface Attachment {
+    id:        number;
+    date:      Date;
+    name:      string;
+    size:      number;
+    extension: string;
+    url:       string;
 }
 
 export interface Company {

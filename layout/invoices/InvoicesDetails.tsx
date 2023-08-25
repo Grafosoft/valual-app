@@ -13,6 +13,7 @@ import { InvoicesDetailsList } from '../../interfaces/invoices/invoicesDetailsLi
 import { InformationDivV2 } from '../../components/componentsDetails/InformationDivV2'
 import { InvoicesResponse } from './InvoicesResponse'
 import { InvoicesItems } from './InvoicesItems'
+import { InvoicesAttachments } from './InvoicesAttachments'
 
 interface Props {
   data: InvoicesDetailsList
@@ -236,7 +237,8 @@ export const InvoicesDetails: FC<Props> = ({ data }) => {
 
           </Card>
           <Card className="col-span-6 grid-row-2">
-            <CardBody></CardBody>
+          <InvoicesAttachments download={data.attachments} />
+
           </Card>
         </div>
       </div>

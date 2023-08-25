@@ -1,10 +1,11 @@
 import React, { FC, useEffect, useState } from 'react'
 import { User } from '@nextui-org/react'
 import { FilesList } from '../../interfaces/files/filesList'
-import { PrinterModal } from '../../components/tbDots/printer'
+
 import { FaFileImage, FaFilePdf } from 'react-icons/fa'
 import { TbFileShredder } from 'react-icons/tb'
 import { AiOutlineFileImage, AiOutlineFilePdf } from 'react-icons/ai'
+import { PrinterModal } from '../../components/tbDots/printer'
 
 
 interface Props {
