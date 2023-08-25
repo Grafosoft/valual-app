@@ -14,6 +14,7 @@ import React from 'react'
 import { SellersList } from '../../../interfaces/sellers/sellersList'
 import { sellersColumns } from '@/global/sellers/sellersColumn'
 import { RenderCellSellers } from '../../../layout/sellers/RenderCellSellers'
+import { SellersHeadersLayout } from '../../../layout/sellers/SellersHeader'
 
 interface Props {
   sellers: SellersList[]
@@ -26,6 +27,8 @@ const SellersList: NextPage<Props> = ({ sellers, apikey, companyId }) => {
       <Head>
         <title>Vendedores</title>
       </Head>
+      <SellersHeadersLayout  sellers={sellers}/>
+
 
       <Spacer y={1} />
       <Table

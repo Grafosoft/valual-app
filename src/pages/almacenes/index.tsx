@@ -14,6 +14,7 @@ import React from 'react'
 import { WarehouseList } from '../../../interfaces/warehouses/warehousesList'
 import { RenderCellWarehouses } from '../../../layout/warehouses/RenderCellWarehouses'
 import { warehousesColumns } from '@/global/warehouses/warehousesColumns'
+import { WarehouseHeadersLayout } from '../../../layout/warehouses/WarehousesHeader'
 
 interface Props {
   houses: WarehouseList[]
@@ -26,6 +27,7 @@ const WarehouseList: NextPage<Props> = ({ houses, apikey, companyId }) => {
       <Head>
         <title>Almacenes</title>
       </Head>
+      <WarehouseHeadersLayout houses={houses}/>
 
       <Spacer y={1} />
       <Table

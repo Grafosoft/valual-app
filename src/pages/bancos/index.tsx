@@ -14,6 +14,7 @@ import React from 'react'
 import { BanksList } from '../../../interfaces/banks/banksList'
 import { banksColumns } from '@/global/banks/banksColumns'
 import { RenderCellBanks } from '../../../layout/banks/RenderCellBanks'
+import { BanksHeadersLayout } from '../../../layout/banks/BanksHeader'
 
 interface Props {
   banks: BanksList[]
@@ -26,6 +27,7 @@ const BanksList: NextPage<Props> = ({ banks, apikey, companyId }) => {
       <Head>
         <title>Bancos</title>
       </Head>
+      <BanksHeadersLayout banks={banks}/>
 
       <Spacer y={1} />
       <Table
