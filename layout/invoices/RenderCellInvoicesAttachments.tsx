@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
-
 import { Attachment } from '../../interfaces/invoices/invoicesDetailsList'
-import { PrinterModal } from '../../components/tbDots/printer'
+import { PrinterModal } from '../../components/tbDots/Printer'
+
 
 
 

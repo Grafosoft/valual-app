@@ -19,6 +19,8 @@ import { RenderCellInvoices } from '../../../layout/invoices/RenderCellInvoices'
 import { invoicesColumns } from '@/global/invoices/invoicesColumns'
 import { InvoicesHeadersLayout } from '../../../layout/invoices/invoicesHeader'
 
+
+
 interface Props {
   invoices: InvoicesList[]
   apikey: string | undefined
@@ -33,6 +35,8 @@ const InvoicesList: NextPage<Props> = ({
   apikey,
   companyId,
   page,
+  number,
+  contactId
 
 }) => {
   const [currentPage, setCurrentPage] = useState(0)
@@ -53,6 +57,8 @@ const InvoicesList: NextPage<Props> = ({
         invoices={invoices}
         apikey={apikey}
         companyId={companyId}
+        contactId={contactId}
+
       />
 
       <Spacer y={1} />

@@ -1,6 +1,6 @@
 import { Link, Spacer } from '@nextui-org/react'
 import React, { FC, PropsWithChildren } from 'react'
-import { SocialFooter } from './Socialfooter'
+import { SocialFooter } from './SocialFooter'
 
 export const Layout: FC<PropsWithChildren> = ({ children }) => {
   return (

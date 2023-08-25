@@ -11,7 +11,7 @@ import {
 } from '@nextui-org/react'
 import { ItemElement } from '../../interfaces/invoices/invoicesDetailsList'
 import { invoicesItemsColumns } from '@/global/invoices/invoicesItemsColumns'
-import { RenderCellItemsInvoices } from './RenderCellItemsInvoices';
+import { RenderCellItemsInvoices } from './RenderCellItemsInvoices'
 
 interface Props {
   items: ItemElement[]

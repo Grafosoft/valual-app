@@ -17,34 +17,32 @@ export const RenderCellItemsInvoices: FC<Props> = ({ items, columnKey }) => {
           {items.item.name} {items.item.code}
         </p>
       )
-      case 'quantity':
+    case 'quantity':
       return (
         <p className="font-medium" style={{ fontSize: '15px' }}>
           {items.quantity}
         </p>
       )
-      case 'description':
+    case 'description':
       return (
         <p className="font-medium" style={{ fontSize: '15px' }}>
           {items.description}
         </p>
       )
-      case 'isRemission':
-        return (
-          <Chip
-            radius="sm"
-            variant={'flat'}
-            size="sm"
-            color={items.isRemission ? 'success' : 'danger'}
-            className="py-5 md:p-0"
-          >
-            {items.isRemission ? 'remisionado' : 'No remisionado'}
-          </Chip>
-        )
+    case 'isRemission':
+      return (
+        <Chip
+          radius="sm"
+          variant={'flat'}
+          size="sm"
+          color={items.isRemission ? 'success' : 'danger'}
+          className="py-5 md:p-0"
+        >
+          {items.isRemission ? 'remisionado' : 'No remisionado'}
+        </Chip>
+      )
 
-
-
-      case 'attorney':
+    case 'attorney':
       return (
         <p className="font-medium" style={{ fontSize: '15px' }}>
           {items.attorney.name}
@@ -63,18 +61,17 @@ export const RenderCellItemsInvoices: FC<Props> = ({ items, columnKey }) => {
           {items.discount}
         </p>
       )
-      case 'value':
-        return (
-          <>
-            <p className="font-medium" style={{ fontSize: '15px' }}>
-              VALOR: {currencyFormat.format(items.value)}
-            </p>
-            <div className="text-gray-400">
-              <p>PRECIO: {currencyFormat.format(items.price)}</p>
-            </div>
-          </>
-        )
-
+    case 'value':
+      return (
+        <>
+          <p className="font-medium" style={{ fontSize: '15px' }}>
+            VALOR: {currencyFormat.format(items.value)}
+          </p>
+          <div className="text-gray-400">
+            <p>PRECIO: {currencyFormat.format(items.price)}</p>
+          </div>
+        </>
+      )
 
     case 'discountAmount':
       return (
@@ -113,6 +110,5 @@ export const RenderCellItemsInvoices: FC<Props> = ({ items, columnKey }) => {
           </div>
         </>
       )
-
   }
 }

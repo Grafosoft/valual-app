@@ -15,7 +15,6 @@ export const FilesHeaderLayout: FC<Props> = ({ files, apikey, companyId }) => {
   const { push } = useRouter()
   const [searchitems, setSearchitems] = useState('')
   const limitAvatar = 5
-
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchitems(e.target.value)
   }

@@ -104,16 +104,15 @@ export const InvoicesDetails: FC<Props> = ({ data }) => {
                 <p>{data.status}</p>
               </div>
               <div className="flex justify-between w-auto">
-              <h4 className="text-lg font-medium">
-                    Factura Electronica
-                  </h4>
-                  <Switch
-                    isSelected={data.numeration.isElectronic}
-                    color="success"
-                    thumbIcon={({ isSelected }: { isSelected: boolean }) =>
-                      isSelected ? <TbReceiptTax /> : <TbX />
-                    }
-                  ></Switch></div>
+                <h4 className="text-lg font-medium">Factura Electronica</h4>
+                <Switch
+                  isSelected={data.numeration.isElectronic}
+                  color="success"
+                  thumbIcon={({ isSelected }: { isSelected: boolean }) =>
+                    isSelected ? <TbReceiptTax /> : <TbX />
+                  }
+                ></Switch>
+              </div>
 
               <Spacer y={5} />
               {data.observations !== '' && (
@@ -176,7 +175,6 @@ export const InvoicesDetails: FC<Props> = ({ data }) => {
               </div>
 
               <div className="grid-row-2">
-
                 <InformationDivV2
                   text={'Divisa'}
                   info={`${data.currency.code} ${data.currency.baseRate}`}
@@ -226,19 +224,16 @@ export const InvoicesDetails: FC<Props> = ({ data }) => {
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-12  pt-5  gap-5">
           <Card className="col-span-12">
-          <InvoicesItems items={data.items} />
-
+            <InvoicesItems items={data.items} />
           </Card>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12  pt-5  gap-5">
           <Card className="col-span-6 grid-row-1 ">
-          <InvoicesResponse download={data.response} />
-
+            <InvoicesResponse download={data.response} />
           </Card>
           <Card className="col-span-6 grid-row-2">
-          <InvoicesAttachments download={data.attachments} />
-
+            <InvoicesAttachments download={data.attachments} />
           </Card>
         </div>
       </div>

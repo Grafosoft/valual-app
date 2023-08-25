@@ -8,7 +8,7 @@ import {
   TableCell,
   TableColumn,
   TableHeader,
-  TableRow,
+  TableRow
 } from '@nextui-org/react'
 import { RenderCellAttachments } from './RenderCellAttachments'
 import { contactAttachmentsColumns } from '@/global/contacts/contactsAttachmentsColumns'

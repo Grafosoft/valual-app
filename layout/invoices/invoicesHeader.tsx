@@ -34,7 +34,7 @@ interface Props {
   apikey: string | undefined
   companyId: string | undefined
   contactId: string | undefined
-  contactName: string | undefined
+  contactName?: string | undefined
 }
 
 export const InvoicesHeadersLayout: FC<Props> = ({

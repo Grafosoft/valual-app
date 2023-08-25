@@ -21,7 +21,6 @@ export const RenderCellInvoices: FC<Props> = ({ invoices, columnKey }) => {
     minute: '2-digit'
   })
 
-
   const [apikey, setApikey] = useState('')
   useEffect(() => {
     setApikey(localStorage.getItem('apikey') || '')
@@ -70,19 +69,15 @@ export const RenderCellInvoices: FC<Props> = ({ invoices, columnKey }) => {
         </p>
       )
 
-      case 'numeration':
-        return (
-              <>
-              <p className="font-medium" >
-               Nombre: {invoices.numeration.name}
-              </p>
-            <div className="text-gray-400">
-              <p>
-                Resolucion: {invoices.numeration.resolution}
-              </p>
-            </div>
-            </>
-        )
+    case 'numeration':
+      return (
+        <>
+          <p className="font-medium">Nombre: {invoices.numeration.name}</p>
+          <div className="text-gray-400">
+            <p>Resolucion: {invoices.numeration.resolution}</p>
+          </div>
+        </>
+      )
     case 'details':
       return (
         <TbArrowBigRightLinesFilled

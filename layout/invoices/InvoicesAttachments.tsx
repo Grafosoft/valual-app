@@ -8,12 +8,11 @@ import {
   TableCell,
   TableColumn,
   TableHeader,
-  TableRow,
+  TableRow
 } from '@nextui-org/react'
 import { invoicesAttachmentsColumns } from '@/global/invoices/invoicesAttachmentsColumns'
 import { Attachment } from '../../interfaces/invoices/invoicesDetailsList'
 import { RenderCellInvoicesAttachments } from './RenderCellInvoicesAttachments'
-
 
 interface Props {
   download: Attachment[]

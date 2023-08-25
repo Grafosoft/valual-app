@@ -5,7 +5,6 @@ import React, { FC } from 'react'
 import { TbArrowRight } from 'react-icons/tb'
 import { ContactsList } from '../../interfaces/contacts/contactsList'
 
-
 interface Props {
   contact: ContactsList
   columnKey: React.Key
@@ -13,7 +12,6 @@ interface Props {
   urlPath: string | undefined
   closeHandler: () => void
   setContactSearch: (inititalState: { id: string; name: string }) => void
-
 }
 
 export const RenderCellInvoicesContactsModal: FC<Props> = ({
@@ -26,7 +24,6 @@ export const RenderCellInvoicesContactsModal: FC<Props> = ({
 }) => {
   const { push } = useRouter()
   const fullName = `${contact.firstName} ${contact.middleName} ${contact.firstSurname} ${contact.secondSurname}`
-
 
   switch (columnKey) {
     case 'commercialName':

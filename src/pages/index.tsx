@@ -15,10 +15,11 @@ import {
   CardFooter,
   Chip
 } from '@nextui-org/react'
-import { Layout } from '../../layout/Layout'
+
 import { signIn, useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import { TbEye, TbEyeOff } from 'react-icons/tb'
+import { Layout } from '../../layout/layout';
 
 export default function index() {
   const [userInfo, setUserInfo] = useState({
