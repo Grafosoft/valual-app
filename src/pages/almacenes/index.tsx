@@ -18,16 +18,14 @@ import {
 } from '@nextui-org/react'
 import { GetServerSideProps, NextPage } from 'next'
 import Head from 'next/head'
-import React, { useState } from 'react'
-import { WarehouseList } from '../../../interfaces/warehouses/warehousesList';
+import React, { useEffect, useState } from 'react'
+import { WarehouseList } from '../../../interfaces/warehouses/warehousesList'
 import { RenderCellWarehouses } from '../../../layout/warehouses/RenderCellWarehouses'
 import { warehousesColumns } from '@/global/warehouses/warehousesColumns'
 import { WarehouseHeadersLayout } from '../../../layout/warehouses/WarehousesHeader'
 import { RiAddFill } from 'react-icons/ri'
-import { data } from 'autoprefixer'
 import { useRouter } from 'next/router'
-
-
+import { useSession } from 'next-auth/react'
 
 interface Props {
   houses: WarehouseList[]
@@ -39,23 +37,24 @@ const WarehouseList: NextPage<Props> = ({ houses, apikey, companyId }) => {
   const [isLoading, setIsLoading] = useState(false)
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure()
   const [name, setName] = useState()
- const [priceList, setPriceList] = useState()
+  const [priceList, setPriceList] = useState()
+  const { status } = useSession()
 
- const handleClickHome = () => {
-  replace(`/almacenes/?companyId=${companyId}&apikey=${apikey}`)
-  onClose()
-}
+  useEffect(() => {
+    status === 'unauthenticated' && replace('/')
+  }, [status, replace])
 
-
-
-
+  const handleClickHome = () => {
+    replace(`/almacenes/?companyId=${companyId}&apikey=${apikey}`)
+    onClose()
+  }
 
   return (
     <>
       <Head>
         <title>Almacenes</title>
       </Head>
-      <WarehouseHeadersLayout houses={houses}/>
+      <WarehouseHeadersLayout houses={houses} />
 
       <Spacer y={1} />
       <Table
@@ -91,8 +90,7 @@ const WarehouseList: NextPage<Props> = ({ houses, apikey, companyId }) => {
           bottom: '2em'
         }}
         isDisabled={isLoading}
-        onPress={ onOpen}
-
+        onPress={onOpen}
       >
         {isLoading ? (
           <CircularProgress
@@ -116,73 +114,64 @@ const WarehouseList: NextPage<Props> = ({ houses, apikey, companyId }) => {
         onOpenChange={onOpenChange}
         onClose={onClose}
       >
-
         <ModalContent>
-        <ModalHeader>
-          <div className="container my-5 lg:my-8 m-auto">
-        <h1 className="text-5xl font-bold text-center">Crear Almacen</h1>
-      </div>
-        </ModalHeader>
-
-
-        <ModalBody>
- <div className="container px-5 lg:px-10 m-auto">
-        <div className="container m-auto">
-          <h2 className="text-xl lg:text-2xl mb-5 font-semibold">
-            Datos Generales
-          </h2>
-          <div className="container my-5">
-            <label htmlFor="title" className="text-gray-500">
-              Nombre
-            </label>
-            <Input
-              id="name"
-              size="lg"
-              radius="sm"
-              className="mt-2"
-              value={name}
-              onValueChange={setName}
-            />
-
+          <ModalHeader>
+            <div className="container my-5 lg:my-8 m-auto">
+              <h1 className="text-5xl font-bold text-center">Crear Almacen</h1>
             </div>
-            <div className="container my-5 grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-10">
-            <div>
-              <label htmlFor="code" className="text-gray-500">
-              Nombre Precio de lista
-              </label>
-              <Input
-                id="code"
-                size="lg"
-                radius="sm"
-                className="mt-2"
-                value={priceList}
-                onValueChange={setPriceList}
-              />
-            </div>
-            </div>
-            </div>
-            <div className="my-10 flex justify-center">
-            <Button
-              size="lg"
-              className="text-white"
-              type="submit"
-              color="warning"
-              style={{ width: '300px' }}
-              onClick={handleClickHome}
+          </ModalHeader>
 
-
-
-            >
-              Guardar
-            </Button>
-          </div>
+          <ModalBody>
+            <div className="container px-5 lg:px-10 m-auto">
+              <div className="container m-auto">
+                <h2 className="text-xl lg:text-2xl mb-5 font-semibold">
+                  Datos Generales
+                </h2>
+                <div className="container my-5">
+                  <label htmlFor="title" className="text-gray-500">
+                    Nombre
+                  </label>
+                  <Input
+                    id="name"
+                    size="lg"
+                    radius="sm"
+                    className="mt-2"
+                    value={name}
+                    onValueChange={setName}
+                  />
+                </div>
+                <div className="container my-5 grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-10">
+                  <div>
+                    <label htmlFor="code" className="text-gray-500">
+                      Nombre Precio de lista
+                    </label>
+                    <Input
+                      id="code"
+                      size="lg"
+                      radius="sm"
+                      className="mt-2"
+                      value={priceList}
+                      onValueChange={setPriceList}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="my-10 flex justify-center">
+                <Button
+                  size="lg"
+                  className="text-white"
+                  type="submit"
+                  color="warning"
+                  style={{ width: '300px' }}
+                  onClick={handleClickHome}
+                >
+                  Guardar
+                </Button>
+              </div>
             </div>
-
           </ModalBody>
         </ModalContent>
       </Modal>
-
-
     </>
   )
 }

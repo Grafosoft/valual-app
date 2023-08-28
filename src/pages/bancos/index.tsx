@@ -10,11 +10,13 @@ import {
 } from '@nextui-org/react'
 import { GetServerSideProps, NextPage } from 'next'
 import Head from 'next/head'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { BanksList } from '../../../interfaces/banks/banksList'
 import { banksColumns } from '@/global/banks/banksColumns'
 import { RenderCellBanks } from '../../../layout/banks/RenderCellBanks'
 import { BanksHeadersLayout } from '../../../layout/banks/BanksHeader'
+import { useSession } from 'next-auth/react'
+import { useRouter } from 'next/router'
 
 interface Props {
   banks: BanksList[]
@@ -22,6 +24,12 @@ interface Props {
   companyId: string | undefined
 }
 const BanksList: NextPage<Props> = ({ banks, apikey, companyId }) => {
+  const { status } = useSession()
+  const { replace } = useRouter()
+
+  useEffect(() => {
+    status === 'unauthenticated' && replace('/')
+  }, [status, replace])
   return (
     <>
       <Head>

@@ -10,11 +10,13 @@ import {
 } from '@nextui-org/react'
 import { GetServerSideProps, NextPage } from 'next'
 import Head from 'next/head'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { SellersList } from '../../../interfaces/sellers/sellersList'
 import { sellersColumns } from '@/global/sellers/sellersColumn'
 import { RenderCellSellers } from '../../../layout/sellers/RenderCellSellers'
 import { SellersHeadersLayout } from '../../../layout/sellers/SellersHeader'
+import { useSession } from 'next-auth/react'
+import { useRouter } from 'next/router'
 
 interface Props {
   sellers: SellersList[]
@@ -22,6 +24,12 @@ interface Props {
   companyId: string | undefined
 }
 const SellersList: NextPage<Props> = ({ sellers, apikey, companyId }) => {
+  const { status } = useSession()
+  const { replace } = useRouter()
+
+  useEffect(() => {
+    status === 'unauthenticated' && replace('/')
+  }, [status, replace])
   return (
     <>
       <Head>
