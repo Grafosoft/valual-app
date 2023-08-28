@@ -9,7 +9,7 @@ import {
 } from '@nextui-org/react'
 import { TbCheck, TbX, TbBellFilled, TbList, TbUser } from 'react-icons/tb'
 import { ContactsDetailsList } from '../../interfaces/contacts/contactsDetailsList'
-import { InformationDiv } from '../../components/componentsDetails/InformationDiv'
+import { InformationDivV2 } from '../../components/componentsDetails/InformationDivV2'
 import { CardButtonDetails } from '../../components/componentsDetails/CardButtonDetails'
 import { IconsDestailsContact } from '../../components/componentsDetails/IconsDetailsContact'
 import { TabletContactsDetails } from './TabletContactsDetails'
@@ -121,59 +121,59 @@ export const ContactsDetails: FC<Props> = ({ data }) => {
 
             <div className="grid grid-cols-1 lg:grid-cols-2 px-10 gap-5 ">
               <div className="grid-row-1">
-                <InformationDiv
+                <InformationDivV2
                   text={'Nombre comercial'}
                   info={data.commercialName}
                 />
-                <InformationDiv
+                <InformationDivV2
                   text={'Tipo de Identifiacion'}
                   info={data.identificationType.name}
                 />
-                <InformationDiv
+                <InformationDivV2
                   text={'Identificacion'}
                   info={data.identification}
                 />
-                <InformationDiv text={'Primer Nombre'} info={data.firstName} />
-                <InformationDiv
+                <InformationDivV2 text={'Primer Nombre'} info={data.firstName} />
+                <InformationDivV2
                   text={'Segundo Nombre'}
                   info={data.middleName}
                 />
-                <InformationDiv
+                <InformationDivV2
                   text={'Primer Apellido'}
                   info={data.firstSurname}
                 />
-                <InformationDiv
+                <InformationDivV2
                   text={'Segundo Apellido'}
                   info={data.secondSurname}
                 />
-                <InformationDiv text={'Correo'} info={data.email} />
-                <InformationDiv text={'Numero telefonico'} info={data.phone} />
-                <InformationDiv text={'Direccion'} info={data.adress} />
-                <InformationDiv text={'Pais'} info={data.city.country} />
-                <InformationDiv text={'Cuidad'} info={data.city.name} />
+                <InformationDivV2 text={'Correo'} info={data.email} />
+                <InformationDivV2 text={'Numero telefonico'} info={data.phone} />
+                <InformationDivV2 text={'Direccion'} info={data.adress} />
+                <InformationDivV2 text={'Pais'} info={data.city.country} />
+                <InformationDivV2 text={'Cuidad'} info={data.city.name} />
               </div>
 
               <div className="grid-row-2">
-                <InformationDiv text={'Codigo Postal'} info={data.postalCode} />
-                <InformationDiv
+                <InformationDivV2 text={'Codigo Postal'} info={data.postalCode} />
+                <InformationDivV2
                   text={'Codigo Cuidad'}
                   info={data.city.code || ''}
                 />
-                <InformationDiv
+                <InformationDivV2
                   text={'Comisión del vendedor'}
                   info={data.comissionSeller.toString()}
                 />
-                <InformationDiv text={'Persona'} info={data.tax.person} />
-                <InformationDiv text={'Regimen'} info={data.tax.regime} />
-                <InformationDiv
+                <InformationDivV2 text={'Persona'} info={data.tax.person} />
+                <InformationDivV2 text={'Regimen'} info={data.tax.regime} />
+                <InformationDivV2
                   text={'Responsabilidad'}
                   info={data.tax.responsibility}
                 />
-                <InformationDiv text={'Actividad'} info={data.activity.name} />
-                <InformationDiv text={'Banco'} info={data.bank.name} />
-                <InformationDiv text={'Tipo de cuenta'} info={data.bank.type} />
-                <InformationDiv text={'No. Cuenta'} info={data.bank.account} />
-                <InformationDiv
+                <InformationDivV2 text={'Actividad'} info={data.activity.name} />
+                <InformationDivV2 text={'Banco'} info={data.bank.name} />
+                <InformationDivV2 text={'Tipo de cuenta'} info={data.bank.type} />
+                <InformationDivV2 text={'No. Cuenta'} info={data.bank.account} />
+                <InformationDivV2
                   text={'Precio de lista'}
                   info={data.priceList.name}
                 />

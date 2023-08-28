@@ -11,7 +11,7 @@ import { ItemsList } from '../../interfaces/items/itemsList'
 import { MdOutlineInventory2 } from 'react-icons/md'
 import { TbCheck, TbX, TbHeart, TbHeartFilled, TbList } from 'react-icons/tb'
 import { CardButtonDetails } from '../../components/componentsDetails/CardButtonDetails'
-import { InformationDiv } from '../../components/componentsDetails/InformationDiv'
+import { InformationDivV2 } from '../../components/componentsDetails/InformationDivV2'
 
 interface Props {
   data: ItemsList
@@ -121,35 +121,36 @@ export const ItemsDetailsHeader: FC<Props> = ({ data }) => {
             </div>
             <div className="grid grid-cols-1 lg:grid-cols-2 px-10 gap-5">
               <div className="grid-row-1 ">
-                <InformationDiv
+                <InformationDivV2
                   text={'Costo'}
                   info={currencyFormat.format(data.costPrice)}
                 />
-                <InformationDiv
+                <InformationDivV2
                   text={'Ultimo Precio'}
                   info={currencyFormat.format(data.lastcostPrice)}
                 />
-                <InformationDiv
+                <InformationDivV2
                   text={'Venta'}
                   info={currencyFormat.format(data.salePrice)}
                 />
-                <InformationDiv text={'Codigo'} info={data.code} />
-                <InformationDiv text={'Codigo de barras'} info={data.barcode} />
+                <InformationDivV2 text={'Codigo'} info={data.code} />
+                <InformationDivV2 text={'Codigo de barras'} info={data.barcode} />
               </div>
               <div className="grid-row-2">
-                <InformationDiv
+                <InformationDivV2
                   text={'Codigo del WOOCOMMERCE'}
                   info={data.wooCode.toString()}
                 />
-                <InformationDiv
+                <InformationDivV2
                   text={'Impuesto en la bolsa'}
                   info={data.bagtaxPrice.toString()}
                 />
-                <InformationDiv text={'Nombre'} info={data.tax.name} />
-                <InformationDiv
+                <InformationDivV2 text={'Nombre'} info={data.tax.name} />
+                <InformationDivV2
                   text={'Porcentaje'}
                   info={`${data.tax.value.toString()} %`}
                 />
+
               </div>
             </div>
             {data.observations !== '' && (

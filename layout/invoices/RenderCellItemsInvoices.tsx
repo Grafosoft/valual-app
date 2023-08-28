@@ -36,7 +36,7 @@ export const RenderCellItemsInvoices: FC<Props> = ({ items, columnKey }) => {
           variant={'flat'}
           size="sm"
           color={items.isRemission ? 'success' : 'danger'}
-          className="py-5 md:p-0"
+          className="py-5 xl:p-0"
         >
           {items.isRemission ? 'remisionado' : 'No remisionado'}
         </Chip>

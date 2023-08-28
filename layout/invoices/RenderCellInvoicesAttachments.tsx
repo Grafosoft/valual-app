@@ -2,9 +2,6 @@ import React, { FC } from 'react'
 import { Attachment } from '../../interfaces/invoices/invoicesDetailsList'
 import { PrinterModal } from '../../components/tbDots/Printer'
 
-
-
-
 interface Props {
   attach: Attachment
   columnKey: React.Key
