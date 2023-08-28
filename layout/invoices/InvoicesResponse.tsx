@@ -34,7 +34,6 @@ export const InvoicesResponse: FC<Props> = ({ download }) => {
             <TableHeader columns={invoicesResponseColumns}>
               {column => (
                 <TableColumn key={column.uid} align="start">
-                  {' '}
                   {column.name}
                 </TableColumn>
               )}

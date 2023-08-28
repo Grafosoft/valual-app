@@ -21,7 +21,7 @@ interface Props {
 }
 
 export const DashboardLayout: FC<Props> = ({ children }) => {
-  const { pathname, query } = useRouter()
+  const { pathname } = useRouter()
   const { status } = useSession()
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const dropdownList = [
@@ -66,13 +66,13 @@ export const DashboardLayout: FC<Props> = ({ children }) => {
             icon={<TbShoppingBag size={25} />}
             text="Productos"
             urlPath={`/catalogo?apikey=$apikey&companyId=$companyId&page=0`}
-            active={pathname === '/catalogo'}
+            active={pathname.includes('/catalogo') }
           />
           <SidebarItem
             icon={<TbUsers size={25} />}
             text="Clientes"
             urlPath={`/contactos?apikey=$apikey&companyId=$companyId&page=0`}
-            active={pathname === '/contactos'}
+            active={pathname.includes('/contactos')}
           />
           <SidebarItem
             icon={<TbFiles size={25} />}
@@ -84,7 +84,7 @@ export const DashboardLayout: FC<Props> = ({ children }) => {
             icon={<TbFileInvoice size={25} />}
             text="Facturas"
             urlPath={`/facturas?apikey=$apikey&companyId=$companyId&page=0`}
-            active={pathname === '/facturas'}
+            active={pathname.includes('/facturas')}
           />
         </Sidebar>
       )}
