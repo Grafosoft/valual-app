@@ -1,18 +1,10 @@
 import valualApi from '@/apis/valualApi'
 import {
   Button,
-  CircularProgress,
   Modal,
   ModalBody,
   ModalContent,
   ModalHeader,
-  Spacer,
-  Table,
-  TableBody,
-  TableCell,
-  TableColumn,
-  TableHeader,
-  TableRow,
   useDisclosure,
   Input,
   Dropdown,
@@ -21,18 +13,11 @@ import {
   DropdownItem,
   ModalFooter
 } from '@nextui-org/react'
-import { GetServerSideProps, NextPage } from 'next'
-import Head from 'next/head'
+import { NextPage } from 'next'
 import React, { useEffect, useState, useMemo } from 'react'
-import { WarehouseList } from '../../../interfaces/warehouses/warehousesList'
-import { RenderCellWarehouses } from '../../../layout/warehouses/RenderCellWarehouses'
-import { warehousesColumns } from '@/global/warehouses/warehousesColumns'
-import { WarehouseHeadersLayout } from '../../../layout/warehouses/WarehousesHeader'
-import { RiAddFill } from 'react-icons/ri'
-import { useRouter } from 'next/router'
 import { useSession } from 'next-auth/react'
 import { Pricelist } from '@/global/params/paramswarehouses'
-
+import { useRouter } from 'next/router'
 interface Props {
   color:
     | 'default'
@@ -42,14 +27,12 @@ interface Props {
     | 'warning'
     | 'danger'
     | undefined
-  houses: WarehouseList[]
   apikey: string | undefined
   companyId: string | undefined
   method: string | undefined
   id?: string | undefined
 }
-const WarehouseList: NextPage<Props> = ({
-  houses,
+const CreateAndEditWarehouses: NextPage<Props> = ({
   apikey,
   companyId,
   color,
@@ -124,61 +107,6 @@ const WarehouseList: NextPage<Props> = ({
 
   return (
     <>
-      <Head>
-        <title>Almacenes</title>
-      </Head>
-      <WarehouseHeadersLayout houses={houses} />
-
-      <Spacer y={1} />
-      <Table
-        aria-label="Almacenes"
-        style={{ height: 'auto', minWidth: '100%' }}
-        isStriped
-        shadow="none"
-      >
-        <TableHeader columns={warehousesColumns}>
-          {column => <TableColumn key={column.uid}>{column.name}</TableColumn>}
-        </TableHeader>
-        <TableBody items={houses}>
-          {item => (
-            <TableRow key={item.id}>
-              {columnKey => (
-                <TableCell>
-                  <RenderCellWarehouses houses={item} columnKey={columnKey} />
-                </TableCell>
-              )}
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
-
-      <Button
-        isIconOnly
-        color={'primary'}
-        variant="shadow"
-        style={{
-          width: '60px',
-          height: '60px',
-          position: 'fixed',
-          right: '2em',
-          bottom: '2em'
-        }}
-        isDisabled={isLoading}
-        onPress={onOpen}
-      >
-        {isLoading ? (
-          <CircularProgress
-            size="md"
-            classNames={{
-              indicator: 'stroke-white',
-              track: 'stroke-white/25'
-            }}
-          />
-        ) : (
-          <RiAddFill size={25} color="white" />
-        )}
-      </Button>
-
       <Modal
         closeButton
         backdrop="blur"
@@ -309,37 +237,4 @@ const WarehouseList: NextPage<Props> = ({
   )
 }
 
-export default WarehouseList
-
-export const getServerSideProps: GetServerSideProps = async ctx => {
-  const apikey = ctx.query.apikey?.toString() || ''
-  const companyId = ctx.query.companyId?.toString() || ''
-  let method = ctx.params?.method || ''
-  let isMethodValid = true
-  const id = ctx.query.id?.toString() || ''
-
-  if (method !== 'crear' && method !== 'editar') {
-    method = 'crear'
-    isMethodValid = false
-  }
-
-  const response = await valualApi.get<WarehouseList[]>(
-    `warehouses/?companyId=${companyId}&apikey=${ctx.query.apikey}`
-  )
-
-  if (!response) {
-    return {
-      notFound: true,
-      redirect: '/404'
-    }
-  }
-
-  return {
-    props: {
-      houses: response.data,
-      apikey,
-      companyId,
-      method
-    }
-  }
-}
+export default CreateAndEditWarehouses

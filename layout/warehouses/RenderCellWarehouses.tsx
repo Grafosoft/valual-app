@@ -1,6 +1,7 @@
 import React, { FC, useEffect, useState } from 'react'
 import { WarehouseList } from '../../interfaces/warehouses/warehousesList'
-import { TbArrowBigRightLinesFilled } from 'react-icons/tb'
+import { TbArrowBigRightLinesFilled, TbPencil } from 'react-icons/tb'
+import { useRouter } from 'next/router'
 
 interface Props {
   houses: WarehouseList
@@ -8,6 +9,8 @@ interface Props {
 }
 
 export const RenderCellWarehouses: FC<Props> = ({ houses, columnKey }) => {
+  const { push } = useRouter()
+
   const [apikey, setApikey] = useState('')
   useEffect(() => {
     setApikey(localStorage.getItem('apikey') || '')
@@ -26,6 +29,16 @@ export const RenderCellWarehouses: FC<Props> = ({ houses, columnKey }) => {
           {houses.priceList.name}
         </p>
       )
+      case 'actions':
+        return (
+          <TbPencil
+          cursor={'pointer'}
+          color={'#006FEE'}
+
+
+          size={20}
+        />
+        )
     default:
       return (
         <div className="flex flex-row align-center">
