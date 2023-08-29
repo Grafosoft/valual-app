@@ -31,8 +31,7 @@ import { WarehouseHeadersLayout } from '../../../layout/warehouses/WarehousesHea
 import { RiAddFill } from 'react-icons/ri'
 import { useRouter } from 'next/router'
 import { useSession } from 'next-auth/react'
-import { Pricelist } from '@/global/params/warehousesList'
-import { Init } from 'v8'
+import { Pricelist } from '@/global/params/paramswarehouses'
 
 interface Props {
   color:
@@ -70,42 +69,37 @@ const WarehouseList: NextPage<Props> = ({
       )?.name,
     [priceList, selectedPriceList]
   )
-  const priceListid: any = Array.from(selectedPriceList)[0]
+  const priceListid = Array.from<number>(selectedPriceList)[0]
 
   const bodyApi = {
     id: 0,
     name: name,
     priceList: {
-      id: parseInt(priceListid),
+      id: parseInt(priceListid.toString()),
       name: list
     }
   }
   const handleClick = async () => {
     setIsLoading(true)
     console.log(bodyApi)
-    console.log()
 
-    // valualApi
-    //   .post(`warehouses/?companyId=${companyId}&apikey=${apikey}`, bodyApi)
-    //   .then(response => {
-    //     if (response.status === 200) {
-    //       setIsLoading(false)
-    //       window.location.replace('')
-    //     }
-    //   })
-    //   .catch(error => {
-    //     console.log(error)
-    //   })
+    valualApi
+      .post(`warehouses/?companyId=${companyId}&apikey=${apikey}`, bodyApi)
+      .then(response => {
+        if (response.status === 200) {
+          setIsLoading(false)
+          window.location.replace('')
+        }
+      })
+      .catch(error => {
+        console.log(error)
+      })
   }
 
   useEffect(() => {
     status === 'unauthenticated' && replace('/')
   }, [status, replace])
 
-  const handleClickHome = () => {
-    replace(`warehouses/?companyId=${companyId}&apikey=${apikey}`)
-    onClose()
-  }
 
   return (
     <>

@@ -1,4 +1,4 @@
-export interface ParamsPriceList {
+export interface ParamsWarehouses {
     companyId:   number;
     companyName: string;
     description: string;
