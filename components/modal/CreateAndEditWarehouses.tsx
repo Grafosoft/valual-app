@@ -1,11 +1,9 @@
 import valualApi from '@/apis/valualApi'
 import {
   Button,
-  Modal,
   ModalBody,
   ModalContent,
   ModalHeader,
-  useDisclosure,
   Input,
   Dropdown,
   DropdownTrigger,
@@ -18,6 +16,7 @@ import React, { useEffect, useState, useMemo } from 'react'
 import { useSession } from 'next-auth/react'
 import { Pricelist } from '@/global/params/paramswarehouses'
 import { useRouter } from 'next/router'
+import { WarehouseList } from '../../interfaces/warehouses/warehousesList'
 interface Props {
   color:
     | 'default'
@@ -27,26 +26,28 @@ interface Props {
     | 'warning'
     | 'danger'
     | undefined
+    form: WarehouseList
   apikey: string | undefined
   companyId: string | undefined
   method: string | undefined
-  id?: string | undefined
+  idput?: number | undefined
+
+
+
 }
 const CreateAndEditWarehouses: NextPage<Props> = ({
   apikey,
   companyId,
   color,
   method,
-  id = '0'
+  idput
 }) => {
   const { replace } = useRouter()
   const [isLoading, setIsLoading] = useState(false)
-  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure()
-  const [name, setName] = useState()
+  const [name, setName] = useState(form.)
   const { status } = useSession()
   const [priceList, setPriceList] = useState<Pricelist[]>([])
   const titleText = method === 'crear' ? `Crear Almacenes` : `Editar Almacenes`
-
   const [selectedPriceList, setSelectedPriceList]: any = useState(
     new Set(['Nombre precio de lista'])
   )
@@ -71,6 +72,7 @@ const CreateAndEditWarehouses: NextPage<Props> = ({
   const handleClick = async () => {
     setIsLoading(true)
     console.log(bodyApi)
+
     if (method === 'crear') {
       valualApi
         .post(`warehouses/?companyId=${companyId}&apikey=${apikey}`, bodyApi)
@@ -86,7 +88,7 @@ const CreateAndEditWarehouses: NextPage<Props> = ({
     } else {
       valualApi
         .put(
-          `warehouses/${id}/?companyId=${companyId}&apikey=${apikey}`,
+          `warehouses/${idput}/?companyId=${companyId}&apikey=${apikey}`,
           bodyApi
         )
         .then(response => {
@@ -107,15 +109,10 @@ const CreateAndEditWarehouses: NextPage<Props> = ({
 
   return (
     <>
-      <Modal
-        closeButton
-        backdrop="blur"
-        aria-label="Crear almacenes"
-        isOpen={isOpen}
-        onOpenChange={onOpenChange}
-        size="2xl"
-      >
+
+
         <ModalContent>
+
           {onClose => {
             if (priceList.length === 0) {
               valualApi
@@ -232,7 +229,7 @@ const CreateAndEditWarehouses: NextPage<Props> = ({
             )
           }}
         </ModalContent>
-      </Modal>
+
     </>
   )
 }

@@ -2,16 +2,39 @@ import React, { FC, useEffect, useState } from 'react'
 import { WarehouseList } from '../../interfaces/warehouses/warehousesList'
 import { TbArrowBigRightLinesFilled, TbPencil } from 'react-icons/tb'
 import { useRouter } from 'next/router'
+import { Button, Modal, useDisclosure } from '@nextui-org/react'
+import CreateAndEditWarehouses from '../../components/modal/CreateAndEditWarehouses'
+import { GetServerSideProps } from 'next'
+import valualApi from '@/apis/valualApi'
 
 interface Props {
+  color?:
+    | 'default'
+    | 'primary'
+    | 'secondary'
+    | 'success'
+    | 'warning'
+    | 'danger'
+    | undefined
   houses: WarehouseList
   columnKey: React.Key
+  apikey: string | undefined
+  companyId: string | undefined
+  method?: string | undefined
 }
 
-export const RenderCellWarehouses: FC<Props> = ({ houses, columnKey }) => {
+export const RenderCellWarehouses: FC<Props> = ({
+  color,
+  houses,
+  columnKey,
+  apikey,
+  companyId,
+  method = 'editar',
+}) => {
   const { push } = useRouter()
+  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure()
 
-  const [apikey, setApikey] = useState('')
+  const [apikeys, setApikey] = useState('')
   useEffect(() => {
     setApikey(localStorage.getItem('apikey') || '')
   }, [])
@@ -29,16 +52,34 @@ export const RenderCellWarehouses: FC<Props> = ({ houses, columnKey }) => {
           {houses.priceList.name}
         </p>
       )
-      case 'actions':
-        return (
+    case 'actions':
+      return (
+        <>
           <TbPencil
-          cursor={'pointer'}
-          color={'#006FEE'}
+            cursor={'pointer'}
+            color={'#006FEE'}
+            size={20}
+            onClick={() => onOpen()}
+          />
+          <Modal
+            closeButton
+            backdrop="blur"
+            aria-label="Crear almacenes"
+            isOpen={isOpen}
+            onOpenChange={onOpenChange}
+            size="2xl"
+          >
+            <CreateAndEditWarehouses
 
-
-          size={20}
-        />
-        )
+              color={color}
+              apikey={apikey}
+              companyId={companyId}
+              method={method}
+              idput={houses.id}
+            />
+          </Modal>
+        </>
+      )
     default:
       return (
         <div className="flex flex-row align-center">
@@ -47,3 +88,5 @@ export const RenderCellWarehouses: FC<Props> = ({ houses, columnKey }) => {
       )
   }
 }
+
+

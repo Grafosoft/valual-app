@@ -3,9 +3,6 @@ import {
   Button,
   CircularProgress,
   Modal,
-  ModalBody,
-  ModalContent,
-  ModalHeader,
   Spacer,
   Table,
   TableBody,
@@ -14,12 +11,6 @@ import {
   TableHeader,
   TableRow,
   useDisclosure,
-  Input,
-  Dropdown,
-  DropdownTrigger,
-  DropdownMenu,
-  DropdownItem,
-  ModalFooter
 } from '@nextui-org/react'
 import { GetServerSideProps, NextPage } from 'next'
 import Head from 'next/head'
@@ -31,7 +22,7 @@ import { WarehouseHeadersLayout } from '../../../layout/warehouses/WarehousesHea
 import { RiAddFill } from 'react-icons/ri'
 import { useRouter } from 'next/router'
 import { useSession } from 'next-auth/react'
-import { Pricelist } from '@/global/params/paramswarehouses'
+import CreateAndEditWarehouses from '../../../components/modal/CreateAndEditWarehouses'
 
 interface Props {
   color:
@@ -53,70 +44,17 @@ const WarehouseList: NextPage<Props> = ({
   apikey,
   companyId,
   color,
-  method,
+  method= 'crear',
   id = '0'
 }) => {
   const { replace } = useRouter()
   const [isLoading, setIsLoading] = useState(false)
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure()
-  const [name, setName] = useState()
   const { status } = useSession()
-  const [priceList, setPriceList] = useState<Pricelist[]>([])
-  const titleText = method === 'crear' ? `Crear Almacenes` : `Editar Almacenes`
 
-  const [selectedPriceList, setSelectedPriceList]: any = useState(
-    new Set(['Nombre precio de lista'])
-  )
-  const list = useMemo(
-    () =>
-      priceList.find(
-        element => element.id.toString() === Array.from(selectedPriceList)[0]
-      )?.name,
-    [priceList, selectedPriceList]
-  )
-  const priceListid = Array.from<number>(selectedPriceList)[0]
 
-  const bodyApi = {
-    id: 0,
-    name: name,
-    priceList: {
-      id: parseInt(priceListid.toString()),
-      name: list
-    }
-  }
 
-  const handleClick = async () => {
-    setIsLoading(true)
-    console.log(bodyApi)
-    if (method === 'crear') {
-      valualApi
-        .post(`warehouses/?companyId=${companyId}&apikey=${apikey}`, bodyApi)
-        .then(response => {
-          if (response.status === 200) {
-            setIsLoading(false)
-            window.location.replace('')
-          }
-        })
-        .catch(error => {
-          console.log(error)
-        })
-    } else {
-      valualApi
-        .put(
-          `warehouses/${id}/?companyId=${companyId}&apikey=${apikey}`,
-          bodyApi
-        )
-        .then(response => {
-          if (response.status === 200) {
-            setIsLoading(false)
-            window.location.replace('')
-          }
-        })
-        .catch(error => {
-          console.log(error)
-        })
-    }
-  }
+
 
   useEffect(() => {
     status === 'unauthenticated' && replace('/')
@@ -144,7 +82,7 @@ const WarehouseList: NextPage<Props> = ({
             <TableRow key={item.id}>
               {columnKey => (
                 <TableCell>
-                  <RenderCellWarehouses houses={item} columnKey={columnKey} />
+                  <RenderCellWarehouses apikey={apikey} companyId={companyId} houses={item} columnKey={columnKey} />
                 </TableCell>
               )}
             </TableRow>
@@ -187,123 +125,8 @@ const WarehouseList: NextPage<Props> = ({
         onOpenChange={onOpenChange}
         size="2xl"
       >
-        <ModalContent>
-          {onClose => {
-            if (priceList.length === 0) {
-              valualApi
-                .get(
-                  `warehouses/params/?apikey=${apikey}&companyId=${companyId}`
-                )
-                .then(response => {
-                  if (response.status === 200) {
-                    setPriceList(response.data.pricelists)
-                    setIsLoading(false)
-                    console.log(priceList)
-                  }
-                })
-                .catch(error => console.log(error))
-            }
+        <CreateAndEditWarehouses color={color} apikey={apikey} companyId={companyId} method={method}  />
 
-            return (
-              <>
-                <ModalHeader>
-                  <div className="container my-5 lg:my-8 m-auto">
-                    <h1 className="text-5xl font-bold text-center">
-                      {titleText}
-                    </h1>
-                  </div>
-                </ModalHeader>
-
-                <ModalBody>
-                  <>
-                    <div className="flex flex-col lg:flex-row lg:justify-between gap-5">
-                      <div className="w-full">
-                        <h2 className="text-xl lg:text-2xl mb-5 font-semibold">
-                          Datos Generales
-                        </h2>
-                        <div className="container my-5">
-                          <label htmlFor="title" className="text-gray-500">
-                            Nombre
-                          </label>
-                          <Input
-                            id="name"
-                            size="lg"
-                            radius="sm"
-                            className="mt-2"
-                            value={name}
-                            onValueChange={setName}
-                          />
-                        </div>
-                        <div className="container my-5 ">
-                          <div>
-                            <label htmlFor="code" className="text-gray-500">
-                              Nombre Precio de lista
-                            </label>
-                            <Dropdown>
-                              <DropdownTrigger>
-                                <Button
-                                  variant="flat"
-                                  className="capitalize w-full"
-                                  size="lg"
-                                  radius="sm"
-                                  color={list !== undefined ? color : 'default'}
-                                >
-                                  {list !== undefined
-                                    ? list
-                                    : 'Nombre precio de lista'}
-                                </Button>
-                              </DropdownTrigger>
-                              <DropdownMenu
-                                aria-label="Selección de precio de lista"
-                                variant={'flat'}
-                                disallowEmptySelection
-                                selectionMode="single"
-                                selectedKeys={selectedPriceList}
-                                onSelectionChange={setSelectedPriceList}
-                              >
-                                {priceList.length !== 0 ? (
-                                  priceList.map(element => (
-                                    <DropdownItem
-                                      key={parseInt(element.id.toString())}
-                                    >
-                                      {element.name}
-                                    </DropdownItem>
-                                  ))
-                                ) : (
-                                  <DropdownItem>NAME</DropdownItem>
-                                )}
-                              </DropdownMenu>
-                            </Dropdown>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </>
-                </ModalBody>
-
-                <ModalFooter>
-                  <div className="mb-5 w-full flex justify-center">
-                    <Button
-                      size="lg"
-                      className="text-white"
-                      type="submit"
-                      color="primary"
-                      style={{ width: '300px' }}
-                      isLoading={isLoading}
-                      onPress={() => {
-                        handleClick()
-                        onClose()
-                        setIsLoading(false)
-                      }}
-                    >
-                      Guardar
-                    </Button>
-                  </div>
-                </ModalFooter>
-              </>
-            )
-          }}
-        </ModalContent>
       </Modal>
     </>
   )
@@ -314,14 +137,8 @@ export default WarehouseList
 export const getServerSideProps: GetServerSideProps = async ctx => {
   const apikey = ctx.query.apikey?.toString() || ''
   const companyId = ctx.query.companyId?.toString() || ''
-  let method = ctx.params?.method || ''
-  let isMethodValid = true
-  const id = ctx.query.id?.toString() || ''
 
-  if (method !== 'crear' && method !== 'editar') {
-    method = 'crear'
-    isMethodValid = false
-  }
+
 
   const response = await valualApi.get<WarehouseList[]>(
     `warehouses/?companyId=${companyId}&apikey=${ctx.query.apikey}`
@@ -339,7 +156,6 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
       houses: response.data,
       apikey,
       companyId,
-      method
     }
   }
 }
