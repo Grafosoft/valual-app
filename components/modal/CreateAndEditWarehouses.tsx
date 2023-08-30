@@ -11,7 +11,7 @@ import {
   DropdownItem,
   ModalFooter
 } from '@nextui-org/react'
-import { NextPage } from 'next'
+import { GetServerSideProps, NextPage } from 'next'
 import React, { useEffect, useState, useMemo } from 'react'
 import { useSession } from 'next-auth/react'
 import { Pricelist } from '@/global/params/paramswarehouses'
@@ -30,6 +30,7 @@ interface Props {
   apikey: string | undefined
   companyId: string | undefined
   method: string | undefined
+  namepricelist?: string | undefined
   idput?: number | undefined
 
 
@@ -40,11 +41,13 @@ const CreateAndEditWarehouses: NextPage<Props> = ({
   companyId,
   color,
   method,
-  idput
+  idput,
+  form,
+  namepricelist
 }) => {
   const { replace } = useRouter()
   const [isLoading, setIsLoading] = useState(false)
-  const [name, setName] = useState(form.)
+  const [name, setName] = useState(''|| form?.name)
   const { status } = useSession()
   const [priceList, setPriceList] = useState<Pricelist[]>([])
   const titleText = method === 'crear' ? `Crear Almacenes` : `Editar Almacenes`
@@ -173,9 +176,13 @@ const CreateAndEditWarehouses: NextPage<Props> = ({
                                   radius="sm"
                                   color={list !== undefined ? color : 'default'}
                                 >
-                                  {list !== undefined
+                                  {
+
+                                  list !== undefined
                                     ? list
-                                    : 'Nombre precio de lista'}
+                                    : list !== undefined || method === 'editar'
+                                    ? namepricelist :
+                                     'Nombre precio de lista'}
                                 </Button>
                               </DropdownTrigger>
                               <DropdownMenu
@@ -235,3 +242,44 @@ const CreateAndEditWarehouses: NextPage<Props> = ({
 }
 
 export default CreateAndEditWarehouses
+
+export const getServerSideProps: GetServerSideProps = async ctx => {
+  let method = ctx.params?.method || ''
+  const apikey = ctx.query.apikey?.toString() || ''
+  const companyId = ctx.query.companyId?.toString() || ''
+
+  const response = await valualApi.get<WarehouseList[]>(
+    `warehouses/?companyId=${companyId}&apikey=${ctx.query.apikey}`
+  )
+
+  if (!response) {
+    return {
+      notFound: true,
+      redirect: '/404'
+    }
+  }
+
+  if(method === 'crear'){
+    return {
+      props: {
+        form: {},
+        apikey,
+        companyId,
+        method,
+      }
+    }
+
+  }else{
+    return {
+      props: {
+        form: response.data,
+        apikey,
+        companyId,
+        method,
+      }
+    }
+
+  }
+
+
+}

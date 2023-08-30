@@ -2,10 +2,9 @@ import React, { FC, useEffect, useState } from 'react'
 import { WarehouseList } from '../../interfaces/warehouses/warehousesList'
 import { TbArrowBigRightLinesFilled, TbPencil } from 'react-icons/tb'
 import { useRouter } from 'next/router'
-import { Button, Modal, useDisclosure } from '@nextui-org/react'
+import { Modal, useDisclosure } from '@nextui-org/react'
 import CreateAndEditWarehouses from '../../components/modal/CreateAndEditWarehouses'
-import { GetServerSideProps } from 'next'
-import valualApi from '@/apis/valualApi'
+
 
 interface Props {
   color?:
@@ -20,7 +19,7 @@ interface Props {
   columnKey: React.Key
   apikey: string | undefined
   companyId: string | undefined
-  method?: string | undefined
+
 }
 
 export const RenderCellWarehouses: FC<Props> = ({
@@ -29,7 +28,7 @@ export const RenderCellWarehouses: FC<Props> = ({
   columnKey,
   apikey,
   companyId,
-  method = 'editar',
+
 }) => {
   const { push } = useRouter()
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure()
@@ -70,12 +69,13 @@ export const RenderCellWarehouses: FC<Props> = ({
             size="2xl"
           >
             <CreateAndEditWarehouses
-
+              form={houses}
               color={color}
               apikey={apikey}
               companyId={companyId}
-              method={method}
+              method='editar'
               idput={houses.id}
+              namepricelist= {houses.priceList.name}
             />
           </Modal>
         </>
