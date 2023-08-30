@@ -75,7 +75,6 @@ export const RenderCellWarehouses: FC<Props> = ({
               companyId={companyId}
               method='editar'
               idput={houses.id}
-              namepricelist= {houses.priceList.name}
             />
           </Modal>
         </>

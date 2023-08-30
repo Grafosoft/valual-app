@@ -14,9 +14,10 @@ import {
 import { GetServerSideProps, NextPage } from 'next'
 import React, { useEffect, useState, useMemo } from 'react'
 import { useSession } from 'next-auth/react'
-import { Pricelist } from '@/global/params/paramswarehouses'
+import { Type } from '@/global/params/paramsBanks'
 import { useRouter } from 'next/router'
 import { WarehouseList } from '../../interfaces/warehouses/warehousesList'
+import { BanksList } from '../../interfaces/banks/banksList'
 interface Props {
   color:
     | 'default'
@@ -26,7 +27,7 @@ interface Props {
     | 'warning'
     | 'danger'
     | undefined
-    form: WarehouseList
+    form: BanksList
   apikey: string | undefined
   companyId: string | undefined
   method: string | undefined
@@ -35,7 +36,7 @@ interface Props {
 
 
 }
-const CreateAndEditWarehouses: NextPage<Props> = ({
+const CreateAndEditBanks: NextPage<Props> = ({
   apikey,
   companyId,
   color,
@@ -47,32 +48,28 @@ const CreateAndEditWarehouses: NextPage<Props> = ({
   const [isLoading, setIsLoading] = useState(false)
   const [name, setName] = useState(''|| form?.name)
   const { status } = useSession()
-  const [priceList, setPriceList] = useState<Pricelist[]>([])
-  const titleText = method === 'crear' ? `Crear Almacenes` : `Editar Almacenes`
-  const [selectedPriceList, setSelectedPriceList]: any = useState(
-    new Set([form?.priceList.name || '' ])
-  )
-  const price = useMemo(
-    () =>
-      Array.from(selectedPriceList).join(', ').replaceAll('_', ' '),
-    [selectedPriceList]
+  const [typeList, setTypeList] = useState<Type[]>([])
+  const titleText = method === 'crear' ? `Crear Bancos` : `Editar Bancos`
+  const [selectedTypeList, setSelectedTypeList]: any = useState(
+    new Set([form?.type.name || '' ])
   )
 
-  const list = useMemo(
+
+  const type = useMemo(
     () =>
-      priceList.find(
-        element => element.id.toString() === Array.from(selectedPriceList)[0]
+      typeList.find(
+        element => element.id === Array.from(selectedTypeList)[0]
       )?.name,
-    [priceList, selectedPriceList]
-  )
-  const priceListid = Array.from<number>(selectedPriceList)[0]
+    [typeList, selectedTypeList])
 
-  const bodyApi = {
+   const priceListid = Array.from<string>(selectedTypeList)[0]
+
+   const bodyApi = {
     id: 0,
     name: name,
-    priceList: {
-      id: parseInt(priceListid.toString()),
-      name: list
+    type: {
+      id: priceListid.toString(),
+      name: type
     }
   }
 
@@ -82,7 +79,7 @@ const CreateAndEditWarehouses: NextPage<Props> = ({
 
     if (method === 'crear') {
       valualApi
-        .post(`warehouses/?companyId=${companyId}&apikey=${apikey}`, bodyApi)
+        .post(`banks/?companyId=${companyId}&apikey=${apikey}`, bodyApi)
         .then(response => {
           if (response.status === 200) {
             setIsLoading(false)
@@ -95,7 +92,7 @@ const CreateAndEditWarehouses: NextPage<Props> = ({
     } else {
       valualApi
         .put(
-          `warehouses/${idput}/?companyId=${companyId}&apikey=${apikey}`,
+          `banks/${idput}/?companyId=${companyId}&apikey=${apikey}`,
           bodyApi
         )
         .then(response => {
@@ -121,16 +118,16 @@ const CreateAndEditWarehouses: NextPage<Props> = ({
         <ModalContent>
 
           {onClose => {
-            if (priceList.length === 0) {
+            if (typeList.length === 0) {
               valualApi
                 .get(
-                  `warehouses/params/?apikey=${apikey}&companyId=${companyId}`
+                  `banks/params/?apikey=${apikey}&companyId=${companyId}`
                 )
                 .then(response => {
                   if (response.status === 200) {
-                    setPriceList(response.data.pricelists)
+                    setTypeList(response.data.pricelists)
                     setIsLoading(false)
-                    console.log(priceList)
+                    console.log(typeList)
                   }
                 })
                 .catch(error => console.log(error))
@@ -178,15 +175,15 @@ const CreateAndEditWarehouses: NextPage<Props> = ({
                                   className="capitalize w-full"
                                   size="lg"
                                   radius="sm"
-                                  color={list !== undefined ? color : 'default'}
+                                  color={type !== undefined ? color : 'default'}
                                 >
                                   {
 
-                                  list !== undefined
-                                    ? list
-                                    : list !== undefined || method === 'editar'
-                                    ? price :
-                                     'Nombre precio de lista'}
+                                  type !== undefined
+                                    ? type
+                                    : type !== undefined || method === 'editar'
+                                    ? type :
+                                     'Nombre tipo de banco'}
                                 </Button>
                               </DropdownTrigger>
                               <DropdownMenu
@@ -194,13 +191,13 @@ const CreateAndEditWarehouses: NextPage<Props> = ({
                                 variant={'flat'}
                                 disallowEmptySelection
                                 selectionMode="single"
-                                selectedKeys={selectedPriceList}
-                                onSelectionChange={setSelectedPriceList}
+                                selectedKeys={selectedTypeList}
+                                onSelectionChange={setSelectedTypeList}
                               >
-                                {priceList.length !== 0 ? (
-                                  priceList.map(element => (
+                                {typeList.length !== 0 ? (
+                                  typeList.map(element => (
                                     <DropdownItem
-                                      key={parseInt(element.id.toString())}
+                                    key={(element.id.toString())}
                                     >
                                       {element.name}
                                     </DropdownItem>
@@ -245,7 +242,7 @@ const CreateAndEditWarehouses: NextPage<Props> = ({
   )
 }
 
-export default CreateAndEditWarehouses
+export default CreateAndEditBanks
 
 export const getServerSideProps: GetServerSideProps = async ctx => {
   let method = ctx.params?.method || ''
@@ -253,7 +250,7 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
   const companyId = ctx.query.companyId?.toString() || ''
 
   const response = await valualApi.get<WarehouseList[]>(
-    `warehouses/?companyId=${companyId}&apikey=${ctx.query.apikey}`
+    `banks/?companyId=${companyId}&apikey=${ctx.query.apikey}`
   )
 
   if (!response) {

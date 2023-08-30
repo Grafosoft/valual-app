@@ -37,14 +37,12 @@ interface Props {
   form: WarehouseList
   apikey: string | undefined
   companyId: string | undefined
-  method: string | undefined
 }
 const WarehouseList: NextPage<Props> = ({
   houses,
   apikey,
   companyId,
   color,
-  method= 'crear',
   form
 }) => {
   const { replace } = useRouter()
@@ -125,7 +123,7 @@ const WarehouseList: NextPage<Props> = ({
         onOpenChange={onOpenChange}
         size="2xl"
       >
-        <CreateAndEditWarehouses form={form} color={color} apikey={apikey} companyId={companyId} method={method}  />
+        <CreateAndEditWarehouses form={form} color={color} apikey={apikey} companyId={companyId} method='crear'  />
 
       </Modal>
     </>
