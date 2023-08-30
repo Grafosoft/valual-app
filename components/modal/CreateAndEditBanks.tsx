@@ -14,10 +14,10 @@ import {
 import { GetServerSideProps, NextPage } from 'next'
 import React, { useEffect, useState, useMemo } from 'react'
 import { useSession } from 'next-auth/react'
-import { Type } from '@/global/params/paramsBanks'
 import { useRouter } from 'next/router'
 import { WarehouseList } from '../../interfaces/warehouses/warehousesList'
 import { BanksList } from '../../interfaces/banks/banksList'
+import { Type } from '@/global/params/paramsBanks'
 interface Props {
   color:
     | 'default'
@@ -53,14 +53,18 @@ const CreateAndEditBanks: NextPage<Props> = ({
   const [selectedTypeList, setSelectedTypeList]: any = useState(
     new Set([form?.type.name || '' ])
   )
-
+  const typebank = useMemo(
+    () =>
+      Array.from(selectedTypeList).join(', ').replaceAll('_', ' '),
+    [selectedTypeList]
+  )
 
   const type = useMemo(
     () =>
-      typeList.find(
-        element => element.id === Array.from(selectedTypeList)[0]
-      )?.name,
-    [typeList, selectedTypeList])
+    typeList.find(
+      element => element.id.toString() === Array.from(selectedTypeList)[0]
+    )?.name,
+  [typeList, selectedTypeList])
 
    const priceListid = Array.from<string>(selectedTypeList)[0]
 
@@ -125,7 +129,7 @@ const CreateAndEditBanks: NextPage<Props> = ({
                 )
                 .then(response => {
                   if (response.status === 200) {
-                    setTypeList(response.data.pricelists)
+                    setTypeList(response.data.types)
                     setIsLoading(false)
                     console.log(typeList)
                   }
@@ -182,7 +186,7 @@ const CreateAndEditBanks: NextPage<Props> = ({
                                   type !== undefined
                                     ? type
                                     : type !== undefined || method === 'editar'
-                                    ? type :
+                                    ? typebank :
                                      'Nombre tipo de banco'}
                                 </Button>
                               </DropdownTrigger>
