@@ -12,7 +12,6 @@ interface Props {
   companyId: string | undefined
   method: string | undefined
   id?: string | undefined
-
 }
 const ItemsCreatePage: NextPage<Props> = ({
   apikey,
@@ -26,16 +25,38 @@ const ItemsCreatePage: NextPage<Props> = ({
   const { status: statusSession } = useSession()
   const titleText = method === 'crear' ? `Crear Articulo` : `Editar Articulo`
 
+
+
   const [name, setName] = useState('' || form?.name)
   const [code, setCode] = useState('' || form?.code)
   const [barcode, setBarcode] = useState('' || form?.barcode)
   const [wooCode, setWooCode] = useState('' || form?.wooCode)
-  const [salePrice, setSalePrice] = useState('' || form?.salePrice)
+
+
+  const [salePrice, setSalePrice] = useState<number | string>('' || form?.salePrice)
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const inputValue = event.target.value;
+
+    // Eliminar puntos y comas del valor para obtener el número sin formato
+    const cleanedValue = inputValue.replace(/[.,]/g, '');
+
+    // Convertir a número y actualizar el estado
+    setSalePrice(cleanedValue !== '' ? parseInt(cleanedValue, 10) : '');
+
+    // No necesitamos formatear el valor aquí
+  };
+
+  const formattedValue = typeof salePrice === 'number'
+    ? salePrice.toLocaleString('en-DE')
+    : salePrice;
+
+
+
   const [costPrice, setCostPrice] = useState('' || form?.costPrice)
   const [lastcostPrice, setLastcostPrice] = useState('' || form?.lastcostPrice)
   const [bagtaxPrice, setBagtaxPrice] = useState('' || form?.bagtaxPrice)
   const [observations, setObservations] = useState('' || form?.observations)
-
 
   const bodyApi = {
     id: 0,
@@ -53,7 +74,6 @@ const ItemsCreatePage: NextPage<Props> = ({
     isAiu: false,
     isActive: true
   }
-
 
   const handleClick: MouseEventHandler<HTMLButtonElement> = async () => {
     setIsLoading(true)
@@ -84,7 +104,6 @@ const ItemsCreatePage: NextPage<Props> = ({
         })
     }
   }
-
 
   useEffect(() => {
     statusSession === 'unauthenticated' && replace('/')
@@ -118,6 +137,67 @@ const ItemsCreatePage: NextPage<Props> = ({
             />
           </div>
         </div>
+
+        <div className="container my-5 grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-10">
+          <div>
+            <label htmlFor="code" className="text-gray-500">
+              Código
+            </label>
+            <Input
+              id="code"
+              size="lg"
+              radius="sm"
+              className="mt-2"
+              value={code}
+              onValueChange={setCode}
+            />
+          </div>
+          <div>
+            <label htmlFor="location" className="text-gray-500">
+              Código de barras
+            </label>
+            <Input
+              id="location"
+              size="lg"
+              radius="sm"
+              className="mt-2"
+              value={barcode}
+              onValueChange={setBarcode}
+            />
+          </div>
+        </div>
+        <div className="container my-5 grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-10">
+          <div>
+            <label htmlFor="code" className="text-gray-500">
+              Código Woo
+            </label>
+            <Input
+              id="code"
+              size="lg"
+              radius="sm"
+              className="mt-2"
+              value={wooCode}
+              onValueChange={setWooCode}
+            />
+          </div>
+          <div>
+            <label htmlFor="location" className="text-gray-500">
+              Precio de Venta
+            </label>
+            <Input
+              type="text"
+              size="lg"
+              radius="sm"
+              className="mt-2"
+              value={formattedValue}
+              onChange={handleInputChange}
+              startContent={
+                <div className="pointer-events-none flex items-center">
+                  <span className="text-default-400 text-small">$</span>
+                </div>}
+            />
+          </div>
+        </div>
       </div>
 
       <div className="mb-5 w-full flex justify-center">
@@ -146,8 +226,6 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
   const companyId = ctx.query.companyId || ''
   const id = ctx.query.id?.toString() || ''
 
-
-
   if (method !== 'crear' && method !== 'editar') {
     method = 'crear'
     isMethodValid = false
@@ -158,15 +236,12 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
       `items/${id}/?companyId=${companyId}&apikey=${apikey}`
     )
 
-
     if (!response || !isMethodValid) {
       return {
         notFound: true,
         redirect: '/404'
       }
-    }
-
-    else {
+    } else {
       return {
         props: {
           form: response.data,
@@ -187,5 +262,4 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
       method
     }
   }
-
 }
