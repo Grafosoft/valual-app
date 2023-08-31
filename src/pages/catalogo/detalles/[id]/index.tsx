@@ -3,10 +3,10 @@ import { useSession } from 'next-auth/react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import React, { useEffect } from 'react'
-import { ItemsList } from '../../../../interfaces/items/itemsList'
+import { ItemsList } from '../../../../../interfaces/items/itemsList'
 
 import valualApi from '@/apis/valualApi'
-import { ItemsDetailsHeader } from '../../../../layout/items/itemsDetailsHeader'
+import { ItemsDetailsHeader } from '../../../../../layout/items/itemsDetailsHeader'
 
 interface Props {
   data: ItemsList

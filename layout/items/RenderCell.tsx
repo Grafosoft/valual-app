@@ -122,7 +122,7 @@ export const RenderCell: FC<Props> = ({ user, columnKey }) => {
             color={colorIcon}
             onClick={() =>
               push(
-                `/catalogo/editar?id=${user.id}?apikey=${localStorage.getItem(
+                `/catalogo/editar?id=${user.id}&apikey=${localStorage.getItem(
                   'apikey'
                 )}&companyId=${localStorage.getItem('companyId')}`
               )
@@ -136,7 +136,7 @@ export const RenderCell: FC<Props> = ({ user, columnKey }) => {
           color={colorIcon}
           onClick={() =>
             push(
-              `/catalogo/${user.id}/?apikey=${localStorage.getItem(
+              `/catalogo/detalles/${user.id}/?apikey=${localStorage.getItem(
                 'apikey'
               )}&companyId=${localStorage.getItem('companyId')}`
             )

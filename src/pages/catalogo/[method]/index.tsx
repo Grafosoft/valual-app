@@ -11,7 +11,8 @@ interface Props {
   apikey: string | undefined
   companyId: string | undefined
   method: string | undefined
-  id?: number | undefined
+  id?: string | undefined
+
 }
 const ItemsCreatePage: NextPage<Props> = ({
   apikey,
@@ -35,6 +36,7 @@ const ItemsCreatePage: NextPage<Props> = ({
   const [bagtaxPrice, setBagtaxPrice] = useState('' || form?.bagtaxPrice)
   const [observations, setObservations] = useState('' || form?.observations)
 
+
   const bodyApi = {
     id: 0,
     name: name,
@@ -51,6 +53,7 @@ const ItemsCreatePage: NextPage<Props> = ({
     isAiu: false,
     isActive: true
   }
+
 
   const handleClick: MouseEventHandler<HTMLButtonElement> = async () => {
     setIsLoading(true)
@@ -81,6 +84,7 @@ const ItemsCreatePage: NextPage<Props> = ({
         })
     }
   }
+
 
   useEffect(() => {
     statusSession === 'unauthenticated' && replace('/')
@@ -139,8 +143,10 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
   let method = ctx.params?.method || ''
   let isMethodValid = true
   const apikey = ctx.query.apikey?.toString() || ''
-  const companyId = ctx.query.companyId?.toString() || ''
+  const companyId = ctx.query.companyId || ''
   const id = ctx.query.id?.toString() || ''
+
+
 
   if (method !== 'crear' && method !== 'editar') {
     method = 'crear'
@@ -152,12 +158,15 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
       `items/${id}/?companyId=${companyId}&apikey=${apikey}`
     )
 
+
     if (!response || !isMethodValid) {
       return {
         notFound: true,
         redirect: '/404'
       }
-    } else {
+    }
+
+    else {
       return {
         props: {
           form: response.data,
@@ -169,6 +178,7 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
       }
     }
   }
+
   return {
     props: {
       form: {},
@@ -177,4 +187,5 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
       method
     }
   }
+
 }
