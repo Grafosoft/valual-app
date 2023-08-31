@@ -1,16 +1,5 @@
 import valualApi from '@/apis/valualApi'
-import {
-  Button,
-  ModalBody,
-  ModalContent,
-  ModalHeader,
-  Input,
-  Dropdown,
-  DropdownTrigger,
-  DropdownMenu,
-  DropdownItem,
-  ModalFooter
-} from '@nextui-org/react'
+import { Button, Input } from '@nextui-org/react'
 import { GetServerSideProps, NextPage } from 'next'
 import React, { useEffect, useState, useMemo, MouseEventHandler } from 'react'
 import { useSession } from 'next-auth/react'
@@ -22,18 +11,18 @@ interface Props {
   apikey: string | undefined
   companyId: string | undefined
   method: string | undefined
-  idput?: number | undefined
+  id?: number | undefined
 }
 const ItemsCreatePage: NextPage<Props> = ({
   apikey,
   companyId,
   method,
-  idput,
+  id,
   form
 }) => {
   const { replace } = useRouter()
   const [isLoading, setIsLoading] = useState(false)
-  const { status } = useSession()
+  const { status: statusSession } = useSession()
   const titleText = method === 'crear' ? `Crear Articulo` : `Editar Articulo`
 
   const [name, setName] = useState('' || form?.name)
@@ -80,7 +69,7 @@ const ItemsCreatePage: NextPage<Props> = ({
         })
     } else {
       valualApi
-        .put(`items/${idput}/?companyId=${companyId}&apikey=${apikey}`, bodyApi)
+        .put(`items/${id}?companyId=${companyId}&apikey=${apikey}`, bodyApi)
         .then(response => {
           if (response.status === 200) {
             setIsLoading(false)
@@ -94,8 +83,8 @@ const ItemsCreatePage: NextPage<Props> = ({
   }
 
   useEffect(() => {
-    status === 'unauthenticated' && replace('/')
-  }, [status, replace])
+    statusSession === 'unauthenticated' && replace('/')
+  }, [statusSession, replace])
 
   return (
     <>
@@ -148,37 +137,44 @@ export default ItemsCreatePage
 
 export const getServerSideProps: GetServerSideProps = async ctx => {
   let method = ctx.params?.method || ''
+  let isMethodValid = true
   const apikey = ctx.query.apikey?.toString() || ''
   const companyId = ctx.query.companyId?.toString() || ''
+  const id = ctx.query.id?.toString() || ''
 
-  const response = await valualApi.get<ItemsList[]>(
-    `warehouses/?companyId=${companyId}&apikey=${ctx.query.apikey}`
-  )
-
-  if (!response) {
-    return {
-      notFound: true,
-      redirect: '/404'
-    }
+  if (method !== 'crear' && method !== 'editar') {
+    method = 'crear'
+    isMethodValid = false
   }
 
-  if (method === 'crear') {
-    return {
-      props: {
-        form: {},
-        apikey,
-        companyId,
-        method
+  if (method === 'editar') {
+    const response = await valualApi.get<ItemsList>(
+      `items/${id}/?companyId=${companyId}&apikey=${apikey}`
+    )
+
+    if (!response || !isMethodValid) {
+      return {
+        notFound: true,
+        redirect: '/404'
+      }
+    } else {
+      return {
+        props: {
+          form: response.data,
+          apikey,
+          companyId,
+          method,
+          id
+        }
       }
     }
-  } else {
-    return {
-      props: {
-        form: response.data,
-        apikey,
-        companyId,
-        method
-      }
+  }
+  return {
+    props: {
+      form: {},
+      apikey,
+      companyId,
+      method
     }
   }
 }

@@ -4,8 +4,9 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import React, { useEffect } from 'react'
 import { ItemsList } from '../../../../interfaces/items/itemsList'
-import { ItemsDetailsHeader } from '../../../../layout/items/ItemsDetailsHeader'
+
 import valualApi from '@/apis/valualApi'
+import { ItemsDetailsHeader } from '../../../../layout/items/itemsDetailsHeader'
 
 interface Props {
   data: ItemsList
@@ -41,7 +42,7 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
     `items/${id}/?companyId=${companyId}&apikey=${ctx.query.apikey}`
   )
 
-  console.log(`items/${id}/?companyId=${companyId}&apikey=${ctx.query.apikey}`)
+
   if (!response) {
     return {
       notFound: true,

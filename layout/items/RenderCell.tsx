@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from 'react'
-import { TbArrowBigRightLinesFilled } from 'react-icons/tb'
-import { Chip, User } from '@nextui-org/react'
+import { TbArrowBigRightLinesFilled, TbPencil } from 'react-icons/tb'
+import { Chip, Spacer, User } from '@nextui-org/react'
 import { useRouter } from 'next/router'
 import { ItemsList } from '../../interfaces/items/itemsList'
 
@@ -116,6 +116,21 @@ export const RenderCell: FC<Props> = ({ user, columnKey }) => {
 
     case 'details':
       return (
+        <div className="flex">
+          <TbPencil
+            cursor={'pointer'}
+            color={colorIcon}
+            onClick={() =>
+              push(
+                `/catalogo/editar?id=${user.id}?apikey=${localStorage.getItem(
+                  'apikey'
+                )}&companyId=${localStorage.getItem('companyId')}`
+              )
+            }
+            size={20}
+          />
+          <Spacer x={8} />
+
         <TbArrowBigRightLinesFilled
           cursor={'pointer'}
           color={colorIcon}
@@ -128,6 +143,7 @@ export const RenderCell: FC<Props> = ({ user, columnKey }) => {
           }
           size={20}
         />
+        </div>
       )
     default:
       return (

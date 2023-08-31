@@ -2,12 +2,14 @@ import { GetServerSideProps, NextPage } from 'next'
 import { ItemsList } from '../../../interfaces/items/itemsList'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import valualApi from '@/apis/valualApi'
 import Head from 'next/head'
 
 import { CatalHeaderLayout } from '../../../layout/items/ItemsHeader'
 import {
+  Button,
+  CircularProgress,
   Table,
   TableBody,
   TableCell,
@@ -18,6 +20,7 @@ import {
 import { columns } from '@/global/items/itemsColumns'
 import { RenderCell } from '../../../layout/items/RenderCell'
 import { PaginationList } from '../../../components/pagination/PaginationList'
+import { RiAddFill } from 'react-icons/ri'
 
 interface Props {
   items: ItemsList[]
@@ -29,7 +32,9 @@ interface Props {
 const CatalogueList: NextPage<Props> = ({ items, apikey, companyId, page }) => {
   const [currentPage, setCurrentPage] = React.useState(0)
   const { data, status } = useSession()
-  const { replace } = useRouter()
+  const { push ,replace } = useRouter()
+  const [isLoading, setIsLoading] = useState(false)
+
 
   useEffect(() => {
     setCurrentPage(parseInt(page || '0') + 1)
@@ -100,6 +105,38 @@ const CatalogueList: NextPage<Props> = ({ items, apikey, companyId, page }) => {
         currentPage={currentPage}
         color={'primary'}
       />
+
+      <Button
+        isIconOnly
+        color={'primary'}
+        variant="shadow"
+        style={{
+          width: '60px',
+          height: '60px',
+          position: 'fixed',
+          right: '2em',
+          bottom: '2em'
+        }}
+        isDisabled={isLoading}
+        onClick={() => {
+          setIsLoading(true)
+          push(
+            `/catalogo/crear?apikey=${apikey}&companyId=${companyId}`
+          )
+        }}
+      >
+        {isLoading ? (
+          <CircularProgress
+            size="md"
+            classNames={{
+              indicator: 'stroke-white',
+              track: 'stroke-white/25'
+            }}
+          />
+        ) : (
+          <RiAddFill size={25} color="white" />
+        )}
+      </Button>
     </>
   )
 }
