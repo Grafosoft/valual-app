@@ -51,13 +51,17 @@ const CreateAndEditBanks: NextPage<Props> = ({
   const [typeList, setTypeList] = useState<Type[]>([])
   const titleText = method === 'crear' ? `Crear Bancos` : `Editar Bancos`
   const [selectedTypeList, setSelectedTypeList]: any = useState(
-    new Set([form?.type.name || '' ])
+    new Set([form?.type.name || 'Nombre tipo de banco' ])
   )
-  const typebank = useMemo(
-    () =>
-      Array.from(selectedTypeList).join(', ').replaceAll('_', ' '),
-    [selectedTypeList]
-  )
+
+
+  const typebank = useMemo(() => {
+    if (form?.type && form.type.name) {
+      return form.type.name;
+    } else {
+      return 'Nombre tipo de banco';
+    }
+  }, [form]);
 
   const type = useMemo(
     () =>
@@ -66,13 +70,24 @@ const CreateAndEditBanks: NextPage<Props> = ({
     )?.name,
   [typeList, selectedTypeList])
 
-   const priceListid = Array.from<string>(selectedTypeList)[0]
+  useEffect(() => {
+    if (method === 'editar') {
+      if (form?.type.id) {
+        setSelectedTypeList(new Set([form.type.id.toString()]));
+      } else {
+        setSelectedTypeList(new Set<string>());
+      }
+    }
+  }, [method, form]);
+
+
+   const typeListid = Array.from<string>(selectedTypeList)[0]
 
    const bodyApi = {
     id: 0,
     name: name,
     type: {
-      id: priceListid.toString(),
+      id: typeListid.toString(),
       name: type
     }
   }
@@ -155,7 +170,7 @@ const CreateAndEditBanks: NextPage<Props> = ({
                           Datos Generales
                         </h2>
                         <div className="container my-5">
-                          <label htmlFor="title" className="text-gray-500">
+                          <label className="text-gray-500">
                             Nombre
                           </label>
                           <Input
@@ -169,14 +184,14 @@ const CreateAndEditBanks: NextPage<Props> = ({
                         </div>
                         <div className="container my-5 ">
                           <div>
-                            <label htmlFor="code" className="text-gray-500">
+                            <h2 className="text-gray-500 my-3">
                               Nombre Precio de lista
-                            </label>
+                            </h2>
                             <Dropdown>
                               <DropdownTrigger>
                                 <Button
                                   variant="flat"
-                                  className="capitalize w-full"
+                                  className="capitalize w-full "
                                   size="lg"
                                   radius="sm"
                                   color={type !== undefined ? color : 'default'}

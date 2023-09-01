@@ -32,8 +32,6 @@ interface Props {
   method: string | undefined
   idput?: number | undefined
 
-
-
 }
 const CreateAndEditWarehouses: NextPage<Props> = ({
   apikey,
@@ -50,13 +48,17 @@ const CreateAndEditWarehouses: NextPage<Props> = ({
   const [priceList, setPriceList] = useState<Pricelist[]>([])
   const titleText = method === 'crear' ? `Crear Almacenes` : `Editar Almacenes`
   const [selectedPriceList, setSelectedPriceList]: any = useState(
-    new Set([form?.priceList.name || '' ])
+    new Set([form?.priceList.name || 'Nombre precio de Lista' ])
   )
-  const price = useMemo(
-    () =>
-      Array.from(selectedPriceList).join(', ').replaceAll('_', ' '),
-    [selectedPriceList]
-  )
+
+
+  const price = useMemo(() => {
+    if (form?.priceList && form.priceList.name) {
+      return form.priceList.name;
+    } else {
+      return 'Nombre precio de lista';
+    }
+  }, [form]);
 
   const list = useMemo(
     () =>
@@ -65,13 +67,27 @@ const CreateAndEditWarehouses: NextPage<Props> = ({
       )?.name,
     [priceList, selectedPriceList]
   )
+
+  useEffect(() => {
+    if (method === 'editar') {
+      if (form?.priceList.id) {
+        setSelectedPriceList(new Set([form.priceList.id.toString()]));
+      } else {
+        setSelectedPriceList(new Set<string>());
+      }
+    }
+  }, [method, form]);
+
+
   const priceListid = Array.from<number>(selectedPriceList)[0]
+
+  const priceListIdString = priceListid !== undefined ? priceListid.toString() : '';
 
   const bodyApi = {
     id: 0,
     name: name,
     priceList: {
-      id: parseInt(priceListid.toString()),
+      id: parseInt(priceListIdString),
       name: list
     }
   }
@@ -79,6 +95,7 @@ const CreateAndEditWarehouses: NextPage<Props> = ({
   const handleClick = async () => {
     setIsLoading(true)
     console.log(bodyApi)
+
 
     if (method === 'crear') {
       valualApi
@@ -168,9 +185,9 @@ const CreateAndEditWarehouses: NextPage<Props> = ({
                         </div>
                         <div className="container my-5 ">
                           <div>
-                            <label htmlFor="code" className="text-gray-500">
+                            <h2 className="text-gray-500 my-3">
                               Nombre Precio de lista
-                            </label>
+                            </h2>
                             <Dropdown>
                               <DropdownTrigger>
                                 <Button
@@ -200,7 +217,7 @@ const CreateAndEditWarehouses: NextPage<Props> = ({
                                 {priceList.length !== 0 ? (
                                   priceList.map(element => (
                                     <DropdownItem
-                                      key={parseInt(element.id.toString())}
+                                      key={(element.id.toString())}
                                     >
                                       {element.name}
                                     </DropdownItem>
