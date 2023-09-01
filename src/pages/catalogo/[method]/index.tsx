@@ -45,10 +45,10 @@ const ItemsCreatePage: NextPage<Props> = ({
   const { status: statusSession } = useSession()
   const titleText = method === 'crear' ? `Crear Articulo` : `Editar Articulo`
   const [name, setName] = useState('' || form?.name)
-  const [code, setCode] = useState('' || form.code)
+  const [code, setCode] = useState('' || form?.code)
   const [barcode, setBarcode] = useState('' || form?.barcode)
   const [wooCode, setWooCode] = useState('' || form?.wooCode)
-  const [salePrice, setSalePrice] = useState('' || form?.salePrice)
+  const [salePrice, setSalePrice] = useState(0 || form?.salePrice)
   const [costPrice, setCostPrice] = useState('' || form?.costPrice)
   const [lastcostPrice, setLastcostPrice] = useState('' || form?.lastcostPrice)
   const [bagtaxPrice, setBagtaxPrice] = useState('' || form?.bagtaxPrice)
@@ -59,7 +59,7 @@ const ItemsCreatePage: NextPage<Props> = ({
   const [isActive, setisActive] = useState('' || form?.isActive)
   const [paramsgroups, setParamsgroups] = useState<Group[]>([])
   const [selectedparamsgroups, setSelectedParamsgroups]: any = useState(
-    new Set([form?.group.name || 'Grupos'])
+    new Set(['Grupos' || form?.group.name  ])
   )
 
   const group = useMemo(() => {
@@ -80,7 +80,7 @@ const ItemsCreatePage: NextPage<Props> = ({
 
   const [paramsTaxs, setParamsTaxs] = useState<Tax[]>([])
   const [selectedParamsTaxs, setSelectedParamsTaxs]: any = useState(
-    new Set([form?.tax.name || 'Impusto'])
+    new Set(['Impusto' || form?.tax.name  ])
   )
 
   const tax = useMemo(() => {
@@ -107,9 +107,9 @@ const ItemsCreatePage: NextPage<Props> = ({
     barcode,
     wooCode,
     salePrice,
-    costPrice,
-    lastcostPrice,
-    bagtaxPrice,
+    costPrice:parseInt(costPrice.toString()) ,
+    lastcostPrice:parseInt(lastcostPrice.toString()) ,
+    bagtaxPrice: parseInt(bagtaxPrice.toString()),
     observations,
     isInventory,
     isFavorite,
@@ -246,6 +246,7 @@ const ItemsCreatePage: NextPage<Props> = ({
               Código de barras
             </label>
             <Input
+              id="barcode"
               size="lg"
               radius="sm"
               className="mt-2"
@@ -258,6 +259,7 @@ const ItemsCreatePage: NextPage<Props> = ({
               Código Woo
             </label>
             <Input
+              id="wooCode"
               size="lg"
               radius="sm"
               className="mt-2"
@@ -273,6 +275,7 @@ const ItemsCreatePage: NextPage<Props> = ({
             </label>
             <Input
               type="text"
+              id="salePrice"
               size="lg"
               radius="sm"
               className="mt-2"
@@ -290,7 +293,7 @@ const ItemsCreatePage: NextPage<Props> = ({
               Precio de Coste
             </label>
             <Input
-              id="code"
+              id="costPrice"
               size="lg"
               radius="sm"
               className="mt-2"
@@ -311,6 +314,7 @@ const ItemsCreatePage: NextPage<Props> = ({
               Ultimo Coste Precio
             </label>
             <Input
+              id="lastcostPrice"
               size="lg"
               radius="sm"
               className="mt-2"
@@ -328,6 +332,7 @@ const ItemsCreatePage: NextPage<Props> = ({
               Impuesto en la bolsa
             </label>
             <Input
+              id="bagtaxPrice"
               size="lg"
               radius="sm"
               className="mt-2"
@@ -348,7 +353,7 @@ const ItemsCreatePage: NextPage<Props> = ({
             Observación
           </label>
           <Textarea
-            id="description"
+            id="observations"
             size="lg"
             radius="sm"
             className="mt-2"
@@ -360,6 +365,7 @@ const ItemsCreatePage: NextPage<Props> = ({
           <div className="grid ">
             <label className="text-gray-500">Control de Inventario</label>
             <Switch
+            id="isInventory"
               className="mt-2"
               isSelected={isInventory}
               onValueChange={setisInventory}
@@ -368,6 +374,8 @@ const ItemsCreatePage: NextPage<Props> = ({
           <div className="grid ">
             <label className="text-gray-500">Favortio</label>
             <Switch
+            id="isFavorite"
+
               className="mt-2"
               isSelected={isFavorite}
               onValueChange={setisFavorite}
@@ -376,6 +384,8 @@ const ItemsCreatePage: NextPage<Props> = ({
           <div className="grid ">
             <label className="text-gray-500">AIU</label>
             <Switch
+            id="isAiu"
+
               className="mt-2"
               isSelected={isAiu}
               onValueChange={setisAiu}
@@ -384,6 +394,8 @@ const ItemsCreatePage: NextPage<Props> = ({
           <div className="grid ">
             <label className="text-gray-500">Estado</label>
             <Switch
+            id="isActive"
+
               className="mt-2"
               isSelected={isActive}
               onValueChange={setisActive}
