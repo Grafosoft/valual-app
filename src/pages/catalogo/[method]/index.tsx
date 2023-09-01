@@ -6,6 +6,7 @@ import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import { ItemsList } from '../../../../interfaces/items/itemsList'
 import Head from 'next/head'
+import { TbMoneybag } from 'react-icons/tb'
 interface Props {
   form: ItemsList
   apikey: string | undefined
@@ -24,34 +25,23 @@ const ItemsCreatePage: NextPage<Props> = ({
   const [isLoading, setIsLoading] = useState(false)
   const { status: statusSession } = useSession()
   const titleText = method === 'crear' ? `Crear Articulo` : `Editar Articulo`
-
-
-
   const [name, setName] = useState('' || form?.name)
   const [code, setCode] = useState('' || form?.code)
   const [barcode, setBarcode] = useState('' || form?.barcode)
   const [wooCode, setWooCode] = useState('' || form?.wooCode)
 
-
-  const [salePrice, setSalePrice] = useState<number | string>('' || form?.salePrice)
-
+  const [salePrice, setSalePrice] = useState<number | string>(
+    '' || form?.salePrice
+  )
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const inputValue = event.target.value;
-
-    // Eliminar puntos y comas del valor para obtener el número sin formato
-    const cleanedValue = inputValue.replace(/[.,]/g, '');
-
-    // Convertir a número y actualizar el estado
-    setSalePrice(cleanedValue !== '' ? parseInt(cleanedValue, 10) : '');
-
-    // No necesitamos formatear el valor aquí
-  };
-
-  const formattedValue = typeof salePrice === 'number'
-    ? salePrice.toLocaleString('en-DE')
-    : salePrice;
-
-
+    const inputValue = event.target.value
+    const cleanedValue = inputValue.replace(/[.,]/g, '')
+    setSalePrice(cleanedValue !== '' ? parseInt(cleanedValue, 10) : '')
+  }
+  const formattedValue =
+    typeof salePrice === 'number'
+      ? salePrice.toLocaleString('en-DE')
+      : salePrice
 
   const [costPrice, setCostPrice] = useState('' || form?.costPrice)
   const [lastcostPrice, setLastcostPrice] = useState('' || form?.lastcostPrice)
@@ -123,7 +113,8 @@ const ItemsCreatePage: NextPage<Props> = ({
           <h2 className="text-xl lg:text-2xl mb-5 font-semibold">
             Datos Generales
           </h2>
-          <div className="container my-5">
+          <div className="container my-5 grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-10">
+            <div>
             <label htmlFor="title" className="text-gray-500">
               Nombre
             </label>
@@ -135,11 +126,8 @@ const ItemsCreatePage: NextPage<Props> = ({
               value={name}
               onValueChange={setName}
             />
-          </div>
-        </div>
-
-        <div className="container my-5 grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-10">
-          <div>
+            </div>
+            <div>
             <label htmlFor="code" className="text-gray-500">
               Código
             </label>
@@ -152,12 +140,15 @@ const ItemsCreatePage: NextPage<Props> = ({
               onValueChange={setCode}
             />
           </div>
+          </div>
+        </div>
+        <div className="container my-5 grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-10">
+
           <div>
             <label htmlFor="location" className="text-gray-500">
               Código de barras
             </label>
             <Input
-              id="location"
               size="lg"
               radius="sm"
               className="mt-2"
@@ -165,8 +156,6 @@ const ItemsCreatePage: NextPage<Props> = ({
               onValueChange={setBarcode}
             />
           </div>
-        </div>
-        <div className="container my-5 grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-10">
           <div>
             <label htmlFor="code" className="text-gray-500">
               Código Woo
@@ -180,6 +169,9 @@ const ItemsCreatePage: NextPage<Props> = ({
               onValueChange={setWooCode}
             />
           </div>
+        </div>
+        <div className="container my-5 grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-10">
+
           <div>
             <label htmlFor="location" className="text-gray-500">
               Precio de Venta
@@ -194,7 +186,64 @@ const ItemsCreatePage: NextPage<Props> = ({
               startContent={
                 <div className="pointer-events-none flex items-center">
                   <span className="text-default-400 text-small">$</span>
-                </div>}
+                </div>
+              }
+            />
+          </div>
+          <div>
+            <label htmlFor="code" className="text-gray-500">
+              Precio de Coste
+            </label>
+            <Input
+              id="code"
+              size="lg"
+              radius="sm"
+              className="mt-2"
+              value={costPrice}
+              onValueChange={setCostPrice}
+              startContent={
+                <div className="pointer-events-none flex items-center">
+                  <span className="text-default-400 text-small">$</span>
+                </div>
+              }
+            />
+          </div>
+        </div>
+
+        <div className="container my-5 grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-10">
+
+          <div>
+            <label htmlFor="location" className="text-gray-500">
+              Ultimo Coste Precio
+            </label>
+            <Input
+              size="lg"
+              radius="sm"
+              className="mt-2"
+              value={lastcostPrice}
+              onValueChange={setLastcostPrice}
+              startContent={
+                <div className="pointer-events-none flex items-center">
+                  <span className="text-default-400 text-small">$</span>
+                </div>
+              }
+            />
+          </div>
+          <div>
+            <label htmlFor="location" className="text-gray-500">
+            Impuesto en la bolsa
+            </label>
+            <Input
+              size="lg"
+              radius="sm"
+              className="mt-2"
+              value={lastcostPrice}
+              onValueChange={setLastcostPrice}
+              startContent={
+                <div className="pointer-events-none flex items-center">
+                  <span className="text-default-400 text-small"><TbMoneybag/></span>
+                </div>
+              }
             />
           </div>
         </div>
