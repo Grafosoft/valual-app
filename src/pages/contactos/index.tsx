@@ -5,6 +5,8 @@ import { ContactsList } from '../../../interfaces/contacts/contactsList'
 import { ContactsHeadersLayout } from '../../../layout/contacts/ContactsHeader'
 import { RenderCellContacts } from '../../../layout/contacts/RenderCellContacts'
 import {
+  Button,
+  CircularProgress,
   Spacer,
   Table,
   TableBody,
@@ -18,6 +20,7 @@ import { useSession } from 'next-auth/react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
+import { RiAddFill } from 'react-icons/ri'
 
 interface Props {
   contacts: ContactsList[]
@@ -34,7 +37,9 @@ const ContactList: NextPage<Props> = ({
 }) => {
   const [currentPage, setCurrentPage] = useState(0)
   const { status } = useSession()
-  const { replace } = useRouter()
+  const { push ,replace } = useRouter()
+  const [isLoading, setIsLoading] = useState(false)
+
 
   useEffect(() => {
     setCurrentPage(parseInt(page || '0') + 1)
@@ -81,6 +86,37 @@ const ContactList: NextPage<Props> = ({
         currentPage={currentPage}
         color={'primary'}
       />
+      <Button
+        isIconOnly
+        color={'primary'}
+        variant="shadow"
+        style={{
+          width: '60px',
+          height: '60px',
+          position: 'fixed',
+          right: '2em',
+          bottom: '2em'
+        }}
+        isDisabled={isLoading}
+        onClick={() => {
+          setIsLoading(true)
+          push(
+            `/contactos/crear?apikey=${apikey}&companyId=${companyId}`
+          )
+        }}
+      >
+        {isLoading ? (
+          <CircularProgress
+            size="md"
+            classNames={{
+              indicator: 'stroke-white',
+              track: 'stroke-white/25'
+            }}
+          />
+        ) : (
+          <RiAddFill size={25} color="white" />
+        )}
+      </Button>
     </>
   )
 }

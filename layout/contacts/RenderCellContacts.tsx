@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from 'react'
-import { TbArrowBigRightLinesFilled } from 'react-icons/tb'
+import { TbArrowBigRightLinesFilled, TbPencil } from 'react-icons/tb'
 import { Chip, Spacer, User } from '@nextui-org/react'
 import { useRouter } from 'next/router'
 import { ContactsList } from '../../interfaces/contacts/contactsList'
@@ -71,18 +71,33 @@ export const RenderCellContacts: FC<Props> = ({ contact, columnKey }) => {
       )
     case 'details':
       return (
-        <TbArrowBigRightLinesFilled
+        <div className="flex">
+        <TbPencil
           cursor={'pointer'}
           color={colorIcon}
           onClick={() =>
             push(
-              `/contactos/${contact.id}/?apikey=${localStorage.getItem(
+              `/contactos/editar?id=${contact.id}&apikey=${localStorage.getItem(
                 'apikey'
               )}&companyId=${localStorage.getItem('companyId')}`
             )
           }
           size={20}
         />
+        <Spacer x={8} />
+        <TbArrowBigRightLinesFilled
+          cursor={'pointer'}
+          color={colorIcon}
+          onClick={() =>
+            push(
+              `/contactos/detalles/${contact.id}/?apikey=${localStorage.getItem(
+                'apikey'
+              )}&companyId=${localStorage.getItem('companyId')}`
+            )
+          }
+          size={20}
+        />
+        </div>
       )
 
     default:

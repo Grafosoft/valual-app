@@ -15,7 +15,6 @@ import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import { ItemsList } from '../../../../interfaces/items/itemsList'
 import Head from 'next/head'
-import { TbMoneybag } from 'react-icons/tb'
 import { Group, Tax } from '@/global/params/paramsItems'
 interface Props {
   color:

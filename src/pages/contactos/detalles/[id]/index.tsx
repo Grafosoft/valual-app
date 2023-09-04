@@ -4,8 +4,8 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import React, { useEffect } from 'react'
 import valualApi from '@/apis/valualApi'
-import { ContactsDetailsList } from '../../../../interfaces/contacts/contactsDetailsList'
-import { ContactsDetails } from '../../../../layout/contacts/ContactsDetails'
+import { ContactsDetailsList } from '../../../../../interfaces/contacts/contactsDetailsList'
+import { ContactsDetails } from '../../../../../layout/contacts/ContactsDetails'
 
 interface Props {
   data: ContactsDetailsList
