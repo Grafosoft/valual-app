@@ -44,24 +44,17 @@ const ItemsCreatePage: NextPage<Props> = ({
   const [isLoading, setIsLoading] = useState(false)
   const { status: statusSession } = useSession()
   const titleText = method === 'crear' ? `Crear Articulo` : `Editar Articulo`
-  const [name, setName] = useState('' || form?.name)
-  const [code, setCode] = useState('' || form?.code)
-  const [barcode, setBarcode] = useState('' || form?.barcode)
-  const [wooCode, setWooCode] = useState('' || form?.wooCode)
-  const [salePrice, setSalePrice] = useState(0 || form?.salePrice)
-  const [costPrice, setCostPrice] = useState('' || form?.costPrice)
-  const [lastcostPrice, setLastcostPrice] = useState('' || form?.lastcostPrice)
-  const [bagtaxPrice, setBagtaxPrice] = useState('' || form?.bagtaxPrice)
-  const [observations, setObservations] = useState('' || form?.observations)
-  const [isInventory, setisInventory] = useState('' || form?.isInventory)
-  const [isFavorite, setisFavorite] = useState('' || form?.isFavorite)
-  const [isAiu, setisAiu] = useState('' || form?.isAiu)
-  const [isActive, setisActive] = useState('' || form?.isActive)
+  const [name, setName] = useState('' || form.name)
+  const [code, setCode] = useState('' || form.code)
+  const [barcode, setBarcode] = useState('' || form.barcode)
+  const [wooCode, setWooCode] = useState('' || form.wooCode)
+  const [salePrice, setSalePrice] = useState('' || form.salePrice)
+  const [observations, setObservations] = useState('' || form.observations)
+  const [isInventory, setisInventory] = useState('' || form.isInventory)
   const [paramsgroups, setParamsgroups] = useState<Group[]>([])
   const [selectedparamsgroups, setSelectedParamsgroups]: any = useState(
-    new Set(['Grupos' || form?.group.name  ])
+    new Set(['Grupos' || form?.group.name])
   )
-
   const group = useMemo(() => {
     if (form?.group && form.group.name) {
       return form.group.name
@@ -80,7 +73,7 @@ const ItemsCreatePage: NextPage<Props> = ({
 
   const [paramsTaxs, setParamsTaxs] = useState<Tax[]>([])
   const [selectedParamsTaxs, setSelectedParamsTaxs]: any = useState(
-    new Set(['Impusto' || form?.tax.name  ])
+    new Set(['Impusto' || form?.tax.name])
   )
 
   const tax = useMemo(() => {
@@ -90,7 +83,6 @@ const ItemsCreatePage: NextPage<Props> = ({
       return 'Impuesto'
     }
   }, [form])
-
   const partax = useMemo(
     () =>
       paramsTaxs.find(
@@ -100,6 +92,7 @@ const ItemsCreatePage: NextPage<Props> = ({
   )
   const taxListid = Array.from<number>(selectedParamsTaxs)[0]
 
+
   const bodyApi = {
     id: 0,
     name,
@@ -107,14 +100,8 @@ const ItemsCreatePage: NextPage<Props> = ({
     barcode,
     wooCode,
     salePrice,
-    costPrice:parseInt(costPrice.toString()) ,
-    lastcostPrice:parseInt(lastcostPrice.toString()) ,
-    bagtaxPrice: parseInt(bagtaxPrice.toString()),
     observations,
     isInventory,
-    isFavorite,
-    isAiu,
-    isActive,
     group: {
       id: parseInt(groupid.toString()),
       name: pargroup
@@ -129,12 +116,13 @@ const ItemsCreatePage: NextPage<Props> = ({
     setIsLoading(true)
     console.log(bodyApi)
     if (method === 'crear') {
+      console.log(`/catalogo/?companyId=${companyId}&apikey=${apikey}`)
       valualApi
         .post(`items/?companyId=${companyId}&apikey=${apikey}`, bodyApi)
         .then(response => {
           if (response.status === 200) {
             setIsLoading(false)
-            window.location.replace('')
+              window.location.replace(`/catalogo?companyId=${companyId}&apikey=${apikey}`)
           }
         })
         .catch(error => {
@@ -146,7 +134,9 @@ const ItemsCreatePage: NextPage<Props> = ({
         .then(response => {
           if (response.status === 200) {
             setIsLoading(false)
-            window.location.replace('')
+            window.location.replace(`/catalogo/detalles/${id}/?companyId=${companyId}&apikey=${apikey}`)
+            console.log(response.data)
+
           }
         })
         .catch(error => {
@@ -203,7 +193,7 @@ const ItemsCreatePage: NextPage<Props> = ({
         <title>{titleText}</title>
       </Head>
       <div className="container my-5 lg:my-8 m-auto">
-        <h1 className="text-5xl font-bold text-center">{titleText}</h1>
+        <h1 className="text-5xl font-bold text-center p-5">{titleText}</h1>
       </div>
 
       <div className="container px-5 lg:px-10 m-auto">
@@ -211,7 +201,7 @@ const ItemsCreatePage: NextPage<Props> = ({
           <h2 className="text-xl lg:text-2xl mb-5 font-semibold">
             Datos Generales
           </h2>
-          <div className="container my-5 grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-10">
+          <div className="container my-5 ">
             <div>
               <label htmlFor="title" className="text-gray-500">
                 Nombre
@@ -225,7 +215,11 @@ const ItemsCreatePage: NextPage<Props> = ({
                 onValueChange={setName}
               />
             </div>
-            <div>
+
+          </div>
+        </div>
+        <div className="container my-5 grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-10">
+        <div>
               <label htmlFor="code" className="text-gray-500">
                 Código
               </label>
@@ -238,9 +232,6 @@ const ItemsCreatePage: NextPage<Props> = ({
                 onValueChange={setCode}
               />
             </div>
-          </div>
-        </div>
-        <div className="container my-5 grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-10">
           <div>
             <label htmlFor="location" className="text-gray-500">
               Código de barras
@@ -254,7 +245,10 @@ const ItemsCreatePage: NextPage<Props> = ({
               onValueChange={setBarcode}
             />
           </div>
-          <div>
+
+        </div>
+        <div className="container my-5 grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-10">
+        <div>
             <label htmlFor="code" className="text-gray-500">
               Código Woo
             </label>
@@ -267,14 +261,12 @@ const ItemsCreatePage: NextPage<Props> = ({
               onValueChange={setWooCode}
             />
           </div>
-        </div>
-        <div className="container my-5 grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-10">
           <div>
             <label htmlFor="location" className="text-gray-500">
               Precio de Venta
             </label>
             <Input
-              type="text"
+              type="number"
               id="salePrice"
               size="lg"
               radius="sm"
@@ -288,66 +280,10 @@ const ItemsCreatePage: NextPage<Props> = ({
               }
             />
           </div>
-          <div>
-            <label htmlFor="code" className="text-gray-500">
-              Precio de Coste
-            </label>
-            <Input
-              id="costPrice"
-              size="lg"
-              radius="sm"
-              className="mt-2"
-              value={costPrice}
-              onValueChange={setCostPrice}
-              startContent={
-                <div className="pointer-events-none flex items-center">
-                  <span className="text-default-400 text-small">$</span>
-                </div>
-              }
-            />
-          </div>
+
         </div>
 
-        <div className="container my-5 grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-10">
-          <div>
-            <label htmlFor="location" className="text-gray-500">
-              Ultimo Coste Precio
-            </label>
-            <Input
-              id="lastcostPrice"
-              size="lg"
-              radius="sm"
-              className="mt-2"
-              value={lastcostPrice}
-              onValueChange={setLastcostPrice}
-              startContent={
-                <div className="pointer-events-none flex items-center">
-                  <span className="text-default-400 text-small">$</span>
-                </div>
-              }
-            />
-          </div>
-          <div>
-            <label htmlFor="location" className="text-gray-500">
-              Impuesto en la bolsa
-            </label>
-            <Input
-              id="bagtaxPrice"
-              size="lg"
-              radius="sm"
-              className="mt-2"
-              value={bagtaxPrice}
-              onValueChange={setBagtaxPrice}
-              startContent={
-                <div className="pointer-events-none flex items-center">
-                  <span className="text-default-400 text-small">
-                    <TbMoneybag />
-                  </span>
-                </div>
-              }
-            />
-          </div>
-        </div>
+
         <div className="container my-5">
           <label htmlFor="description" className="text-gray-500">
             Observación
@@ -361,49 +297,21 @@ const ItemsCreatePage: NextPage<Props> = ({
             onValueChange={setObservations}
           />
         </div>
-        <div className="container my-5 grid grid-cols-2 md:grid-cols-4 gap-5 md:gap-10">
-          <div className="grid ">
-            <label className="text-gray-500">Control de Inventario</label>
+
+
+
+        <div className="container my-5 grid grid-cols-1 md:grid-cols-5 gap-5 md:gap-10">
+        <div className="grid md:col-start-1 ">
+            <label className="text-gray-500 my-3">Control de Inventario</label>
             <Switch
-            id="isInventory"
+              size="lg"
+              id="isInventory"
               className="mt-2"
               isSelected={isInventory}
               onValueChange={setisInventory}
             />
           </div>
-          <div className="grid ">
-            <label className="text-gray-500">Favortio</label>
-            <Switch
-            id="isFavorite"
-
-              className="mt-2"
-              isSelected={isFavorite}
-              onValueChange={setisFavorite}
-            />
-          </div>
-          <div className="grid ">
-            <label className="text-gray-500">AIU</label>
-            <Switch
-            id="isAiu"
-
-              className="mt-2"
-              isSelected={isAiu}
-              onValueChange={setisAiu}
-            />
-          </div>
-          <div className="grid ">
-            <label className="text-gray-500">Estado</label>
-            <Switch
-            id="isActive"
-
-              className="mt-2"
-              isSelected={isActive}
-              onValueChange={setisActive}
-            />
-          </div>
-        </div>
-        <div className="container my-5 grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-10">
-          <div>
+          <div className="md:col-start-2 md:col-span-2">
             <h2 className="text-gray-500 my-3">Grupo</h2>
 
             <Dropdown>
@@ -443,7 +351,7 @@ const ItemsCreatePage: NextPage<Props> = ({
             </Dropdown>
           </div>
 
-          <div>
+          <div className="md:col-start-4 md:col-span-2 ">
             <h2 className="text-gray-500 my-3">Impuesto</h2>
 
             <Dropdown>
