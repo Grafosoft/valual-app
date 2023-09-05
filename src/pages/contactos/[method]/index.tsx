@@ -73,7 +73,6 @@ const ContactsCreatePage: NextPage<Props> = ({
   const { replace } = useRouter()
   const [isLoading, setIsLoading] = useState(false)
   const { status: statusSession } = useSession()
-
   const [paramstype, setParamstype] = useState<AccountType[]>([])
   const [selectedparamstype, setSelectedParamstype]: any = useState(
     new Set(['Tipo' || form?.type])
@@ -115,7 +114,7 @@ const ContactsCreatePage: NextPage<Props> = ({
   )
   const [postalCode, setPostalCode] = useState('' || form.postalCode)
   const [isTaxResident, setIsTaxResident] = useState('' || form.isTaxResident)
-  const [isActive, setisActive] = useState('' || form.isActive)
+  const [isActive, setIsActive] = useState('' || form.isActive)
 
   const [paramsidentificationType, setParamsidentificationType] = useState<
     IdentificationType[]
@@ -173,6 +172,25 @@ const ContactsCreatePage: NextPage<Props> = ({
       })
   }
 
+  const [paramsperson, setParamsperson] = useState<AccountType[]>([])
+  const [selectedparamsperson, setSelectedParamsperson]: any = useState(
+    new Set(['Persona' || form?.tax.person])
+  )
+  const person = useMemo(() => {
+    if (form?.type) {
+      return form.type
+    } else {
+      return 'Persona'
+    }
+  }, [form])
+  const parperson = useMemo(
+    () =>
+      paramsperson.find(
+        element => element.id.toString() === Array.from(selectedparamsperson)[0]
+      )?.name,
+    [paramsperson, selectedparamsperson]
+  )
+
   const [website, setWebsite] = useState('' || form.media?.website)
   const [linkedin, setLinkedin] = useState('' || form.media?.linkedin)
   const [facebook, setFacebook] = useState('' || form.media?.facebook)
@@ -208,7 +226,9 @@ const ContactsCreatePage: NextPage<Props> = ({
       code: citySearch.code,
       name: citySearch.name
     },
-    tax: {},
+    tax: {
+      person:parperson,
+    },
     activity: {},
     bank: {},
     priceList: {}
@@ -267,6 +287,8 @@ const ContactsCreatePage: NextPage<Props> = ({
         })
         .catch(error => console.log(error))
     }
+
+
     if (method === 'editar') {
       if (form.identificationType.id) {
         setSelectedIdentificationType(
@@ -284,6 +306,27 @@ const ContactsCreatePage: NextPage<Props> = ({
             setParamsidentificationType(response.data.identificationTypes)
             setIsLoading(false)
             console.log(paramsidentificationType)
+          }
+        })
+        .catch(error => console.log(error))
+    }
+
+
+    if (method === 'editar') {
+      if (form.tax.person) {
+        setSelectedParamsperson(new Set([form.tax.person]))
+      } else {
+        setSelectedParamsperson(new Set<string>())
+      }
+    }
+    if (paramsperson.length === 0) {
+      valualApi
+        .get(`contacts/params/?apikey=${apikey}&companyId=${companyId}`)
+        .then(response => {
+          if (response.status === 200) {
+            setParamsperson(response.data.persons)
+            setIsLoading(false)
+            console.log(paramsperson)
           }
         })
         .catch(error => console.log(error))
@@ -371,7 +414,7 @@ const ContactsCreatePage: NextPage<Props> = ({
                   className="capitalize w-full mt-2"
                   size="lg"
                   radius="sm"
-                  color={identificationType !== undefined ? color : 'default'}
+                  color={paridentificationType !== undefined ? color : 'default'}
                 >
                   {paridentificationType !== undefined
                     ? paridentificationType
@@ -731,6 +774,170 @@ const ContactsCreatePage: NextPage<Props> = ({
 
         <Divider />
         <div className="pt-5"></div>
+        <h2 className="text-xl lg:text-2xl mb-5 font-semibold">
+          Impuesto
+        </h2>
+        <div className="container my-5 grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-10">
+        <div>
+            <label className="text-gray-500 ">
+              Persona
+            </label>
+            <Dropdown>
+              <DropdownTrigger>
+                <Button
+                  variant="flat"
+                  className="capitalize w-full mt-2"
+                  size="lg"
+                  radius="sm"
+                  color={parperson !== undefined ? color : 'default'}
+                >
+                  {parperson !== undefined
+                    ? parperson
+                    : parperson !== undefined || method === 'editar'
+                    ? person
+                    : 'Persona'}
+                </Button>
+              </DropdownTrigger>
+              <DropdownMenu
+                aria-label="Selección de Tipo"
+                variant={'flat'}
+                disallowEmptySelection
+                selectionMode="single"
+                selectedKeys={selectedparamsperson}
+                onSelectionChange={setSelectedParamsperson}
+              >
+                {paramsperson.length !== 0 ? (
+                  paramsperson.map(element => (
+                    <DropdownItem key={element.id.toString()}>
+                      {element.name}
+                    </DropdownItem>
+                  ))
+                ) : (
+                  <DropdownItem>NAME</DropdownItem>
+                )}
+              </DropdownMenu>
+            </Dropdown>
+          </div>
+
+          <div>
+            <label className="text-gray-500 ">
+              Régimen
+            </label>
+            <Dropdown>
+              <DropdownTrigger>
+                <Button
+                  variant="flat"
+                  className="capitalize w-full mt-2"
+                  size="lg"
+                  radius="sm"
+                  color={identificationType !== undefined ? color : 'default'}
+                >
+                  {paridentificationType !== undefined
+                    ? paridentificationType
+                    : paridentificationType !== undefined || method === 'editar'
+                    ? identificationType
+                    : 'Tipo Identificacion'}
+                </Button>
+              </DropdownTrigger>
+              <DropdownMenu
+                aria-label="Selección de Tipo"
+                variant={'flat'}
+                disallowEmptySelection
+                selectionMode="single"
+                selectedKeys={selectedidentificationType}
+                onSelectionChange={setSelectedIdentificationType}
+              >
+                {paramsidentificationType.length !== 0 ? (
+                  paramsidentificationType.map(element => (
+                    <DropdownItem key={element.id.toString()}>
+                      {element.name}
+                    </DropdownItem>
+                  ))
+                ) : (
+                  <DropdownItem>NAME</DropdownItem>
+                )}
+              </DropdownMenu>
+            </Dropdown>
+          </div>
+
+          <div>
+            <label className="text-gray-500 ">
+              Responsabilidad
+            </label>
+            <Dropdown>
+              <DropdownTrigger>
+                <Button
+                  variant="flat"
+                  className="capitalize w-full mt-2"
+                  size="lg"
+                  radius="sm"
+                  color={identificationType !== undefined ? color : 'default'}
+                >
+                  {paridentificationType !== undefined
+                    ? paridentificationType
+                    : paridentificationType !== undefined || method === 'editar'
+                    ? identificationType
+                    : 'Tipo Identificacion'}
+                </Button>
+              </DropdownTrigger>
+              <DropdownMenu
+                aria-label="Selección de Tipo"
+                variant={'flat'}
+                disallowEmptySelection
+                selectionMode="single"
+                selectedKeys={selectedidentificationType}
+                onSelectionChange={setSelectedIdentificationType}
+              >
+                {paramsidentificationType.length !== 0 ? (
+                  paramsidentificationType.map(element => (
+                    <DropdownItem key={element.id.toString()}>
+                      {element.name}
+                    </DropdownItem>
+                  ))
+                ) : (
+                  <DropdownItem>NAME</DropdownItem>
+                )}
+              </DropdownMenu>
+            </Dropdown>
+          </div>
+
+
+        </div>
+
+        <Divider />
+        <div className="pt-5"></div>
+        <h2 className="text-xl lg:text-2xl mb-5 font-semibold flex justify-center">
+          Opciones
+        </h2>
+
+        <div className="container my-5 grid grid-cols-2 gap-5 md:gap-10">
+
+        <div className="grid flex justify-center ">
+            <label className="text-gray-500 my-3">Tiene impuesto</label>
+            <Switch
+              size="lg"
+              id="isTaxResident"
+              className="mt-2"
+              isSelected={isTaxResident}
+              onValueChange={setIsTaxResident}
+            />
+          </div>
+          <div className="grid flex justify-center  ">
+            <label className="text-gray-500 my-3">Estado</label>
+            <Switch
+              size="lg"
+              id="isActive"
+              className="mt-2"
+              isSelected={isActive}
+              onValueChange={setIsActive}
+            />
+          </div>
+
+
+          </div>
+
+
+
       </div>
 
       <div className="mb-5 p-5 w-full flex justify-center">
