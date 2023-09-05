@@ -77,13 +77,7 @@ const ContactsCreatePage: NextPage<Props> = ({
   const [selectedparamstype, setSelectedParamstype]: any = useState(
     new Set(['Tipo' || form?.type])
   )
-  const type = useMemo(() => {
-    if (form?.type) {
-      return form.type
-    } else {
-      return 'Tipo'
-    }
-  }, [form])
+
   const partype = useMemo(
     () =>
       paramstype.find(
@@ -123,13 +117,7 @@ const ContactsCreatePage: NextPage<Props> = ({
     useState(
       new Set(['Tipo de Identificacion' || form?.identificationType.name])
     )
-  const identificationType = useMemo(() => {
-    if (form?.type) {
-      return form.type
-    } else {
-      return 'Tipo'
-    }
-  }, [form])
+
   const paridentificationType = useMemo(
     () =>
       paramsidentificationType.find(
@@ -176,13 +164,6 @@ const ContactsCreatePage: NextPage<Props> = ({
   const [selectedparamsperson, setSelectedParamsperson]: any = useState(
     new Set(['Persona' || form?.tax.person])
   )
-  const person = useMemo(() => {
-    if (form?.type) {
-      return form.type
-    } else {
-      return 'Persona'
-    }
-  }, [form])
   const parperson = useMemo(
     () =>
       paramsperson.find(
@@ -191,11 +172,23 @@ const ContactsCreatePage: NextPage<Props> = ({
     [paramsperson, selectedparamsperson]
   )
 
+  const [paramsregime, setParamsregime] = useState<AccountType[]>([])
+  const [selectedparamsregime, setSelectedParamsregime]: any = useState(
+    new Set(['Regimen' || form?.tax.regime])
+  )
+  const parregime = useMemo(
+    () =>
+      paramsregime.find(
+        element => element.id.toString() === Array.from(selectedparamsregime)[0]
+      )?.name,
+    [paramsregime, selectedparamsregime]
+  )
+
+
   const [website, setWebsite] = useState('' || form.media?.website)
   const [linkedin, setLinkedin] = useState('' || form.media?.linkedin)
   const [facebook, setFacebook] = useState('' || form.media?.facebook)
   const [instagram, setInstagram] = useState('' || form.media?.instagram)
-
   const [whatsapp, setWhatsapp] = useState('' || form.communication?.whatsapp)
 
   const bodyApi = {
@@ -228,6 +221,7 @@ const ContactsCreatePage: NextPage<Props> = ({
     },
     tax: {
       person:parperson,
+      regime:parregime,
     },
     activity: {},
     bank: {},
@@ -237,19 +231,19 @@ const ContactsCreatePage: NextPage<Props> = ({
     setIsLoading(true)
     console.log(bodyApi)
     if (method === 'crear') {
-      valualApi
-        .post(`contacts/?companyId=${companyId}&apikey=${apikey}`, bodyApi)
-        .then(response => {
-          if (response.status === 200) {
-            setIsLoading(false)
-            window.location.replace(
-              `/contactos?companyId=${companyId}&apikey=${apikey}`
-            )
-          }
-        })
-        .catch(error => {
-          console.log(error)
-        })
+      // valualApi
+      //   .post(`contacts/?companyId=${companyId}&apikey=${apikey}`, bodyApi)
+      //   .then(response => {
+      //     if (response.status === 200) {
+      //       setIsLoading(false)
+      //       window.location.replace(
+      //         `/contactos?companyId=${companyId}&apikey=${apikey}`
+      //       )
+      //     }
+      //   })
+      //   .catch(error => {
+      //     console.log(error)
+      //   })
     } else {
       // valualApi
       //   .put(`contacts/${id}?companyId=${companyId}&apikey=${apikey}`, bodyApi)
@@ -331,6 +325,26 @@ const ContactsCreatePage: NextPage<Props> = ({
         })
         .catch(error => console.log(error))
     }
+
+    if (method === 'editar') {
+      if (form.tax.regime) {
+        setSelectedParamsregime(new Set([form.tax.regime]))
+      } else {
+        setSelectedParamsregime(new Set<string>())
+      }
+    }
+    if (paramsregime.length === 0) {
+      valualApi
+        .get(`contacts/params/?apikey=${apikey}&companyId=${companyId}`)
+        .then(response => {
+          if (response.status === 200) {
+            setParamsregime(response.data.regimes)
+            setIsLoading(false)
+            console.log(paramsregime)
+          }
+        })
+        .catch(error => console.log(error))
+    }
   }, [method, form, statusSession, replace])
 
   return (
@@ -376,7 +390,7 @@ const ContactsCreatePage: NextPage<Props> = ({
                     {partype !== undefined
                       ? partype
                       : partype !== undefined || method === 'editar'
-                      ? type
+                      ? partype
                       : 'Tipo'}
                   </Button>
                 </DropdownTrigger>
@@ -419,7 +433,7 @@ const ContactsCreatePage: NextPage<Props> = ({
                   {paridentificationType !== undefined
                     ? paridentificationType
                     : paridentificationType !== undefined || method === 'editar'
-                    ? identificationType
+                    ? paridentificationType
                     : 'Tipo Identificacion'}
                 </Button>
               </DropdownTrigger>
@@ -794,7 +808,7 @@ const ContactsCreatePage: NextPage<Props> = ({
                   {parperson !== undefined
                     ? parperson
                     : parperson !== undefined || method === 'editar'
-                    ? person
+                    ? parperson
                     : 'Persona'}
                 </Button>
               </DropdownTrigger>
@@ -830,13 +844,13 @@ const ContactsCreatePage: NextPage<Props> = ({
                   className="capitalize w-full mt-2"
                   size="lg"
                   radius="sm"
-                  color={identificationType !== undefined ? color : 'default'}
+                  color={parregime !== undefined ? color : 'default'}
                 >
-                  {paridentificationType !== undefined
-                    ? paridentificationType
-                    : paridentificationType !== undefined || method === 'editar'
-                    ? identificationType
-                    : 'Tipo Identificacion'}
+                  {parregime !== undefined
+                    ? parregime
+                    : parregime !== undefined || method === 'editar'
+                    ? parregime
+                    : 'Régimen'}
                 </Button>
               </DropdownTrigger>
               <DropdownMenu
@@ -844,11 +858,11 @@ const ContactsCreatePage: NextPage<Props> = ({
                 variant={'flat'}
                 disallowEmptySelection
                 selectionMode="single"
-                selectedKeys={selectedidentificationType}
-                onSelectionChange={setSelectedIdentificationType}
+                selectedKeys={selectedparamsregime}
+                onSelectionChange={setSelectedParamsregime}
               >
-                {paramsidentificationType.length !== 0 ? (
-                  paramsidentificationType.map(element => (
+                {paramsregime.length !== 0 ? (
+                  paramsregime.map(element => (
                     <DropdownItem key={element.id.toString()}>
                       {element.name}
                     </DropdownItem>
@@ -871,12 +885,12 @@ const ContactsCreatePage: NextPage<Props> = ({
                   className="capitalize w-full mt-2"
                   size="lg"
                   radius="sm"
-                  color={identificationType !== undefined ? color : 'default'}
+                  color={paridentificationType !== undefined ? color : 'default'}
                 >
                   {paridentificationType !== undefined
                     ? paridentificationType
                     : paridentificationType !== undefined || method === 'editar'
-                    ? identificationType
+                    ? paridentificationType
                     : 'Tipo Identificacion'}
                 </Button>
               </DropdownTrigger>
