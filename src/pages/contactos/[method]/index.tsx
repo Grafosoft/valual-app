@@ -8,16 +8,41 @@ import {
   DropdownTrigger,
   DropdownMenu,
   DropdownItem,
-  Divider
+  Divider,
+  useDisclosure,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  Table,
+  TableBody,
+  TableCell,
+  TableColumn,
+  TableHeader,
+  TableRow,
+  Spacer,
+  CircularProgress
 } from '@nextui-org/react'
 import { ContactsDetailsList } from '../../../../interfaces/contacts/contactsDetailsList'
 import { GetServerSideProps, NextPage } from 'next'
 import { useRouter } from 'next/router'
-import React, { useEffect, useState, useMemo, MouseEventHandler } from 'react'
+import React, {
+  useEffect,
+  useState,
+  useMemo,
+  MouseEventHandler,
+  FormEventHandler,
+  ChangeEvent
+} from 'react'
 import { useSession } from 'next-auth/react'
 import Head from 'next/head'
-import { AccountType ,IdentificationType} from '@/global/params/paramsContacts'
-
+import { AccountType, IdentificationType } from '@/global/params/paramsContacts'
+import { CityList } from '../../../../interfaces/city/cityList'
+import { FaCity } from 'react-icons/fa'
+import { TbSearch } from 'react-icons/tb'
+import { cityColumns } from '@/global/city/cityColumns'
+import { RenderCellCity } from '../../../../layout/city/RenderCellCity'
 
 interface Props {
   color:
@@ -54,7 +79,7 @@ const ContactsCreatePage: NextPage<Props> = ({
     new Set(['Tipo' || form?.type])
   )
   const type = useMemo(() => {
-    if (form?.type ) {
+    if (form?.type) {
       return form.type
     } else {
       return 'Tipo'
@@ -62,13 +87,17 @@ const ContactsCreatePage: NextPage<Props> = ({
   }, [form])
   const partype = useMemo(
     () =>
-    paramstype.find(
+      paramstype.find(
         element => element.id.toString() === Array.from(selectedparamstype)[0]
       )?.name,
     [paramstype, selectedparamstype]
   )
-  const [identification, setIdentification] = useState('' || form.identification)
-  const [commercialName, setCommercialName] = useState('' || form.commercialName)
+  const [identification, setIdentification] = useState(
+    '' || form.identification
+  )
+  const [commercialName, setCommercialName] = useState(
+    '' || form.commercialName
+  )
   const [firstName, setFirstName] = useState('' || form.firstName)
   const [middleName, setMiddleName] = useState('' || form.middleName)
   const [firstSurname, setFirstSurname] = useState('' || form.firstSurname)
@@ -77,19 +106,26 @@ const ContactsCreatePage: NextPage<Props> = ({
   const [phone, setPhone] = useState('' || form.phone)
   const [adress, setAdress] = useState('' || form.adress)
   const [observations, setObservations] = useState('' || form.observations)
-  const [commercialCode, setCommercialCode] = useState('' || form.commercialCode)
+  const [commercialCode, setCommercialCode] = useState(
+    '' || form.commercialCode
+  )
   const [birthDate, setBirthDate] = useState(currentDate || form.birthDate)
-  const [createDate, setCreateDate] = useState(currentDate || form.createDate?.substring(0, 10))
+  const [createDate, setCreateDate] = useState(
+    currentDate || form.createDate?.substring(0, 10)
+  )
   const [postalCode, setPostalCode] = useState('' || form.postalCode)
   const [isTaxResident, setIsTaxResident] = useState('' || form.isTaxResident)
   const [isActive, setisActive] = useState('' || form.isActive)
 
-  const [paramsidentificationType, setParamsidentificationType] = useState<IdentificationType[]>([])
-  const [selectedidentificationType, setSelectedIdentificationType]: any = useState(
-    new Set(['Tipo de Identificacion' || form?.identificationType.name])
-  )
+  const [paramsidentificationType, setParamsidentificationType] = useState<
+    IdentificationType[]
+  >([])
+  const [selectedidentificationType, setSelectedIdentificationType]: any =
+    useState(
+      new Set(['Tipo de Identificacion' || form?.identificationType.name])
+    )
   const identificationType = useMemo(() => {
-    if (form?.type ) {
+    if (form?.type) {
       return form.type
     } else {
       return 'Tipo'
@@ -97,30 +133,56 @@ const ContactsCreatePage: NextPage<Props> = ({
   }, [form])
   const paridentificationType = useMemo(
     () =>
-    paramsidentificationType.find(
-        element => element.id.toString() === Array.from(selectedidentificationType)[0]
+      paramsidentificationType.find(
+        element =>
+          element.id.toString() === Array.from(selectedidentificationType)[0]
       )?.name,
     [paramsidentificationType, selectedidentificationType]
   )
   const identificationTypeid = Array.from<number>(selectedidentificationType)[0]
+  const [cityList, setCityList] = useState<CityList[]>([])
+  const {
+    isOpen: isOpenCity,
+    onOpen: onOpenCity,
+    onOpenChange: onOpenChangeCity
+  } = useDisclosure()
+  const [isLoadingModalCity, setIsLoadingModalCity] = useState(true)
+  const [citySearch, setCitySearch] = useState({
+    id: '' || form.city?.id.toString(),
+    code: '' || form.city?.code,
+    name: '' || form.city?.name
+  })
+  const [searchCity, setSearchCity] = useState('')
 
+  const handleSubmitCity: FormEventHandler<HTMLFormElement> = e => {
+    e.preventDefault()
+    setIsLoadingModalCity(true)
 
-
+    valualApi
+      .get<CityList[]>(
+        `settings/cities/?page=0&apikey=${apikey}&name=${searchCity}`
+      )
+      .then(response => {
+        if (response.status === 200) {
+          setCityList(response.data)
+          setIsLoadingModalCity(false)
+        }
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  }
 
   const [website, setWebsite] = useState('' || form.media?.website)
   const [linkedin, setLinkedin] = useState('' || form.media?.linkedin)
   const [facebook, setFacebook] = useState('' || form.media?.facebook)
   const [instagram, setInstagram] = useState('' || form.media?.instagram)
 
-
-
   const [whatsapp, setWhatsapp] = useState('' || form.communication?.whatsapp)
-
-
 
   const bodyApi = {
     id: 0,
-    type:partype,
+    type: partype,
     identification,
     commercialName,
     firstName,
@@ -137,23 +199,19 @@ const ContactsCreatePage: NextPage<Props> = ({
     postalCode,
     isTaxResident,
     isActive,
-    identificationType:{
-      id:identificationTypeid,
-      name:paridentificationType,
+    identificationType: {
+      id: identificationTypeid,
+      name: paridentificationType
     },
-    city:{
+    city: {
+      id: parseInt(citySearch.id?.toString()),
+      code: citySearch.code,
+      name: citySearch.name
     },
-    tax:{
-    },
-    activity:{
-
-    },
-    bank:{
-
-    },
-    priceList:{
-
-    }
+    tax: {},
+    activity: {},
+    bank: {},
+    priceList: {}
   }
   const handleClick: MouseEventHandler<HTMLButtonElement> = async () => {
     setIsLoading(true)
@@ -164,7 +222,9 @@ const ContactsCreatePage: NextPage<Props> = ({
         .then(response => {
           if (response.status === 200) {
             setIsLoading(false)
-              window.location.replace(`/contactos?companyId=${companyId}&apikey=${apikey}`)
+            window.location.replace(
+              `/contactos?companyId=${companyId}&apikey=${apikey}`
+            )
           }
         })
         .catch(error => {
@@ -178,7 +238,6 @@ const ContactsCreatePage: NextPage<Props> = ({
       //       setIsLoading(false)
       //       window.location.replace(`/contactos/detalles/${id}/?companyId=${companyId}&apikey=${apikey}`)
       //       console.log(response.data)
-
       //     }
       //   })
       //   .catch(error => {
@@ -210,7 +269,9 @@ const ContactsCreatePage: NextPage<Props> = ({
     }
     if (method === 'editar') {
       if (form.identificationType.id) {
-        setSelectedIdentificationType(new Set([form.identificationType.id.toString()]))
+        setSelectedIdentificationType(
+          new Set([form.identificationType.id.toString()])
+        )
       } else {
         setSelectedIdentificationType(new Set<string>())
       }
@@ -229,12 +290,8 @@ const ContactsCreatePage: NextPage<Props> = ({
     }
   }, [method, form, statusSession, replace])
 
-
-
-
-
-  return(
-     <>
+  return (
+    <>
       <Head>
         <title>{titleText}</title>
       </Head>
@@ -261,54 +318,55 @@ const ContactsCreatePage: NextPage<Props> = ({
                 onValueChange={setCommercialName}
               />
             </div>
-            <div >
-            <h2 className="text-gray-500 my-3">Tipo de Tercero</h2>
+            <div>
+              <h2 className="text-gray-500 my-3">Tipo de Tercero</h2>
 
-            <Dropdown>
-              <DropdownTrigger>
-                <Button
-                  variant="flat"
-                  className="capitalize w-full"
-                  size="lg"
-                  radius="sm"
-                  color={partype !== undefined ? color : 'default'}
+              <Dropdown>
+                <DropdownTrigger>
+                  <Button
+                    variant="flat"
+                    className="capitalize w-full"
+                    size="lg"
+                    radius="sm"
+                    color={partype !== undefined ? color : 'default'}
+                  >
+                    {partype !== undefined
+                      ? partype
+                      : partype !== undefined || method === 'editar'
+                      ? type
+                      : 'Tipo'}
+                  </Button>
+                </DropdownTrigger>
+                <DropdownMenu
+                  aria-label="Selección de Tipo"
+                  variant={'flat'}
+                  disallowEmptySelection
+                  selectionMode="single"
+                  selectedKeys={selectedparamstype}
+                  onSelectionChange={setSelectedParamstype}
                 >
-                  {partype !== undefined
-                    ? partype
-                    : partype !== undefined || method === 'editar'
-                    ? type
-                    : 'Tipo'}
-                </Button>
-              </DropdownTrigger>
-              <DropdownMenu
-                aria-label="Selección de Tipo"
-                variant={'flat'}
-                disallowEmptySelection
-                selectionMode="single"
-                selectedKeys={selectedparamstype}
-                onSelectionChange={setSelectedParamstype}
-              >
-                {paramstype.length !== 0 ? (
-                  paramstype.map(element => (
-                    <DropdownItem key={element.id.toString()}>
-                      {element.name}
-                    </DropdownItem>
-                  ))
-                ) : (
-                  <DropdownItem>NAME</DropdownItem>
-                )}
-              </DropdownMenu>
-            </Dropdown>
-          </div>
+                  {paramstype.length !== 0 ? (
+                    paramstype.map(element => (
+                      <DropdownItem key={element.id.toString()}>
+                        {element.name}
+                      </DropdownItem>
+                    ))
+                  ) : (
+                    <DropdownItem>NAME</DropdownItem>
+                  )}
+                </DropdownMenu>
+              </Dropdown>
+            </div>
           </div>
         </div>
         <div className="container my-5 grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-10">
-        <div>
-          <label className="text-gray-500 ">Tipo de Identificacion Tercero</label>
+          <div>
+            <label className="text-gray-500 ">
+              Tipo de Identificacion Tercero
+            </label>
             <Dropdown>
               <DropdownTrigger>
                 <Button
-
                   variant="flat"
                   className="capitalize w-full mt-2"
                   size="lg"
@@ -340,9 +398,10 @@ const ContactsCreatePage: NextPage<Props> = ({
                   <DropdownItem>NAME</DropdownItem>
                 )}
               </DropdownMenu>
-            </Dropdown></div>
+            </Dropdown>
+          </div>
 
-        <div>
+          <div>
             <label htmlFor="identification" className="text-gray-500">
               Identificacion
             </label>
@@ -358,8 +417,7 @@ const ContactsCreatePage: NextPage<Props> = ({
         </div>
 
         <div className="container my-5 grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-10">
-
-        <div>
+          <div>
             <label htmlFor="firstName" className="text-gray-500">
               Primer Nombre
             </label>
@@ -387,7 +445,7 @@ const ContactsCreatePage: NextPage<Props> = ({
           </div>
         </div>
         <div className="container my-5 grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-10">
-        <div>
+          <div>
             <label htmlFor="firstSurname" className="text-gray-500">
               Primer Apellido
             </label>
@@ -414,47 +472,17 @@ const ContactsCreatePage: NextPage<Props> = ({
             />
           </div>
         </div>
-        <div className="container my-5 grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-10">
-        <div>
-            <label htmlFor="firstSurname" className="text-gray-500">
-              Primer Apellido
-            </label>
-            <Input
-              id="firstSurname"
-              size="lg"
-              radius="sm"
-              className="mt-2"
-              value={firstSurname}
-              onValueChange={setFirstSurname}
-            />
-          </div>
-          <div>
-            <label htmlFor="secondSurname" className="text-gray-500">
-              Segundo Apellido
-            </label>
-            <Input
-              id="secondSurname"
-              size="lg"
-              radius="sm"
-              className="mt-2"
-              value={secondSurname}
-              onValueChange={setSecondSurname}
-            />
-          </div>
-        </div>
-
-
 
         <Divider />
         <div className="pt-5"></div>
 
         <h2 className="text-xl lg:text-2xl mb-5 font-semibold">
-            Datos Generales
-          </h2>
+          Datos Generales
+        </h2>
         <div className="container my-5 grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-10">
-        <div>
+          <div>
             <label htmlFor="email" className="text-gray-500">
-             Email
+              Email
             </label>
             <Input
               id="email"
@@ -467,7 +495,7 @@ const ContactsCreatePage: NextPage<Props> = ({
           </div>
           <div>
             <label htmlFor="phone" className="text-gray-500">
-             Telefono
+              Telefono
             </label>
             <Input
               id="phone"
@@ -495,9 +523,9 @@ const ContactsCreatePage: NextPage<Props> = ({
         </div>
 
         <div className="container my-5 grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-10">
-        <div>
+          <div>
             <label htmlFor="adress" className="text-gray-500">
-             Direccion
+              Direccion
             </label>
             <Input
               id="email"
@@ -510,7 +538,7 @@ const ContactsCreatePage: NextPage<Props> = ({
           </div>
           <div>
             <label htmlFor="commercialCode" className="text-gray-500">
-             Codigo Comercial
+              Codigo Comercial
             </label>
             <Input
               id="commercialCode"
@@ -523,42 +551,189 @@ const ContactsCreatePage: NextPage<Props> = ({
           </div>
         </div>
         <div className="container my-5 grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-10">
-            <div>
-              <label htmlFor="birthDate" className="text-gray-500">
-                Fecha de nacimiento
-              </label>
-              <Input
-                id="birthDate"
-                size="lg"
-                radius="sm"
-                type="date"
-                className="mt-2"
-                value={birthDate}
-                onValueChange={setBirthDate}
-              />
-            </div>
-            <div>
-              <label htmlFor="createDate" className="text-gray-500">
-                Fecha de Creaciom
-              </label>
-              <Input
-                id="createDate"
-                size="lg"
-                radius="sm"
-                type="date"
-                className="mt-2"
-                value={createDate}
-                onValueChange={setCreateDate}
-              />
-            </div>
-            </div>
-        <Divider />
-        <div className="pt-5"></div>
+          <div>
+            <label htmlFor="birthDate" className="text-gray-500">
+              Fecha de nacimiento
+            </label>
+            <Input
+              id="birthDate"
+              size="lg"
+              radius="sm"
+              type="date"
+              className="mt-2"
+              value={birthDate}
+              onValueChange={setBirthDate}
+            />
+          </div>
+          <div>
+            <label htmlFor="createDate" className="text-gray-500">
+              Fecha de Creaciom
+            </label>
+            <Input
+              id="createDate"
+              size="lg"
+              radius="sm"
+              type="date"
+              className="mt-2"
+              value={createDate}
+              onValueChange={setCreateDate}
+            />
+          </div>
+        </div>
+        <div className="container my-5 grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-10">
+          <div>
+            <h2 className="text-gray-500">Ciudad</h2>
+            <Input
+              aria-label="Buscar ciudad"
+              readOnly={true}
+              placeholder="Buscar ciudad"
+              onClick={onOpenCity}
+              value={citySearch.name}
+              startContent={<FaCity />}
+              style={{ cursor: 'pointer' }}
+              size="lg"
+              className="mt-2"
+              radius="sm"
+            />
+            <Modal
+              closeButton
+              size="5xl"
+              scrollBehavior="inside"
+              backdrop="blur"
+              style={{ width: '1000px' }}
+              isOpen={isOpenCity}
+              onOpenChange={onOpenChangeCity}
+            >
+              <ModalContent>
+                {onClose => {
+                  if (cityList.length === 0) {
+                    valualApi
+                      .get<CityList[]>(
+                        `/settings/cities?page=0&apikey=${apikey}&name=`
+                      )
+                      .then(response => {
+                        if (response.status === 200) {
+                          setCityList(response.data)
+                          setIsLoadingModalCity(false)
+                        }
+                      })
+                      .catch(error => {
+                        console.log(error)
+                      })
+                  }
 
-
+                  return (
+                    <>
+                      <ModalHeader>
+                        <div className="container">
+                          <h2
+                            id="modal-title"
+                            className="flex justify-center py-5 text-3xl font-bold"
+                          >
+                            Listado de Ciudad
+                          </h2>
+                          <Spacer y={1} />
+                          <form onSubmit={handleSubmitCity}>
+                            <Input
+                              aria-label="Buscar ciudad"
+                              placeholder="Buscar ciudad"
+                              value={searchCity}
+                              width="100%"
+                              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                                setSearchCity(e.target.value)
+                              }
+                              startContent={<TbSearch />}
+                              size="md"
+                            />
+                          </form>
+                        </div>
+                      </ModalHeader>
+                      <ModalBody>
+                        {isLoadingModalCity ? (
+                          <div
+                            className="container"
+                            style={{
+                              display: 'flex',
+                              justifyContent: 'center',
+                              alignContent: 'center',
+                              alignItems: 'center',
+                              height: '100%'
+                            }}
+                          >
+                            <CircularProgress size="lg" color={'warning'} />
+                          </div>
+                        ) : (
+                          <Table
+                            aria-label="Lista de terceros"
+                            style={{ height: 'auto', minWidth: '100%' }}
+                            isStriped
+                            shadow="none"
+                          >
+                            <TableHeader columns={cityColumns}>
+                              {column => (
+                                <TableColumn key={column.uid} align="start">
+                                  {column.name}
+                                </TableColumn>
+                              )}
+                            </TableHeader>
+                            <TableBody
+                              emptyContent="No hay datos por mostrar."
+                              items={cityList}
+                            >
+                              {item => (
+                                <TableRow key={item.id}>
+                                  {columnKey => (
+                                    <TableCell>
+                                      <RenderCellCity
+                                        searchCity={''}
+                                        city={item}
+                                        columnKey={columnKey}
+                                        urlPath="form"
+                                        closeHandler={onClose}
+                                        setCitySearch={setCitySearch}
+                                      />
+                                    </TableCell>
+                                  )}
+                                </TableRow>
+                              )}
+                            </TableBody>
+                          </Table>
+                        )}
+                      </ModalBody>
+                      <ModalFooter>
+                        <Button
+                          style={{ width: 'auto' }}
+                          variant={'flat'}
+                          color="danger"
+                          onPress={onClose}
+                        >
+                          Cerrar
+                        </Button>
+                      </ModalFooter>
+                    </>
+                  )
+                }}
+              </ModalContent>
+            </Modal>
+          </div>
+          <div>
+            <label className="text-gray-500">Codigo postal</label>
+            <Input
+              id="postalCode"
+              size="lg"
+              radius="sm"
+              className="mt-2"
+              value={postalCode}
+              onValueChange={setPostalCode}
+            />
+          </div>
         </div>
 
-        <div className="mb-5 p-5 w-full flex justify-center">
+        <Divider />
+        <div className="pt-5"></div>
+      </div>
+
+      <div className="mb-5 p-5 w-full flex justify-center">
         <Button
           size="lg"
           className="text-white"
@@ -571,12 +746,8 @@ const ContactsCreatePage: NextPage<Props> = ({
           Guardar
         </Button>
       </div>
-
-
-
-
-     </>
-     )
+    </>
+  )
 }
 export default ContactsCreatePage
 
