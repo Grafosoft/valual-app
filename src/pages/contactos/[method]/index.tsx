@@ -209,6 +209,18 @@ const ContactsCreatePage: NextPage<Props> = ({
     [paramsbank, selectedparamsbank]
   )
 
+  const [paramspriceList, setParamspriceList] = useState<IdentificationType[]>([])
+  const [selectedparamspriceList, setSelectedParamspriceList]: any = useState(
+    new Set(['Precio de Lista' || form?.priceList.name])
+  )
+  const parpriceList= useMemo(
+    () =>
+    paramspriceList.find(
+        element => element.id.toString() === Array.from(selectedparamspriceList)[0]
+      )?.name,
+    [paramspriceList, selectedparamspriceList]
+  )
+  const priceListid = Array.from<number>(selectedparamspriceList)[0]
 
 
   const [website, setWebsite] = useState('' || form.media?.website)
@@ -252,8 +264,14 @@ const ContactsCreatePage: NextPage<Props> = ({
 
     },
     activity: {},
-    bank: {},
-    priceList: {}
+    bank: {
+      account:parbank,
+
+    },
+    priceList: {
+      id:parseInt(priceListid.toString()),
+      name:parpriceList
+    }
   }
   const handleClick: MouseEventHandler<HTMLButtonElement> = async () => {
     setIsLoading(true)
@@ -302,7 +320,7 @@ const ContactsCreatePage: NextPage<Props> = ({
           setIsLoading(false);
 
           if (method === 'editar') {
-            const { type, identificationType, tax,bank } = form;
+            const { type, identificationType, tax,bank,priceList } = form;
 
             setSelectedParamstype(type ? new Set([type]) : new Set<string>());
             setSelectedIdentificationType(
@@ -312,6 +330,9 @@ const ContactsCreatePage: NextPage<Props> = ({
             setSelectedParamsregime(tax?.regime ? new Set([tax.regime]) : new Set<string>());
             setSelectedParamsresponsibility(tax?.responsibility ? new Set([tax.responsibility]) : new Set<string>());
             setSelectedParamsbank(bank?.type ? new Set([bank.type]) : new Set<string>());
+            setSelectedParamspriceList(
+              priceList?.id ? new Set([priceList.id.toString()]) : new Set<string>()
+            );
 
 
           }
@@ -321,7 +342,9 @@ const ContactsCreatePage: NextPage<Props> = ({
           if (paramsperson.length === 0) setParamsperson(responseData.persons);
           if (paramsregime.length === 0) setParamsregime(responseData.regimes);
           if (paramsresponsibility.length === 0) setParamsresponsibility(responseData.responsibilities);
-          if (paramsbank.length === 0) setParamsresponsibility(responseData.accountTypes);
+          if (paramsbank.length === 0) setParamsbank(responseData.accountTypes);
+          if (paramspriceList.length === 0) setParamspriceList(responseData.priceLists);
+
 
 
         }
@@ -931,7 +954,7 @@ const ContactsCreatePage: NextPage<Props> = ({
                     ? parbank
                     : parbank !== undefined || method === 'editar'
                     ? parbank
-                    : 'Tipo de banco'}
+                    : 'Cuenta'}
                 </Button>
               </DropdownTrigger>
               <DropdownMenu
@@ -973,7 +996,47 @@ const ContactsCreatePage: NextPage<Props> = ({
           </div>
 
         <div className="container my-5 grid grid-cols-1 md:grid-cols-5 gap-5 md:gap-10">
-          <div className="md:col-start-1 md:col-span-4"></div>
+          <div className="md:col-start-1 md:col-span-4">
+          <label className="text-gray-500 ">
+              Precio de Lista
+            </label>
+            <Dropdown>
+              <DropdownTrigger>
+                <Button
+                  variant="flat"
+                  className="capitalize w-full mt-2"
+                  size="lg"
+                  radius="sm"
+                  color={parpriceList !== undefined ? color : 'default'}
+                >
+                  {parpriceList !== undefined
+                    ? parpriceList
+                    : parpriceList!== undefined || method === 'editar'
+                    ? parpriceList
+                    : 'Precio de Lista'}
+                </Button>
+              </DropdownTrigger>
+              <DropdownMenu
+                aria-label="Selección de Tipo"
+                variant={'flat'}
+                disallowEmptySelection
+                selectionMode="single"
+                selectedKeys={selectedparamspriceList}
+                onSelectionChange={setSelectedParamspriceList}
+              >
+                {paramspriceList.length !== 0 ? (
+                  paramspriceList.map(element => (
+                    <DropdownItem key={element.id.toString()}>
+                      {element.name}
+                    </DropdownItem>
+                  ))
+                ) : (
+                  <DropdownItem>NAME</DropdownItem>
+                )}
+              </DropdownMenu>
+            </Dropdown>
+
+          </div>
             <div className="grid   ">
             <label className="text-gray-500 my-3">Estado</label>
             <Switch
@@ -985,6 +1048,74 @@ const ContactsCreatePage: NextPage<Props> = ({
             />
           </div>
         </div>
+        <Divider />
+        <div className="pt-5"></div>
+        <h2 className="text-xl lg:text-2xl mb-5 font-semibold ">
+          Media
+        </h2>
+        <div className="container my-5 grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-10">
+
+        <div>
+
+            <label className="text-gray-500">Pagina Web</label>
+            <Input
+              id="website"
+              size="lg"
+              radius="sm"
+              className="mt-2"
+              value={website}
+              onValueChange={setWebsite}
+            />
+          </div>
+          <div>
+
+            <label className="text-gray-500">Linkedin</label>
+            <Input
+              id="linkedin"
+              size="lg"
+              radius="sm"
+              className="mt-2"
+              value={linkedin}
+              onValueChange={setLinkedin}
+            />
+          </div>
+          <div>
+
+            <label className="text-gray-500">Facebook</label>
+            <Input
+              id="facebook"
+              size="lg"
+              radius="sm"
+              className="mt-2"
+              value={facebook}
+              onValueChange={setFacebook}
+            />
+          </div>
+          <div>
+
+            <label className="text-gray-500">Instagram</label>
+            <Input
+              id="instagram"
+              size="lg"
+              radius="sm"
+              className="mt-2"
+              value={instagram}
+              onValueChange={setInstagram}
+            />
+          </div>
+           <div>
+
+            <label className="text-gray-500">Whatsapp</label>
+            <Input
+              id="whatsapp"
+              size="lg"
+              radius="sm"
+              className="mt-2"
+              value={whatsapp}
+              onValueChange={setWhatsapp}
+            />
+          </div>
+          </div>
 
 
 
