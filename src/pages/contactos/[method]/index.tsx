@@ -185,6 +185,32 @@ const ContactsCreatePage: NextPage<Props> = ({
   )
 
 
+  const [paramsresponsibility, setParamsresponsibility] = useState<AccountType[]>([])
+  const [selectedparamsresponsibility, setSelectedParamsresponsibility]: any = useState(
+    new Set(['Responsabilidad' || form?.tax.responsibility])
+  )
+  const parresponsibility = useMemo(
+    () =>
+    paramsresponsibility.find(
+        element => element.id.toString() === Array.from(selectedparamsresponsibility)[0]
+      )?.name,
+    [paramsresponsibility, selectedparamsresponsibility]
+  )
+
+  const [paramsbank, setParamsbank] = useState<AccountType[]>([])
+  const [selectedparamsbank, setSelectedParamsbank]: any = useState(
+    new Set(['Tipo de Cuenta' || form?.bank.type])
+  )
+  const parbank= useMemo(
+    () =>
+    paramsbank.find(
+        element => element.id.toString() === Array.from(selectedparamsbank)[0]
+      )?.name,
+    [paramsbank, selectedparamsbank]
+  )
+
+
+
   const [website, setWebsite] = useState('' || form.media?.website)
   const [linkedin, setLinkedin] = useState('' || form.media?.linkedin)
   const [facebook, setFacebook] = useState('' || form.media?.facebook)
@@ -222,6 +248,8 @@ const ContactsCreatePage: NextPage<Props> = ({
     tax: {
       person:parperson,
       regime:parregime,
+      responsibility:parresponsibility
+
     },
     activity: {},
     bank: {},
@@ -259,93 +287,54 @@ const ContactsCreatePage: NextPage<Props> = ({
       //   })
     }
   }
-
   useEffect(() => {
-    statusSession === 'unauthenticated' && replace('/')
-    if (method === 'editar') {
-      if (form.type) {
-        setSelectedParamstype(new Set([form.type]))
-      } else {
-        setSelectedParamstype(new Set<string>())
-      }
+    if (statusSession === 'unauthenticated') {
+      replace('/');
+      return;
     }
-    if (paramstype.length === 0) {
-      valualApi
-        .get(`contacts/params/?apikey=${apikey}&companyId=${companyId}`)
-        .then(response => {
-          if (response.status === 200) {
-            setParamstype(response.data.types)
-            setIsLoading(false)
-            console.log(paramstype)
+
+    const fetchData = async () => {
+      try {
+        const response = await valualApi.get(`contacts/params/?apikey=${apikey}&companyId=${companyId}`);
+        if (response.status === 200) {
+          const responseData = response.data;
+
+          setIsLoading(false);
+
+          if (method === 'editar') {
+            const { type, identificationType, tax,bank } = form;
+
+            setSelectedParamstype(type ? new Set([type]) : new Set<string>());
+            setSelectedIdentificationType(
+              identificationType?.id ? new Set([identificationType.id.toString()]) : new Set<string>()
+            );
+            setSelectedParamsperson(tax?.person ? new Set([tax.person]) : new Set<string>());
+            setSelectedParamsregime(tax?.regime ? new Set([tax.regime]) : new Set<string>());
+            setSelectedParamsresponsibility(tax?.responsibility ? new Set([tax.responsibility]) : new Set<string>());
+            setSelectedParamsbank(bank?.type ? new Set([bank.type]) : new Set<string>());
+
+
           }
-        })
-        .catch(error => console.log(error))
-    }
+
+          if (paramstype.length === 0) setParamstype(responseData.types);
+          if (paramsidentificationType.length === 0) setParamsidentificationType(responseData.identificationTypes);
+          if (paramsperson.length === 0) setParamsperson(responseData.persons);
+          if (paramsregime.length === 0) setParamsregime(responseData.regimes);
+          if (paramsresponsibility.length === 0) setParamsresponsibility(responseData.responsibilities);
+          if (paramsbank.length === 0) setParamsresponsibility(responseData.accountTypes);
 
 
-    if (method === 'editar') {
-      if (form.identificationType.id) {
-        setSelectedIdentificationType(
-          new Set([form.identificationType.id.toString()])
-        )
-      } else {
-        setSelectedIdentificationType(new Set<string>())
+        }
+      } catch (error) {
+        console.log(error);
       }
-    }
-    if (paramsidentificationType.length === 0) {
-      valualApi
-        .get(`contacts/params/?apikey=${apikey}&companyId=${companyId}`)
-        .then(response => {
-          if (response.status === 200) {
-            setParamsidentificationType(response.data.identificationTypes)
-            setIsLoading(false)
-            console.log(paramsidentificationType)
-          }
-        })
-        .catch(error => console.log(error))
-    }
+    };
+
+    fetchData();
+  }, [method, form, statusSession, replace]);
 
 
-    if (method === 'editar') {
-      if (form.tax.person) {
-        setSelectedParamsperson(new Set([form.tax.person]))
-      } else {
-        setSelectedParamsperson(new Set<string>())
-      }
-    }
-    if (paramsperson.length === 0) {
-      valualApi
-        .get(`contacts/params/?apikey=${apikey}&companyId=${companyId}`)
-        .then(response => {
-          if (response.status === 200) {
-            setParamsperson(response.data.persons)
-            setIsLoading(false)
-            console.log(paramsperson)
-          }
-        })
-        .catch(error => console.log(error))
-    }
 
-    if (method === 'editar') {
-      if (form.tax.regime) {
-        setSelectedParamsregime(new Set([form.tax.regime]))
-      } else {
-        setSelectedParamsregime(new Set<string>())
-      }
-    }
-    if (paramsregime.length === 0) {
-      valualApi
-        .get(`contacts/params/?apikey=${apikey}&companyId=${companyId}`)
-        .then(response => {
-          if (response.status === 200) {
-            setParamsregime(response.data.regimes)
-            setIsLoading(false)
-            console.log(paramsregime)
-          }
-        })
-        .catch(error => console.log(error))
-    }
-  }, [method, form, statusSession, replace])
 
   return (
     <>
@@ -885,25 +874,25 @@ const ContactsCreatePage: NextPage<Props> = ({
                   className="capitalize w-full mt-2"
                   size="lg"
                   radius="sm"
-                  color={paridentificationType !== undefined ? color : 'default'}
+                  color={parresponsibility !== undefined ? color : 'default'}
                 >
-                  {paridentificationType !== undefined
-                    ? paridentificationType
-                    : paridentificationType !== undefined || method === 'editar'
-                    ? paridentificationType
-                    : 'Tipo Identificacion'}
+                  {parresponsibility !== undefined
+                    ? parresponsibility
+                    : parresponsibility !== undefined || method === 'editar'
+                    ? parresponsibility
+                    : 'Responsabilidad'}
                 </Button>
               </DropdownTrigger>
               <DropdownMenu
-                aria-label="Selección de Tipo"
+                aria-label="Selección de responsabilidad"
                 variant={'flat'}
                 disallowEmptySelection
                 selectionMode="single"
-                selectedKeys={selectedidentificationType}
-                onSelectionChange={setSelectedIdentificationType}
+                selectedKeys={selectedparamsresponsibility}
+                onSelectionChange={setSelectedParamsresponsibility}
               >
-                {paramsidentificationType.length !== 0 ? (
-                  paramsidentificationType.map(element => (
+                {paramsresponsibility.length !== 0 ? (
+                  paramsresponsibility.map(element => (
                     <DropdownItem key={element.id.toString()}>
                       {element.name}
                     </DropdownItem>
@@ -920,13 +909,55 @@ const ContactsCreatePage: NextPage<Props> = ({
 
         <Divider />
         <div className="pt-5"></div>
-        <h2 className="text-xl lg:text-2xl mb-5 font-semibold flex justify-center">
+        <h2 className="text-xl lg:text-2xl mb-5 font-semibold ">
           Opciones
         </h2>
 
-        <div className="container my-5 grid grid-cols-2 gap-5 md:gap-10">
+        <div className="container my-5 grid grid-cols-1 md:grid-cols-5 gap-5 md:gap-10">
+          <div className="md:col-start-1 md:col-span-4">
+          <label className="text-gray-500 ">
+              Tipo de banco
+            </label>
+            <Dropdown>
+              <DropdownTrigger>
+                <Button
+                  variant="flat"
+                  className="capitalize w-full mt-2"
+                  size="lg"
+                  radius="sm"
+                  color={parbank !== undefined ? color : 'default'}
+                >
+                  {parbank !== undefined
+                    ? parbank
+                    : parbank !== undefined || method === 'editar'
+                    ? parbank
+                    : 'Tipo de banco'}
+                </Button>
+              </DropdownTrigger>
+              <DropdownMenu
+                aria-label="Selección de Tipo"
+                variant={'flat'}
+                disallowEmptySelection
+                selectionMode="single"
+                selectedKeys={selectedparamsbank}
+                onSelectionChange={setSelectedParamsbank}
+              >
+                {paramsbank.length !== 0 ? (
+                  paramsbank.map(element => (
+                    <DropdownItem key={element.id.toString()}>
+                      {element.name}
+                    </DropdownItem>
+                  ))
+                ) : (
+                  <DropdownItem>NAME</DropdownItem>
+                )}
+              </DropdownMenu>
+            </Dropdown>
 
-        <div className="grid flex justify-center ">
+
+          </div>
+
+        <div className="grid  ">
             <label className="text-gray-500 my-3">Tiene impuesto</label>
             <Switch
               size="lg"
@@ -936,7 +967,14 @@ const ContactsCreatePage: NextPage<Props> = ({
               onValueChange={setIsTaxResident}
             />
           </div>
-          <div className="grid flex justify-center  ">
+
+
+
+          </div>
+
+        <div className="container my-5 grid grid-cols-1 md:grid-cols-5 gap-5 md:gap-10">
+          <div className="md:col-start-1 md:col-span-4"></div>
+            <div className="grid   ">
             <label className="text-gray-500 my-3">Estado</label>
             <Switch
               size="lg"
@@ -946,9 +984,7 @@ const ContactsCreatePage: NextPage<Props> = ({
               onValueChange={setIsActive}
             />
           </div>
-
-
-          </div>
+        </div>
 
 
 
