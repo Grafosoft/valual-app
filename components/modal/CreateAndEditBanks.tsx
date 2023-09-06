@@ -81,7 +81,7 @@ const CreateAndEditBanks: NextPage<Props> = ({
   }, [method, form]);
 
 
-   const typeListid = Array.from<string>(selectedTypeList)[0]
+   const typeListid = Array.from<string>(selectedTypeList)
 
    const bodyApi = {
     id: 0,

@@ -222,6 +222,19 @@ const ContactsCreatePage: NextPage<Props> = ({
   )
   const priceListid = Array.from<number>(selectedparamspriceList)[0]
 
+  const [paramscommunicationMethod, setParamscommunicationMethod] = useState<AccountType[]>([])
+  const [selectedparamscommunicationMethod, setSelectedParamscommunicationMethod]: any = useState(
+    new Set(['Metodo de comunicacion ' || form?.paramscommunicationMethod.name])
+  )
+  const parcommunicationMethod= useMemo(
+    () =>
+    paramscommunicationMethod.find(
+        element => element.id.toString() === Array.from(selectedparamscommunicationMethod)[0]
+      )?.name,
+    [paramscommunicationMethod, selectedparamscommunicationMethod]
+  )
+  const communicationMethodid = Array.from<string>(selectedparamscommunicationMethod)[0]
+
 
   const [website, setWebsite] = useState('' || form.media?.website)
   const [linkedin, setLinkedin] = useState('' || form.media?.linkedin)
@@ -269,8 +282,21 @@ const ContactsCreatePage: NextPage<Props> = ({
 
     },
     priceList: {
-      id:parseInt(priceListid.toString()),
+      id:parseInt(priceListid?.toString()),
       name:parpriceList
+    },
+    media:{
+      website,
+      linkedin,
+      facebook,
+      instagram
+    },
+    communicationMethod:{
+      id:communicationMethodid.toString(),
+      name:parcommunicationMethod
+    },
+    communication:{
+      whatsapp
     }
   }
   const handleClick: MouseEventHandler<HTMLButtonElement> = async () => {
@@ -320,7 +346,7 @@ const ContactsCreatePage: NextPage<Props> = ({
           setIsLoading(false);
 
           if (method === 'editar') {
-            const { type, identificationType, tax,bank,priceList } = form;
+            const { type, identificationType, tax,bank,priceList,communicationMethod } = form;
 
             setSelectedParamstype(type ? new Set([type]) : new Set<string>());
             setSelectedIdentificationType(
@@ -333,6 +359,9 @@ const ContactsCreatePage: NextPage<Props> = ({
             setSelectedParamspriceList(
               priceList?.id ? new Set([priceList.id.toString()]) : new Set<string>()
             );
+            setSelectedParamscommunicationMethod(
+              communicationMethod?.id ? new Set([communicationMethod.id.toString()]) : new Set<string>()
+            );
 
 
           }
@@ -344,6 +373,8 @@ const ContactsCreatePage: NextPage<Props> = ({
           if (paramsresponsibility.length === 0) setParamsresponsibility(responseData.responsibilities);
           if (paramsbank.length === 0) setParamsbank(responseData.accountTypes);
           if (paramspriceList.length === 0) setParamspriceList(responseData.priceLists);
+          if (paramscommunicationMethod.length === 0) setParamscommunicationMethod(responseData.communicationMethod);
+
 
 
 
@@ -991,11 +1022,6 @@ const ContactsCreatePage: NextPage<Props> = ({
             />
           </div>
 
-
-
-          </div>
-
-        <div className="container my-5 grid grid-cols-1 md:grid-cols-5 gap-5 md:gap-10">
           <div className="md:col-start-1 md:col-span-4">
           <label className="text-gray-500 ">
               Precio de Lista
@@ -1048,6 +1074,7 @@ const ContactsCreatePage: NextPage<Props> = ({
             />
           </div>
         </div>
+
         <Divider />
         <div className="pt-5"></div>
         <h2 className="text-xl lg:text-2xl mb-5 font-semibold ">
@@ -1114,6 +1141,46 @@ const ContactsCreatePage: NextPage<Props> = ({
               value={whatsapp}
               onValueChange={setWhatsapp}
             />
+          </div>
+          <div>
+          <label className="text-gray-500 ">
+              Metodo de comunicacion
+            </label>
+            <Dropdown>
+              <DropdownTrigger>
+                <Button
+                  variant="flat"
+                  className="capitalize w-full mt-2"
+                  size="lg"
+                  radius="sm"
+                  color={parcommunicationMethod !== undefined ? color : 'default'}
+                >
+                  {parcommunicationMethod !== undefined
+                    ? parcommunicationMethod
+                    : parcommunicationMethod!== undefined || method === 'editar'
+                    ? parcommunicationMethod
+                    : 'Precio de Lista'}
+                </Button>
+              </DropdownTrigger>
+              <DropdownMenu
+                aria-label="Selección de Tipo"
+                variant={'flat'}
+                disallowEmptySelection
+                selectionMode="single"
+                selectedKeys={selectedparamscommunicationMethod}
+                onSelectionChange={setSelectedParamscommunicationMethod}
+              >
+                {paramscommunicationMethod.length !== 0 ? (
+                  paramscommunicationMethod.map(element => (
+                    <DropdownItem key={element.id.toString()}>
+                      {element.name}
+                    </DropdownItem>
+                  ))
+                ) : (
+                  <DropdownItem>NAME</DropdownItem>
+                )}
+              </DropdownMenu>
+            </Dropdown>
           </div>
           </div>
 
