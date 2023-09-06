@@ -30,7 +30,7 @@ export interface ContactsDetailsList {
     communicationMethod:    CommunicationMethod;
     communication:          Communication;
     contacts:               Contact[];
-    attachments:            any[];
+    attachments:            Attachment[];
 }
 
 export interface Activity {

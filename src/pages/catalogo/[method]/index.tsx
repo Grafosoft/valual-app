@@ -115,7 +115,6 @@ const ItemsCreatePage: NextPage<Props> = ({
     setIsLoading(true)
     console.log(bodyApi)
     if (method === 'crear') {
-      console.log(`/catalogo/?companyId=${companyId}&apikey=${apikey}`)
       valualApi
         .post(`items/?companyId=${companyId}&apikey=${apikey}`, bodyApi)
         .then(response => {

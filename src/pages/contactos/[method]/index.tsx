@@ -41,8 +41,12 @@ import { AccountType, IdentificationType } from '@/global/params/paramsContacts'
 import { CityList } from '../../../../interfaces/city/cityList'
 import { FaCity } from 'react-icons/fa'
 import { TbSearch } from 'react-icons/tb'
+import { RxActivityLog } from 'react-icons/rx'
 import { cityColumns } from '@/global/city/cityColumns'
 import { RenderCellCity } from '../../../../layout/city/RenderCellCity'
+import { ActivityList } from '../../../../interfaces/activity/activityList'
+import { activityColumns } from '@/global/activity/activityColumns'
+import { RenderCellActivity } from '../../../../layout/activity/RenderCellActivity'
 
 interface Props {
   color:
@@ -184,58 +188,102 @@ const ContactsCreatePage: NextPage<Props> = ({
     [paramsregime, selectedparamsregime]
   )
 
-
-  const [paramsresponsibility, setParamsresponsibility] = useState<AccountType[]>([])
-  const [selectedparamsresponsibility, setSelectedParamsresponsibility]: any = useState(
-    new Set(['Responsabilidad' || form?.tax.responsibility])
-  )
+  const [paramsresponsibility, setParamsresponsibility] = useState<
+    AccountType[]
+  >([])
+  const [selectedparamsresponsibility, setSelectedParamsresponsibility]: any =
+    useState(new Set(['Responsabilidad' || form?.tax.responsibility]))
   const parresponsibility = useMemo(
     () =>
-    paramsresponsibility.find(
-        element => element.id.toString() === Array.from(selectedparamsresponsibility)[0]
+      paramsresponsibility.find(
+        element =>
+          element.id.toString() === Array.from(selectedparamsresponsibility)[0]
       )?.name,
     [paramsresponsibility, selectedparamsresponsibility]
   )
+
+  const [activityList, setActivityList] = useState<ActivityList[]>([])
+  const {
+    isOpen: isOpenActivity,
+    onOpen: onOpenActivity,
+    onOpenChange: onOpenChangeActivity
+  } = useDisclosure()
+  const [isLoadingModalActivity, setIsLoadingModalActivity] = useState(true)
+  const [activitySearch, setActivitySearch] = useState({
+    id: '' || form.activity?.id.toString(),
+    code: '' || form.activity?.code,
+    name: '' || form.activity?.name
+  })
+  const [searchActivity, setSearchActivity] = useState('')
+
+  const handleSubmitActivity: FormEventHandler<HTMLFormElement> = e => {
+    e.preventDefault()
+    setIsLoadingModalActivity(true)
+
+    valualApi
+      .get<ActivityList[]>(
+        `settings/activities/?page=0&apikey=${apikey}&name=${searchActivity}`
+      )
+      .then(response => {
+        if (response.status === 200) {
+          setActivityList(response.data)
+          setIsLoadingModalActivity(false)
+        }
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  }
 
   const [paramsbank, setParamsbank] = useState<AccountType[]>([])
   const [selectedparamsbank, setSelectedParamsbank]: any = useState(
     new Set(['Tipo de Cuenta' || form?.bank.type])
   )
-  const parbank= useMemo(
+  const parbank = useMemo(
     () =>
-    paramsbank.find(
+      paramsbank.find(
         element => element.id.toString() === Array.from(selectedparamsbank)[0]
       )?.name,
     [paramsbank, selectedparamsbank]
   )
 
-  const [paramspriceList, setParamspriceList] = useState<IdentificationType[]>([])
+  const [paramspriceList, setParamspriceList] = useState<IdentificationType[]>(
+    []
+  )
   const [selectedparamspriceList, setSelectedParamspriceList]: any = useState(
     new Set(['Precio de Lista' || form?.priceList.name])
   )
-  const parpriceList= useMemo(
+  const parpriceList = useMemo(
     () =>
-    paramspriceList.find(
-        element => element.id.toString() === Array.from(selectedparamspriceList)[0]
+      paramspriceList.find(
+        element =>
+          element.id.toString() === Array.from(selectedparamspriceList)[0]
       )?.name,
     [paramspriceList, selectedparamspriceList]
   )
   const priceListid = Array.from<number>(selectedparamspriceList)[0]
 
-  const [paramscommunicationMethod, setParamscommunicationMethod] = useState<AccountType[]>([])
-  const [selectedparamscommunicationMethod, setSelectedParamscommunicationMethod]: any = useState(
+  const [paramscommunicationMethod, setParamscommunicationMethod] = useState<
+    AccountType[]
+  >([])
+  const [
+    selectedparamscommunicationMethod,
+    setSelectedParamscommunicationMethod
+  ]: any = useState(
     new Set(['Metodo de comunicacion ' || form?.communicationMethod.name])
   )
-  const parcommunicationMethod= useMemo(
+  const parcommunicationMethod = useMemo(
     () =>
-    paramscommunicationMethod.find(
-        element => element.id.toString() === Array.from(selectedparamscommunicationMethod)[0]
+      paramscommunicationMethod.find(
+        element =>
+          element.id.toString() ===
+          Array.from(selectedparamscommunicationMethod)[0]
       )?.name,
     [paramscommunicationMethod, selectedparamscommunicationMethod]
   )
-  const communicationMethodid = Array.from<string>(selectedparamscommunicationMethod)[0]
-
-
+  const communicationMethodid = Array.from<string>(
+    selectedparamscommunicationMethod
+  )[0]
   const [website, setWebsite] = useState('' || form.media?.website)
   const [linkedin, setLinkedin] = useState('' || form.media?.linkedin)
   const [facebook, setFacebook] = useState('' || form.media?.facebook)
@@ -263,39 +311,45 @@ const ContactsCreatePage: NextPage<Props> = ({
     isActive,
     identificationType: {
       id: identificationTypeid,
+      code: '',
       name: paridentificationType
     },
     city: {
       id: parseInt(citySearch.id?.toString()),
       code: citySearch.code,
-      name: citySearch.name
+      name: citySearch.name,
+      country: 'colombia'
     },
     tax: {
-      person:parperson,
-      regime:parregime,
-      responsibility:parresponsibility
-
+      person: parperson,
+      regime: parregime,
+      responsibility: parresponsibility
     },
-    activity: {},
+    activity: {
+      id: '',
+      code: activitySearch.id,
+      name: activitySearch.name
+    },
     bank: {
-      account:parbank,
-
+      name: '',
+      type: parbank,
+      account: ''
     },
     priceList: {
-      id:parseInt(priceListid?.toString()),
-      name:parpriceList
+      id: parseInt(priceListid?.toString()),
+      name: parpriceList
     },
-    media:{
+    media: {
       website,
       linkedin,
       facebook,
       instagram
     },
-    communicationMethod:{
-      id:communicationMethodid,
-      name:parcommunicationMethod
+    communicationMethod: {
+      id: communicationMethodid,
+      name: parcommunicationMethod
     },
-    communication:{
+    communication: {
       whatsapp
     }
   }
@@ -303,92 +357,114 @@ const ContactsCreatePage: NextPage<Props> = ({
     setIsLoading(true)
     console.log(bodyApi)
     if (method === 'crear') {
-      // valualApi
-      //   .post(`contacts/?companyId=${companyId}&apikey=${apikey}`, bodyApi)
-      //   .then(response => {
-      //     if (response.status === 200) {
-      //       setIsLoading(false)
-      //       window.location.replace(
-      //         `/contactos?companyId=${companyId}&apikey=${apikey}`
-      //       )
-      //     }
-      //   })
-      //   .catch(error => {
-      //     console.log(error)
-      //   })
+      valualApi
+        .post(`contacts/?companyId=${companyId}&apikey=${apikey}`, bodyApi)
+        .then(response => {
+          if (response.status === 200) {
+            setIsLoading(false)
+            window.location.replace(
+              `/contactos?companyId=${companyId}&apikey=${apikey}`
+            )
+          }
+        })
+        .catch(error => {
+          console.log(error)
+        })
     } else {
-      // valualApi
-      //   .put(`contacts/${id}?companyId=${companyId}&apikey=${apikey}`, bodyApi)
-      //   .then(response => {
-      //     if (response.status === 200) {
-      //       setIsLoading(false)
-      //       window.location.replace(`/contactos/detalles/${id}/?companyId=${companyId}&apikey=${apikey}`)
-      //       console.log(response.data)
-      //     }
-      //   })
-      //   .catch(error => {
-      //     console.log(error)
-      //   })
+      valualApi
+        .put(`contacts/${id}?companyId=${companyId}&apikey=${apikey}`, bodyApi)
+        .then(response => {
+          if (response.status === 200) {
+            setIsLoading(false)
+            window.location.replace(
+              `/contactos/detalles/${id}/?companyId=${companyId}&apikey=${apikey}`
+            )
+            console.log(response.data)
+          }
+        })
+        .catch(error => {
+          console.log(error)
+        })
     }
   }
   useEffect(() => {
     if (statusSession === 'unauthenticated') {
-      replace('/');
-      return;
+      replace('/')
+      return
     }
 
     const fetchData = async () => {
       try {
-        const response = await valualApi.get(`contacts/params/?apikey=${apikey}&companyId=${companyId}`);
+        const response = await valualApi.get(
+          `contacts/params/?apikey=${apikey}&companyId=${companyId}`
+        )
         if (response.status === 200) {
-          const responseData = response.data;
+          const responseData = response.data
 
-          setIsLoading(false);
+          setIsLoading(false)
 
           if (method === 'editar') {
-            const { type, identificationType, tax,bank,priceList,communicationMethod } = form;
+            const {
+              type,
+              identificationType,
+              tax,
+              bank,
+              priceList,
+              communicationMethod
+            } = form
 
-            setSelectedParamstype(type ? new Set([type]) : new Set<string>());
+            setSelectedParamstype(type ? new Set([type]) : new Set<string>())
             setSelectedIdentificationType(
-              identificationType?.id ? new Set([identificationType.id.toString()]) : new Set<string>()
-            );
-            setSelectedParamsperson(tax?.person ? new Set([tax.person]) : new Set<string>());
-            setSelectedParamsregime(tax?.regime ? new Set([tax.regime]) : new Set<string>());
-            setSelectedParamsresponsibility(tax?.responsibility ? new Set([tax.responsibility]) : new Set<string>());
-            setSelectedParamsbank(bank?.type ? new Set([bank.type]) : new Set<string>());
+              identificationType?.id
+                ? new Set([identificationType.id.toString()])
+                : new Set<string>()
+            )
+            setSelectedParamsperson(
+              tax?.person ? new Set([tax.person]) : new Set<string>()
+            )
+            setSelectedParamsregime(
+              tax?.regime ? new Set([tax.regime]) : new Set<string>()
+            )
+            setSelectedParamsresponsibility(
+              tax?.responsibility
+                ? new Set([tax.responsibility])
+                : new Set<string>()
+            )
+            setSelectedParamsbank(
+              bank?.type ? new Set([bank.type]) : new Set<string>()
+            )
             setSelectedParamspriceList(
-              priceList?.id ? new Set([priceList.id.toString()]) : new Set<string>()
-            );
+              priceList?.id
+                ? new Set([priceList.id.toString()])
+                : new Set<string>()
+            )
             setSelectedParamscommunicationMethod(
-              communicationMethod?.id ? new Set([communicationMethod.id.toString()]) : new Set<string>()
-            );
-
-
+              communicationMethod?.id
+                ? new Set([communicationMethod.id.toString()])
+                : new Set<string>()
+            )
           }
 
-          if (paramstype.length === 0) setParamstype(responseData.types);
-          if (paramsidentificationType.length === 0) setParamsidentificationType(responseData.identificationTypes);
-          if (paramsperson.length === 0) setParamsperson(responseData.persons);
-          if (paramsregime.length === 0) setParamsregime(responseData.regimes);
-          if (paramsresponsibility.length === 0) setParamsresponsibility(responseData.responsibilities);
-          if (paramsbank.length === 0) setParamsbank(responseData.accountTypes);
-          if (paramspriceList.length === 0) setParamspriceList(responseData.priceLists);
-          if (paramscommunicationMethod.length === 0) setParamscommunicationMethod(responseData.communicationMethod);
-
-
-
-
+          if (paramstype.length === 0) setParamstype(responseData.types)
+          if (paramsidentificationType.length === 0)
+            setParamsidentificationType(responseData.identificationTypes)
+          if (paramsperson.length === 0) setParamsperson(responseData.persons)
+          if (paramsregime.length === 0) setParamsregime(responseData.regimes)
+          if (paramsresponsibility.length === 0)
+            setParamsresponsibility(responseData.responsibilities)
+          if (paramsbank.length === 0) setParamsbank(responseData.accountTypes)
+          if (paramspriceList.length === 0)
+            setParamspriceList(responseData.priceLists)
+          if (paramscommunicationMethod.length === 0)
+            setParamscommunicationMethod(responseData.communicationMethod)
         }
       } catch (error) {
-        console.log(error);
+        console.log(error)
       }
-    };
+    }
 
-    fetchData();
-  }, [method, form, statusSession, replace]);
-
-
-
+    fetchData()
+  }, [method, form, statusSession, replace])
 
   return (
     <>
@@ -471,7 +547,9 @@ const ContactsCreatePage: NextPage<Props> = ({
                   className="capitalize w-full mt-2"
                   size="lg"
                   radius="sm"
-                  color={paridentificationType !== undefined ? color : 'default'}
+                  color={
+                    paridentificationType !== undefined ? color : 'default'
+                  }
                 >
                   {paridentificationType !== undefined
                     ? paridentificationType
@@ -831,14 +909,10 @@ const ContactsCreatePage: NextPage<Props> = ({
 
         <Divider />
         <div className="pt-5"></div>
-        <h2 className="text-xl lg:text-2xl mb-5 font-semibold">
-          Impuesto
-        </h2>
+        <h2 className="text-xl lg:text-2xl mb-5 font-semibold">Impuesto</h2>
         <div className="container my-5 grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-10">
-        <div>
-            <label className="text-gray-500 ">
-              Persona
-            </label>
+          <div>
+            <label className="text-gray-500 ">Persona</label>
             <Dropdown>
               <DropdownTrigger>
                 <Button
@@ -877,9 +951,7 @@ const ContactsCreatePage: NextPage<Props> = ({
           </div>
 
           <div>
-            <label className="text-gray-500 ">
-              Régimen
-            </label>
+            <label className="text-gray-500 ">Régimen</label>
             <Dropdown>
               <DropdownTrigger>
                 <Button
@@ -918,9 +990,7 @@ const ContactsCreatePage: NextPage<Props> = ({
           </div>
 
           <div>
-            <label className="text-gray-500 ">
-              Responsabilidad
-            </label>
+            <label className="text-gray-500 ">Responsabilidad</label>
             <Dropdown>
               <DropdownTrigger>
                 <Button
@@ -957,21 +1027,15 @@ const ContactsCreatePage: NextPage<Props> = ({
               </DropdownMenu>
             </Dropdown>
           </div>
-
-
         </div>
 
         <Divider />
         <div className="pt-5"></div>
-        <h2 className="text-xl lg:text-2xl mb-5 font-semibold ">
-          Opciones
-        </h2>
+        <h2 className="text-xl lg:text-2xl mb-5 font-semibold ">Opciones</h2>
 
         <div className="container my-5 grid grid-cols-1 md:grid-cols-5 gap-5 md:gap-10">
           <div className="md:col-start-1 md:col-span-4">
-          <label className="text-gray-500 ">
-              Tipo de banco
-            </label>
+            <label className="text-gray-500 ">Tipo de banco</label>
             <Dropdown>
               <DropdownTrigger>
                 <Button
@@ -1007,11 +1071,9 @@ const ContactsCreatePage: NextPage<Props> = ({
                 )}
               </DropdownMenu>
             </Dropdown>
-
-
           </div>
 
-        <div className="grid  ">
+          <div className="grid  ">
             <label className="text-gray-500 my-3">Tiene impuesto</label>
             <Switch
               size="lg"
@@ -1023,9 +1085,7 @@ const ContactsCreatePage: NextPage<Props> = ({
           </div>
 
           <div className="md:col-start-1 md:col-span-4">
-          <label className="text-gray-500 ">
-              Precio de Lista
-            </label>
+            <label className="text-gray-500 ">Precio de Lista</label>
             <Dropdown>
               <DropdownTrigger>
                 <Button
@@ -1037,7 +1097,7 @@ const ContactsCreatePage: NextPage<Props> = ({
                 >
                   {parpriceList !== undefined
                     ? parpriceList
-                    : parpriceList!== undefined || method === 'editar'
+                    : parpriceList !== undefined || method === 'editar'
                     ? parpriceList
                     : 'Precio de Lista'}
                 </Button>
@@ -1061,9 +1121,8 @@ const ContactsCreatePage: NextPage<Props> = ({
                 )}
               </DropdownMenu>
             </Dropdown>
-
           </div>
-            <div className="grid   ">
+          <div className="grid   ">
             <label className="text-gray-500 my-3">Estado</label>
             <Switch
               size="lg"
@@ -1074,16 +1133,148 @@ const ContactsCreatePage: NextPage<Props> = ({
             />
           </div>
         </div>
+        <div>
+          <h2 className="text-gray-500">Actividad</h2>
+          <Input
+            aria-label="Buscar ciudad"
+            readOnly={true}
+            placeholder="Buscar ciudad"
+            onClick={onOpenActivity}
+            value={activitySearch.name}
+            startContent={<RxActivityLog />}
+            style={{ cursor: 'pointer' }}
+            size="lg"
+            className="mt-2"
+            radius="sm"
+          />
+          <Modal
+            closeButton
+            size="5xl"
+            scrollBehavior="inside"
+            backdrop="blur"
+            style={{ width: '1000px' }}
+            isOpen={isOpenActivity}
+            onOpenChange={onOpenChangeActivity}
+          >
+            <ModalContent>
+              {onClose => {
+                if (activityList.length === 0) {
+                  valualApi
+                    .get<ActivityList[]>(
+                      `/settings/activities?page=0&apikey=${apikey}&name=`
+                    )
+                    .then(response => {
+                      if (response.status === 200) {
+                        setActivityList(response.data)
+                        setIsLoadingModalActivity(false)
+                      }
+                    })
+                    .catch(error => {
+                      console.log(error)
+                    })
+                }
+
+                return (
+                  <>
+                    <ModalHeader>
+                      <div className="container">
+                        <h2
+                          id="modal-title"
+                          className="flex justify-center py-5 text-3xl font-bold"
+                        >
+                          Listado de Actividades
+                        </h2>
+                        <Spacer y={1} />
+                        <form onSubmit={handleSubmitActivity}>
+                          <Input
+                            aria-label="Buscar actividad"
+                            placeholder="Buscar actividad"
+                            value={searchActivity}
+                            width="100%"
+                            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                              setSearchActivity(e.target.value)
+                            }
+                            startContent={<TbSearch />}
+                            size="md"
+                          />
+                        </form>
+                      </div>
+                    </ModalHeader>
+                    <ModalBody>
+                      {isLoadingModalActivity ? (
+                        <div
+                          className="container"
+                          style={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignContent: 'center',
+                            alignItems: 'center',
+                            height: '100%'
+                          }}
+                        >
+                          <CircularProgress size="lg" color={'warning'} />
+                        </div>
+                      ) : (
+                        <Table
+                          aria-label="Lista de terceros"
+                          style={{ height: 'auto', minWidth: '100%' }}
+                          isStriped
+                          shadow="none"
+                        >
+                          <TableHeader columns={activityColumns}>
+                            {column => (
+                              <TableColumn key={column.uid} align="start">
+                                {column.name}
+                              </TableColumn>
+                            )}
+                          </TableHeader>
+                          <TableBody
+                            emptyContent="No hay datos por mostrar."
+                            items={activityList}
+                          >
+                            {item => (
+                              <TableRow key={item.id}>
+                                {columnKey => (
+                                  <TableCell>
+                                    <RenderCellActivity
+                                      searchActivity={''}
+                                      activity={item}
+                                      columnKey={columnKey}
+                                      urlPath="form"
+                                      closeHandler={onClose}
+                                      setActivitySearch={setActivitySearch}
+                                    />
+                                  </TableCell>
+                                )}
+                              </TableRow>
+                            )}
+                          </TableBody>
+                        </Table>
+                      )}
+                    </ModalBody>
+                    <ModalFooter>
+                      <Button
+                        style={{ width: 'auto' }}
+                        variant={'flat'}
+                        color="danger"
+                        onPress={onClose}
+                      >
+                        Cerrar
+                      </Button>
+                    </ModalFooter>
+                  </>
+                )
+              }}
+            </ModalContent>
+          </Modal>
+        </div>
+        <Spacer y={5} />
 
         <Divider />
         <div className="pt-5"></div>
-        <h2 className="text-xl lg:text-2xl mb-5 font-semibold ">
-          Media
-        </h2>
+        <h2 className="text-xl lg:text-2xl mb-5 font-semibold ">Media</h2>
         <div className="container my-5 grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-10">
-
-        <div>
-
+          <div>
             <label className="text-gray-500">Pagina Web</label>
             <Input
               id="website"
@@ -1095,7 +1286,6 @@ const ContactsCreatePage: NextPage<Props> = ({
             />
           </div>
           <div>
-
             <label className="text-gray-500">Linkedin</label>
             <Input
               id="linkedin"
@@ -1107,7 +1297,6 @@ const ContactsCreatePage: NextPage<Props> = ({
             />
           </div>
           <div>
-
             <label className="text-gray-500">Facebook</label>
             <Input
               id="facebook"
@@ -1119,7 +1308,6 @@ const ContactsCreatePage: NextPage<Props> = ({
             />
           </div>
           <div>
-
             <label className="text-gray-500">Instagram</label>
             <Input
               id="instagram"
@@ -1130,8 +1318,7 @@ const ContactsCreatePage: NextPage<Props> = ({
               onValueChange={setInstagram}
             />
           </div>
-           <div>
-
+          <div>
             <label className="text-gray-500">Whatsapp</label>
             <Input
               id="whatsapp"
@@ -1143,9 +1330,7 @@ const ContactsCreatePage: NextPage<Props> = ({
             />
           </div>
           <div>
-          <label className="text-gray-500 ">
-              Metodo de comunicacion
-            </label>
+            <label className="text-gray-500 ">Metodo de comunicacion</label>
             <Dropdown>
               <DropdownTrigger>
                 <Button
@@ -1153,11 +1338,14 @@ const ContactsCreatePage: NextPage<Props> = ({
                   className="capitalize w-full mt-2"
                   size="lg"
                   radius="sm"
-                  color={parcommunicationMethod !== undefined ? color : 'default'}
+                  color={
+                    parcommunicationMethod !== undefined ? color : 'default'
+                  }
                 >
                   {parcommunicationMethod !== undefined
                     ? parcommunicationMethod
-                    : parcommunicationMethod!== undefined || method === 'editar'
+                    : parcommunicationMethod !== undefined ||
+                      method === 'editar'
                     ? parcommunicationMethod
                     : 'Precio de Lista'}
                 </Button>
@@ -1182,10 +1370,7 @@ const ContactsCreatePage: NextPage<Props> = ({
               </DropdownMenu>
             </Dropdown>
           </div>
-          </div>
-
-
-
+        </div>
       </div>
 
       <div className="mb-5 p-5 w-full flex justify-center">
