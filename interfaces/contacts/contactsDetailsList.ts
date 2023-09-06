@@ -27,6 +27,7 @@ export interface ContactsDetailsList {
     bank:                   Bank;
     priceList:              PriceList;
     media:                  Media;
+    communicationMethod:    CommunicationMethod;
     communication:          Communication;
     contacts:               Contact[];
     attachments:            any[];
@@ -55,6 +56,10 @@ export interface Bank {
 
 export interface Communication {
     whatsapp: string;
+}
+export interface CommunicationMethod {
+    id:   string;
+    name: string;
 }
 
 export interface Contact {

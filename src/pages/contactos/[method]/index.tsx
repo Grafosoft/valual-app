@@ -224,7 +224,7 @@ const ContactsCreatePage: NextPage<Props> = ({
 
   const [paramscommunicationMethod, setParamscommunicationMethod] = useState<AccountType[]>([])
   const [selectedparamscommunicationMethod, setSelectedParamscommunicationMethod]: any = useState(
-    new Set(['Metodo de comunicacion ' || form?.paramscommunicationMethod.name])
+    new Set(['Metodo de comunicacion ' || form?.communicationMethod.name])
   )
   const parcommunicationMethod= useMemo(
     () =>
@@ -292,7 +292,7 @@ const ContactsCreatePage: NextPage<Props> = ({
       instagram
     },
     communicationMethod:{
-      id:communicationMethodid.toString(),
+      id:communicationMethodid,
       name:parcommunicationMethod
     },
     communication:{
