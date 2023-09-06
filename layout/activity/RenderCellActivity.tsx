@@ -23,7 +23,7 @@ export const RenderCellActivity: FC<Props> = ({
   const { push } = useRouter()
 
   switch (columnKey) {
-    
+
     case 'name':
       return (
         <p
@@ -41,7 +41,7 @@ export const RenderCellActivity: FC<Props> = ({
             onClick={() => {
               setActivitySearch({
                 id: activity.id.toString(),
-                code: `${activity.id} `,
+                code: `${activity.code} `,
                 name: `${activity.name} `
               })
               closeHandler()

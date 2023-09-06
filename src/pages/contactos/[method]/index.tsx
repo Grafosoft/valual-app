@@ -201,7 +201,6 @@ const ContactsCreatePage: NextPage<Props> = ({
       )?.name,
     [paramsresponsibility, selectedparamsresponsibility]
   )
-
   const [activityList, setActivityList] = useState<ActivityList[]>([])
   const {
     isOpen: isOpenActivity,
@@ -234,10 +233,12 @@ const ContactsCreatePage: NextPage<Props> = ({
         console.log(error)
       })
   }
+  const [name, setName] = useState('' || form.bank?.name)
+  const [account, setAccount] = useState('' || form.bank?.account)
 
   const [paramsbank, setParamsbank] = useState<AccountType[]>([])
   const [selectedparamsbank, setSelectedParamsbank]: any = useState(
-    new Set(['Tipo de Cuenta' || form?.bank.type])
+    new Set(['Tipo de Cuenta' || form.bank.type])
   )
   const parbank = useMemo(
     () =>
@@ -311,7 +312,6 @@ const ContactsCreatePage: NextPage<Props> = ({
     isActive,
     identificationType: {
       id: identificationTypeid,
-      code: '',
       name: paridentificationType
     },
     city: {
@@ -326,14 +326,14 @@ const ContactsCreatePage: NextPage<Props> = ({
       responsibility: parresponsibility
     },
     activity: {
-      id: '',
-      code: activitySearch.id,
+      id: activitySearch.id,
+      code: activitySearch.code,
       name: activitySearch.name
     },
     bank: {
-      name: '',
+      name,
       type: parbank,
-      account: ''
+      account
     },
     priceList: {
       id: parseInt(priceListid?.toString()),
@@ -731,7 +731,7 @@ const ContactsCreatePage: NextPage<Props> = ({
         <div className="container my-5 grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-10">
           <div>
             <label htmlFor="birthDate" className="text-gray-500">
-              Fecha de nacimiento
+              Fecha de Nacimiento
             </label>
             <Input
               id="birthDate"
@@ -745,7 +745,7 @@ const ContactsCreatePage: NextPage<Props> = ({
           </div>
           <div>
             <label htmlFor="createDate" className="text-gray-500">
-              Fecha de Creaciom
+              Fecha de Creacion
             </label>
             <Input
               id="createDate"
@@ -895,7 +895,7 @@ const ContactsCreatePage: NextPage<Props> = ({
             </Modal>
           </div>
           <div>
-            <label className="text-gray-500">Codigo postal</label>
+            <label className="text-gray-500">Codigo Postal</label>
             <Input
               id="postalCode"
               size="lg"
@@ -1031,11 +1031,38 @@ const ContactsCreatePage: NextPage<Props> = ({
 
         <Divider />
         <div className="pt-5"></div>
-        <h2 className="text-xl lg:text-2xl mb-5 font-semibold ">Opciones</h2>
-
-        <div className="container my-5 grid grid-cols-1 md:grid-cols-5 gap-5 md:gap-10">
-          <div className="md:col-start-1 md:col-span-4">
-            <label className="text-gray-500 ">Tipo de banco</label>
+        <h2 className="text-xl lg:text-2xl mb-5 font-semibold">Banco</h2>
+        <div className="container my-5 grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-10">
+        <div>
+            <label htmlFor="name" className="text-gray-500">
+              Nombre de Banco
+            </label>
+            <Input
+              id="name"
+              size="lg"
+              radius="sm"
+              type="text"
+              className="mt-2"
+              value={name}
+              onValueChange={setName}
+            />
+          </div>
+          <div>
+            <label htmlFor="account" className="text-gray-500">
+              Numero de Cuenta
+            </label>
+            <Input
+              id="account"
+              size="lg"
+              radius="sm"
+              type="text"
+              className="mt-2"
+              value={account}
+              onValueChange={setAccount}
+            />
+          </div>
+          <div>
+          <label className="text-gray-500 ">Tipo de Banco</label>
             <Dropdown>
               <DropdownTrigger>
                 <Button
@@ -1072,20 +1099,17 @@ const ContactsCreatePage: NextPage<Props> = ({
               </DropdownMenu>
             </Dropdown>
           </div>
+        </div>
 
-          <div className="grid  ">
-            <label className="text-gray-500 my-3">Tiene impuesto</label>
-            <Switch
-              size="lg"
-              id="isTaxResident"
-              className="mt-2"
-              isSelected={isTaxResident}
-              onValueChange={setIsTaxResident}
-            />
-          </div>
+        <Divider />
+        <div className="pt-5"></div>
+        <h2 className="text-xl lg:text-2xl mb-5 font-semibold ">Opciones</h2>
 
+
+
+        <div className="container my-5 grid grid-cols-1 md:grid-cols-5 gap-5 md:gap-10">
           <div className="md:col-start-1 md:col-span-4">
-            <label className="text-gray-500 ">Precio de Lista</label>
+          <label className="text-gray-500 ">Precio de Lista</label>
             <Dropdown>
               <DropdownTrigger>
                 <Button
@@ -1122,23 +1146,25 @@ const ContactsCreatePage: NextPage<Props> = ({
               </DropdownMenu>
             </Dropdown>
           </div>
-          <div className="grid   ">
-            <label className="text-gray-500 my-3">Estado</label>
+
+          <div className="grid  ">
+            <label className="text-gray-500 my-3">Tiene Impuesto</label>
             <Switch
               size="lg"
-              id="isActive"
+              id="isTaxResident"
               className="mt-2"
-              isSelected={isActive}
-              onValueChange={setIsActive}
+              isSelected={isTaxResident}
+              onValueChange={setIsTaxResident}
             />
           </div>
-        </div>
-        <div>
+
+          <div className="md:col-start-1 md:col-span-4">
+          <div>
           <h2 className="text-gray-500">Actividad</h2>
           <Input
-            aria-label="Buscar ciudad"
+            aria-label="Buscar Actividad"
             readOnly={true}
-            placeholder="Buscar ciudad"
+            placeholder="Buscar Actividad"
             onClick={onOpenActivity}
             value={activitySearch.name}
             startContent={<RxActivityLog />}
@@ -1268,7 +1294,21 @@ const ContactsCreatePage: NextPage<Props> = ({
             </ModalContent>
           </Modal>
         </div>
-        <Spacer y={5} />
+
+          </div>
+          <div className="grid   ">
+            <label className="text-gray-500 my-3">Estado</label>
+            <Switch
+              size="lg"
+              id="isActive"
+              className="mt-2"
+              isSelected={isActive}
+              onValueChange={setIsActive}
+            />
+          </div>
+        </div>
+
+
 
         <Divider />
         <div className="pt-5"></div>
