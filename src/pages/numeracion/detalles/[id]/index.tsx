@@ -3,19 +3,21 @@ import { useSession } from 'next-auth/react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import React, { useEffect } from 'react'
+import { ItemsList } from '../../../../../interfaces/items/itemsList'
+
 import valualApi from '@/apis/valualApi'
 
-import { InvoicesDetailsList } from '../../../../interfaces/invoices/invoicesDetailsList'
-import { InvoicesDetails } from '../../../../layout/invoices/InvoicesDetails'
+import { NumerationsList } from '../../../../../interfaces/numerations/numerationsList'
+import { NumerationsDetailsHeader } from '../../../../../layout/numerations/NumerationsDetailsHeader'
 
 interface Props {
-  data: InvoicesDetailsList
+  data: NumerationsList
   id: string | undefined
   apikey: string | undefined
   companyId: string | undefined
 }
 
-const DetailsInvoices: NextPage<Props> = ({ data, id, apikey }) => {
+const Init: NextPage<Props> = ({ data, id, apikey }) => {
   const { status } = useSession()
   const { replace } = useRouter()
 
@@ -26,9 +28,11 @@ const DetailsInvoices: NextPage<Props> = ({ data, id, apikey }) => {
   return (
     <>
       <Head>
-        <title>{data.company.name}</title>
+        <title>{data.name}</title>
       </Head>
-      <InvoicesDetails data={data} />
+
+      <NumerationsDetailsHeader data={data} />
+
 
     </>
   )
@@ -39,13 +43,11 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
   const apikey = ctx.query.apikey?.toString() || ''
   const companyId = ctx.query.companyId || '0'
 
-  const response = await valualApi.get<InvoicesDetailsList>(
-    `invoices/${id}/?companyId=${companyId}&apikey=${ctx.query.apikey}`
+  const response = await valualApi.get<ItemsList>(
+    `numerations/${id}/?companyId=${companyId}&apikey=${ctx.query.apikey}`
   )
 
-  console.log(
-    `invoices/${id}/?companyId=${companyId}&apikey=${ctx.query.apikey}`
-  )
+
   if (!response) {
     return {
       notFound: true,
@@ -62,4 +64,4 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
     }
   }
 }
-export default DetailsInvoices
+export default Init

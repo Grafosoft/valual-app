@@ -10,12 +10,21 @@ export interface NumerationsList {
     toNumber:      number;
     startNumber:   number;
     currentNumber: number;
+    technicalKey:  string;
     status:        string;
-    type:          Software;
+    type:          Type;
     software:      Software;
 }
 
 export interface Software {
+    id:             number;
+    name:           string;
+    identification: string;
+    pinCode:        string;
+    TestId:         string;
+}
+
+export interface Type {
     id:   number;
     name: string;
 }

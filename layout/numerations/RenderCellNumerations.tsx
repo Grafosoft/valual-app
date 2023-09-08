@@ -1,6 +1,8 @@
 import React, { FC, useEffect, useState } from 'react'
 import { Chip, Spacer, User } from '@nextui-org/react'
 import { NumerationsList } from '../../interfaces/numerations/numerationsList'
+import { TbArrowBigRightLinesFilled, TbPencil } from 'react-icons/tb'
+import { useRouter } from 'next/router'
 
 interface Props {
   numeration: NumerationsList
@@ -15,8 +17,10 @@ export const RenderCellNumerations: FC<Props> = ({ numeration, columnKey }) => {
     hour: '2-digit',
     minute: '2-digit'
   })
+  let colorIcon = '#0072F5'
+  const { push } = useRouter()
 
-  const [apikey, setApikey] = useState('')
+  const [apikeys, setApikey] = useState('')
   useEffect(() => {
     setApikey(localStorage.getItem('apikey') || '')
   }, [])
@@ -78,6 +82,43 @@ export const RenderCellNumerations: FC<Props> = ({ numeration, columnKey }) => {
           {createDate}
         </p>
       )
+      case 'details':
+        return (
+            <>
+        <div className="flex">
+
+            <TbPencil
+              cursor={'pointer'}
+              color={colorIcon}
+              onClick={() =>
+                push(
+                  `/numeracion/editar?id=${numeration.id}&apikey=${localStorage.getItem(
+                    'apikey'
+                  )}&companyId=${localStorage.getItem('companyId')}`
+                )
+              }
+              size={20}
+            />
+          <Spacer x={8} />
+
+               <TbArrowBigRightLinesFilled
+          cursor={'pointer'}
+          color={colorIcon}
+          onClick={() =>
+            push(
+              `/numeracion/detalles/${numeration.id}/?apikey=${localStorage.getItem(
+                'apikey'
+              )}&companyId=${localStorage.getItem('companyId')}`
+            )
+          }
+          size={20}
+        />
+        </div>
+
+          </>
+
+        )
+
 
     default:
   }

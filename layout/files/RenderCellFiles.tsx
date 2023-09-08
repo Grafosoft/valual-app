@@ -5,7 +5,8 @@ import { FilesList } from '../../interfaces/files/filesList'
 import { FaFileImage, FaFilePdf } from 'react-icons/fa'
 import { TbFileShredder } from 'react-icons/tb'
 import { AiOutlineFileImage, AiOutlineFilePdf } from 'react-icons/ai'
-import { PrinterModal } from '../../components/tbDots/printer'
+import { PrinterModal } from '../../components/tbDots/Printer'
+
 
 
 interface Props {

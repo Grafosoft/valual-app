@@ -14,7 +14,7 @@ import {
 import { GetServerSideProps, NextPage } from 'next'
 import React, { useEffect, useState, useMemo } from 'react'
 import { useSession } from 'next-auth/react'
-import { Pricelist } from '@/global/params/paramswarehouses'
+import { Pricelist } from '../../interfaces/params/paramsWarehouses'
 import { useRouter } from 'next/router'
 import { WarehouseList } from '../../interfaces/warehouses/warehousesList'
 interface Props {

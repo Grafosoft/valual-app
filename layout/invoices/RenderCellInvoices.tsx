@@ -85,7 +85,7 @@ export const RenderCellInvoices: FC<Props> = ({ invoices, columnKey }) => {
           color={colorIcon}
           onClick={() =>
             push(
-              `/facturas/${invoices.id}/?apikey=${localStorage.getItem(
+              `/facturas/detalles/${invoices.id}/?apikey=${localStorage.getItem(
                 'apikey'
               )}&companyId=${localStorage.getItem('companyId')}`
             )

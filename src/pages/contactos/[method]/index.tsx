@@ -37,7 +37,7 @@ import React, {
 } from 'react'
 import { useSession } from 'next-auth/react'
 import Head from 'next/head'
-import { AccountType, IdentificationType } from '@/global/params/paramsContacts'
+import { AccountType, IdentificationType } from '../../../../interfaces/params/paramsContacts'
 import { CityList } from '../../../../interfaces/city/cityList'
 import { FaCity } from 'react-icons/fa'
 import { TbSearch } from 'react-icons/tb'
@@ -106,9 +106,9 @@ const ContactsCreatePage: NextPage<Props> = ({
   const [commercialCode, setCommercialCode] = useState(
     '' || form.commercialCode
   )
-  const [birthDate, setBirthDate] = useState(currentDate || form.birthDate)
-  const [createDate, setCreateDate] = useState(
-    currentDate || form.createDate?.substring(0, 10)
+  const [birthDate, setBirthDate] = useState(form.birthDate || currentDate  )
+  const [createDate, setCreateDate] = useState(form.createDate?.substring(0, 10)
+   || currentDate
   )
   const [postalCode, setPostalCode] = useState('' || form.postalCode)
   const [isTaxResident, setIsTaxResident] = useState('' || form.isTaxResident)

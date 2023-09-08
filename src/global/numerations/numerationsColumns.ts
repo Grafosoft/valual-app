@@ -5,7 +5,7 @@ export const numerationsColumns = [
     },   {
       name: 'AUTORIZACION',
       uid: 'authorization'
-    }, 
+    },
     {
       name: 'ESTADO',
       uid: 'status'
@@ -23,7 +23,11 @@ export const numerationsColumns = [
         name: 'FECHA',
         uid: 'date'
       },
-    
-  
-  
+      {
+        name: '',
+        uid: 'details'
+      }
+
+
+
   ]

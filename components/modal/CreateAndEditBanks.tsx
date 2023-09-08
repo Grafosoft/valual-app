@@ -17,7 +17,7 @@ import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import { WarehouseList } from '../../interfaces/warehouses/warehousesList'
 import { BanksList } from '../../interfaces/banks/banksList'
-import { Type } from '@/global/params/paramsBanks'
+import { Type } from '../../interfaces/params/paramsBanks'
 interface Props {
   color:
     | 'default'

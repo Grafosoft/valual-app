@@ -15,7 +15,7 @@ import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import { ItemsList } from '../../../../interfaces/items/itemsList'
 import Head from 'next/head'
-import { Group, Tax } from '@/global/params/paramsItems'
+import { Group, Tax } from '../../../../interfaces/params/paramsItems'
 interface Props {
   color:
     | 'default'
