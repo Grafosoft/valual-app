@@ -1,31 +1,42 @@
 import valualApi from '@/apis/valualApi'
 import {
+  Button,
+  CircularProgress,
+  Modal,
   Spacer,
   Table,
   TableBody,
   TableCell,
   TableColumn,
   TableHeader,
-  TableRow
+  TableRow,
+  useDisclosure
 } from '@nextui-org/react'
 import { GetServerSideProps, NextPage } from 'next'
 import Head from 'next/head'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { SellersList } from '../../../interfaces/sellers/sellersList'
 import { sellersColumns } from '@/global/sellers/sellersColumn'
 import { RenderCellSellers } from '../../../layout/sellers/RenderCellSellers'
 import { SellersHeadersLayout } from '../../../layout/sellers/SellersHeader'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
+import { RiAddFill } from 'react-icons/ri'
+import CreateAndEditSellers from '../../../components/modal/CreateAndEditSellers'
 
 interface Props {
+  form: SellersList
   sellers: SellersList[]
   apikey: string | undefined
   companyId: string | undefined
 }
-const SellersList: NextPage<Props> = ({ sellers, apikey, companyId }) => {
+const SellersList: NextPage<Props> = ({ sellers, apikey,form, companyId }) => {
   const { status } = useSession()
   const { replace } = useRouter()
+  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure()
+  const [isLoading, setIsLoading] = useState(false)
+
+
 
   useEffect(() => {
     status === 'unauthenticated' && replace('/')
@@ -53,13 +64,53 @@ const SellersList: NextPage<Props> = ({ sellers, apikey, companyId }) => {
             <TableRow key={item.id}>
               {columnKey => (
                 <TableCell>
-                  <RenderCellSellers sellers={item} columnKey={columnKey} />
+                  <RenderCellSellers apikey={apikey} companyId={companyId} sellers={item} columnKey={columnKey} />
                 </TableCell>
               )}
             </TableRow>
           )}
         </TableBody>
       </Table>
+
+      <Button
+        isIconOnly
+        color={'primary'}
+        variant="shadow"
+        style={{
+          width: '60px',
+          height: '60px',
+          position: 'fixed',
+          right: '2em',
+          bottom: '2em'
+        }}
+        isDisabled={isLoading}
+        onPress={onOpen}
+      >
+        {isLoading ? (
+          <CircularProgress
+            size="md"
+            classNames={{
+              indicator: 'stroke-white',
+              track: 'stroke-white/25'
+            }}
+          />
+        ) : (
+          <RiAddFill size={25} color="white" />
+        )}
+      </Button>
+
+      <Modal
+        closeButton
+        backdrop="blur"
+        aria-label="Crear bancos"
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        size="2xl"
+      >
+        <CreateAndEditSellers form={form}  apikey={apikey} companyId={companyId} method='crear'  />
+
+
+      </Modal>
     </>
   )
 }
