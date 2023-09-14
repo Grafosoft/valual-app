@@ -1,22 +1,26 @@
 export const contactsColumns = [
     {
-      name: 'Nombre Comercial',
+      name: 'NOMBRE COMERCIAL',
       uid: 'commercialName'
     },  
     {
-        name: 'Identificacion',
+        name: 'IDENTIFICACION',
         uid: 'identification'
       },
     {
-      name: 'Estado',
+      name: 'ESTADO',
       uid: 'isActive'
     },
     {
-      name: 'Cuidad',
+      name: 'CIUDAD',
       uid: 'city'
     },
     {
-      name: 'Informacion',
+      name: 'INFORMACION',
       uid: 'email'
     },
+    {
+      name: '',
+      uid: 'details'
+    }
   ]

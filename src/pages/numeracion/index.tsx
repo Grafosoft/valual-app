@@ -1,10 +1,12 @@
 import valualApi from '@/apis/valualApi'
 import { NumerationsList } from '../../../interfaces/numerations/numerationsList'
-import { NumerationsHeadersLayout } from '../../../layout/numerations/numerationsHeader'
+import { NumerationsHeadersLayout } from '../../../layout/numerations/NumerationsHeader'
 import { numerationsColumns } from '@/global/numerations/numerationsColumns'
 import { RenderCellNumerations } from '../../../layout/numerations/RenderCellNumerations'
-
+import { PaginationList } from '../../../components/pagination/PaginationList'
 import {
+  Button,
+  CircularProgress,
   Spacer,
   Table,
   TableBody,
@@ -18,27 +20,25 @@ import { useSession } from 'next-auth/react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
-import { PaginationList } from '../../../components/pagination/PaginationList'
-
-
-
+import { RiAddFill } from 'react-icons/ri'
 
 interface Props {
-    numerations: NumerationsList[]
+  numerations: NumerationsList[]
   apikey: string | undefined
   companyId: string | undefined
   page: string | undefined
 }
 
 const NumerationsList: NextPage<Props> = ({
-numerations,
+  numerations,
   apikey,
   companyId,
   page
 }) => {
   const [currentPage, setCurrentPage] = useState(0)
   const { status } = useSession()
-  const { replace } = useRouter()
+  const { push ,replace } = useRouter()
+  const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
     setCurrentPage(parseInt(page || '0') + 1)
@@ -48,7 +48,7 @@ numerations,
   return (
     <>
       <Head>
-        <title>Clientes</title>
+        <title>Numeracion</title>
       </Head>
       <NumerationsHeadersLayout
         numerations={numerations}
@@ -60,6 +60,7 @@ numerations,
         aria-label="Factura"
         style={{ height: 'auto', minWidth: '100%' }}
         isStriped
+        shadow="none"
       >
         <TableHeader columns={numerationsColumns}>
           {column => <TableColumn key={column.uid}>{column.name}</TableColumn>}
@@ -69,7 +70,10 @@ numerations,
             <TableRow key={item.id}>
               {columnKey => (
                 <TableCell>
-                  <RenderCellNumerations Numeration={item} columnKey={columnKey} />
+                  <RenderCellNumerations
+                    numeration={item}
+                    columnKey={columnKey}
+                  />
                 </TableCell>
               )}
             </TableRow>
@@ -82,9 +86,39 @@ numerations,
         }`}
         urlNext={`numeracion/?companyId=${companyId}&apikey=${apikey}&page=${currentPage}`}
         currentPage={currentPage}
-        color={"primary"}
-
+        color={'primary'}
       />
+        <Button
+        isIconOnly
+        color={'primary'}
+        variant="shadow"
+        style={{
+          width: '60px',
+          height: '60px',
+          position: 'fixed',
+          right: '2em',
+          bottom: '2em'
+        }}
+        isDisabled={isLoading}
+        onClick={() => {
+          setIsLoading(true)
+          push(
+            `/numeracion/crear?apikey=${apikey}&companyId=${companyId}`
+          )
+        }}
+      >
+        {isLoading ? (
+          <CircularProgress
+            size="md"
+            classNames={{
+              indicator: 'stroke-white',
+              track: 'stroke-white/25'
+            }}
+          />
+        ) : (
+          <RiAddFill size={25} color="white" />
+        )}
+      </Button>
     </>
   )
 }
@@ -110,11 +144,10 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
 
   return {
     props: {
-    numerations:response.data,
+      numerations: response.data,
       apikey,
       companyId,
-      page,
-      
+      page
     }
   }
 }

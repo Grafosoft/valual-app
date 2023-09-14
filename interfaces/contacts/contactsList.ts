@@ -3,14 +3,14 @@ export interface ContactsList {
     type:               string;
     identification:     string;
     commercialName:     string;
-    firstName:          null;
-    middleName:         null;
-    firstSurname:       null;
-    secondSurname:      null;
+    firstName:          string;
+    middleName:         string;
+    firstSurname:       string;
+    secondSurname:      string;
     email:              string;
     phone:              string;
-    adress:             null;
-    observations:       null;
+    adress:             string;
+    observations:       string;
     isActive:           boolean;
     identificationType: IdentificationType;
     city:               City;
@@ -27,6 +27,6 @@ export interface IdentificationType {
 
 export interface Tax {
     person:         string;
-    regime:         null;
-    responsibility: null;
+    regime:         string;
+    responsibility: string;
 }

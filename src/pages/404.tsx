@@ -17,7 +17,6 @@ export default function FourOhFour() {
         style={{
           minHeight: 'calc(100vh - 100px)',
           maxHeight: '100vh',
-
           margin: 'auto'
         }}
       >
@@ -34,7 +33,6 @@ export default function FourOhFour() {
               color: '#006FEE'
             }}
           >
-            
             404
           </h1>
           <h3
